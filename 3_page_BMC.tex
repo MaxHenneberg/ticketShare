@@ -1,0 +1,217 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{graphicx}
+
+
+\usepackage{amsthm}
+
+\begin{titlepage}
+	\centering
+    \vspace*{0.5 cm}
+
+    \textsc{\LARGE TU Munich}\\[2.0 cm]	% University Name
+
+% 	\textsc{\Large CMPE 58Z}\\[0.5 cm]				% Course Code
+	\textsc{\Large SEBA 2020 }\\[0.5 cm]
+    % \textsc{\Large Performance Evaluation of Biometric Systems}\\[0.5 cm]% Course Code
+    \textsc{\Large \today}
+	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
+	{ \huge \bfseries \thetitle Exercise I }\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	
+% 	\begin{minipage}{0.4\textwidth}
+% 		\begin{flushleft} \large
+% 			\emph{Submitted To:}\\
+% 			Berk Gökberk\\
+% 		\end{flushleft}
+% 	\end{minipage}~
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright} \large
+			\emph{Submitted By :} \\
+            Yaşar Fatih Enes Yalçın \\
+            \vspace{2mm}
+            Muhammad Rana \\
+            \vspace{2mm}
+            Nada Chatti \\
+            \vspace{2mm}
+            Maximilian Henneberg \\
+            \vspace{2mm}
+	    \end{flushright}
+	\end{minipage}\\[2 cm]
+	
+	
+
+    
+    
+    
+	
+\end{titlepage}
+
+
+\begin{document}
+
+% \setcounter{page}{2}
+% \tableofcontents
+
+\newpage
+
+\section{Project Idea}
+
+In certain events and transportation systems, buying multi-person-tickey is cheaper per person. Wouldn't it be great if we had a platform for to find people for these kind of multi-people-tickets! $TicketShare$ will help people to share their tickets!
+
+Bavaria ticket can be a common daily example for this:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{People} & \textbf{Price} \\ \hline
+1 passenger:    & 26 Euros          \\ \hline
+2 passengers:   & 34 Euros           \\ \hline
+3 passengers:   & 42 Euros           \\ \hline
+4 passengers:   & 50 Euros           \\ \hline
+5 passengers:   & 58 Euros           \\ \hline
+\end{tabular}
+\end{table}
+
+\vspace{-5mm}
+\section{Customer Segments}
+Our most important customers are:
+
+\begin{itemize}
+    \item Public Transport Users
+        \begin{itemize}
+            \item Young people
+            \item People who are interested in saving money
+        \end{itemize}
+    \item Travelers
+    \item Festival/Concert/Amusement-Park Goers
+    \item Ticket Retailer/Event Organizers
+\end{itemize}
+
+Since saving small amount of money is more important for young people and also young people socialize more than the elderly, we think that they would be our main customers.
+
+Also after creating a sufficient user base, ticket retailers would benefit from our product.
+
+\vspace{-3mm}
+\section{Value Proposition}
+These are the common values for every potential customer (except Ticket Retailers)
+\begin{itemize}
+    \item Saving money
+    \item Safe Payment Environment
+    \item Socializing opportunity
+\end{itemize}
+
+Spare Time Activity Goers and Travelers can find suggestions for events. And Ticket Retailer can have a safe payment environment and opportunity to popularize their events.
+
+
+
+\vspace{-3mm}
+\section{Customer Relationships}
+
+The role of our product is just being a middleman. A similar example could be BlaBlaCar platform. Our goal is to be at least intrusive as possible. But since the money is involved, safe payment environment and customer support will be our infrastructure and human resource costs which will be mentioned in detail under the Cost Structure part.
+
+
+\vspace{-3mm}
+\section{Channels}
+
+Our main channel will be our website. It works the best and it is the most cost efficient way to reach. We might also have a mobile app in the future. To reach our customers, we will also use the power of the social media and network based marketing techniques, these techniques can be thought as leveraging links between consumers to increase sales, visibility, popularity, etc.
+
+
+\vspace{-3mm}
+\section{Key Activities}
+
+To satisfy our value propositions there are two main activities to work on.
+\begin{enumerate}
+    \item Building the Product: The product has to have intuitive and fast user interface. Payment system has to be secure and assuring. It also has to look like it is secure.
+    
+    \item Building a User Base: We need as many people as possible to create more and more value for the people. Since connecting two or more people to create a win-win situation is the key factor for the product, each user is a potential value creator for us. We would use marketing strategies to attract users. Also, contacting Ticket Retailers and getting base supply of event from them would help us to build a solid user base. 
+    
+\end{enumerate}
+
+\vspace{-3mm}
+\section{Key Resources}
+
+Here is the list of key resources:
+\begin{itemize}
+    \item Solid Server Hardware: to make sure that everything is up and running
+    \item Safe and Reliable Storage: especially payment data needs a safe storage
+    \item Tickets
+    \item Marketing Agency: to grow the userbase
+    \item Support Team: to assure the safe payment environment (may scale with the userbase)
+\end{itemize}
+
+\vspace{-3mm}
+\newpage
+\section{Key Partners}
+Our key partners are:
+\begin{multicols}{2}
+    \begin{itemize}
+        \item Event Companies
+        \item Hotels
+        \item Holiday Management Companies
+        \item Advertisement Platforms
+        \item Beta Testing partners
+    \end{itemize}
+\end{multicols}
+
+The resources we are going to get from the partners are: offers, tickets, APIs, commissions, testing.
+
+And our key suppliers are:
+\begin{multicols}{2}
+    \begin{itemize}
+        \item Ticket Information Websites
+        \item End Users
+    \end{itemize}
+\end{multicols}
+
+We are mainly going to get the information about the tickets from our suppliers.
+
+\vspace{-3mm}
+\section{Cost Structure}
+Our key costs are:
+\begin{itemize}
+    \item Development Costs (Since it is a student project: No Costs for the MVP)
+    \item Maintenance  Cost (Only after we launch the project)
+    \item Hosting Costs (Scale with the User Base: Start Small)
+    \item Marketing
+    \item Support Team (Also scales with the User Base)
+\end{itemize}
+
+We can say that costs related to development is quite low at first. Marketing can be thought of the big chunk in the costs since it doesn't have a limit. Marketing costs will be there before and after launch. 
+
+\vspace{-3mm}
+\section{Revenue Stream}
+
+We planned our revenue stream:
+\begin{itemize}
+    \item Pay for Premium Features: No payment for standard users. We will advertise the premium features (e.g. get more offers)
+    \item Revenue over website advertisements
+    \item Smart Advertisements (e.g. Hotel for Festival location)
+\end{itemize}
+
+For the future outlook, if we can manage to have big enough userbase, we can consider cooperation with Ticket Retailers and get percent, leveraging our userbase.
+
+
+\vspace{3mm}
+
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{openfst} 
+%\url{http://www.openfst.org/}
+%\textit{A library for constructing, combining, %optimizing, and searching weighted finite-state %transducers (FSTs). } 
+
+%\bibitem{jurafsky}
+%Dan Jurafsky and James H. Martin
+%\textit{Speech and Language Processing (3rd %edition)}
+%Stanford University
+
+%\end{thebibliography}
+
+\end{document}
