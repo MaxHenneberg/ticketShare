@@ -5,8 +5,10 @@ const extend = require('mongoose-schema-extend');
 
 const BaseAttributesSchema = new mongoose.Schema({
     id: {
-        type: Number,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        index: true,
+        required: true,
+        auto: true
     },
     deleted: Boolean,
     creator: String

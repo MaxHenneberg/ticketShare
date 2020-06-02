@@ -2,9 +2,9 @@
 
 const mongoose = require('mongoose');
 const extend = require('mongoose-schema-extend');
-const BaseAttributes = require('baseAttributes');
+const BaseAttributes = require('../schema/baseAttributes');
 
-const LoginSchema = BaseAttributes.extend({
+const LoginSchema = new mongoose.Schema({
     location: String,
     browser: String
 });

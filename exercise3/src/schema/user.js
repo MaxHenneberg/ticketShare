@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const extend = require('mongoose-schema-extend');
-const BaseAttributes = require('baseAttributes');
+const BaseAttributes = require('src/schema/baseAttributes');
 
 const UserSchema = BaseAttributes.extend({
     username: {
