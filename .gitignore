@@ -120,4 +120,4 @@ dist
 #intellij 
 .idea/
 
-.zip
+*.zip
