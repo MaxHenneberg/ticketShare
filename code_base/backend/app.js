@@ -17,4 +17,4 @@ app.use(express.urlencoded({ extended: false }));
 // routes
 app.use("/", require("./src/routes/routes"));
 
-app.listen(3000);
+app.listen(8000);
