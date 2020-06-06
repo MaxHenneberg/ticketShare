@@ -18,7 +18,6 @@ exports.register = function (req, res) {
         }
         res.send(user);
       });
-  res.send("NOT IMPLEMENTED:Register");
 };
 
 /**
