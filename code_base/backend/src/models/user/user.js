@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Address = require("src/models/user/address")
+const Address = require("../user/address");
 const SearchTag = require("../group/searchTag")
 
 const UserSchema = new mongoose.Schema({
@@ -17,10 +17,18 @@ const UserSchema = new mongoose.Schema({
         birthDate: Date,
 
         billingAdresses: [
-          Address
+          {
+            nickName: String,
+
+            street: String,
+            streetNumber: String,
+            city: String,
+            country: String,
+            countryCode: String
+          }
         ],
       },
-      searchTags: [SearchTag]
+      searchTags: [String]
     },
     {timestamps: true}
 );
@@ -30,7 +38,7 @@ const UserSchema = new mongoose.Schema({
  * @param username Given username
  * @param callback function(err, result)
  */
-exports.findByUsername = function(username, callback){
+exports.findByUsername = function (username, callback) {
   User.findOne({usename: searchedUsername}, function (err, result) {
     callback(err, result);
   })

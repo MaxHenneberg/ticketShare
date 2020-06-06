@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user/user');
 const bcrypt = require('bcrypt');
-const config = require("./config/keys");
+const config = require("../../config/keys");
 
 passport.use(new LocalStrategy(
     function (username, password, done) {
@@ -43,33 +43,7 @@ exports.handleRegister = function (username, password, callback) {
   //TODO: password Constraints
   //TODO: Move dupliate User check to here
 
-  storeUserCredentials(username, password, callback);
-};
-
-/**
- * Stores given Credential to Databases (Hashes Password in process)
- * @param username Chosen username by User
- * @param password Chosen password by User
- * @param callback callback function(error, StoredUser, AdditonalInfo)
- */
-exports.storeUserCredentials = function (username, password, callback) {
-  User.findOne({username: username}, function (err, user) {
-    if (err) {
-      console.error(err);
-      return callback(err);
-    }
-    if (user) {
-      return callback(null, false, {message: 'User already exists!'});
-    }
-  });
-  bcrypt.hash(password, config.WORK_FACTOR, function (err, hash) {
-    if (err) {
-      return callback(err);
-    }
-    const nUser = new User({username: username, passwordHash: hash});
-    User.save(nUser);
-    return callback(null, nUser);
-  });
+  return storeUserCredentials(username, password, callback);
 };
 
 /**
@@ -84,4 +58,34 @@ function validPassword(user, password) {
     }
     return result;
   })
+}
+
+/**
+ * Stores given Credential to Databases (Hashes Password in process)
+ * @param username Chosen username by User
+ * @param password Chosen password by User
+ * @param callback callback function(error, StoredUser, AdditonalInfo)
+ */
+function storeUserCredentials(username, password, callback) {
+  User.findOne({username: username}, function (err, user) {
+    if (err) {
+      console.error(err);
+      return callback(err, null);
+    }
+    if (user) {
+      console.warn("User already exists!");
+      return callback(null, false, {message: 'User already exists!'});
+    }
+    bcrypt.hash(password, config.WORK_FACTOR, function (error, hash) {
+      if (error) {
+        return callback(error, null);
+      }
+      const nUser = new User({username: username, passwordHash: hash});
+      User.create(nUser, function (userError, createdUser) {
+        if(userError) return callback(userError, null);
+        return callback(null, createdUser);
+      });
+      return callback(null, nUser);
+    });
+  });
 }

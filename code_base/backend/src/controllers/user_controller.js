@@ -1,5 +1,5 @@
 const User = require('../models/user/user');
-const authController = require('auth_controller');
+const authController = require('../controllers/auth_controller');
 /*
 exports.login = function (req, res) {
   res.send("NOT IMPLEMENTED:Login");
@@ -8,15 +8,16 @@ exports.login = function (req, res) {
 
 
 exports.register = function (req, res) {
-  authController.handleRegister(req.username, req.password,
+  console.log("Recieved Register Request with: "+req.body.username+"/"+req.body.password);
+  return authController.handleRegister(req.body.username, req.body.password,
       function (err, user, addInfo) {
         if (err) {
-          res.send(err);
+          return res.send(err);
         }
         if(!user){
-          res.send(addInfo.message);
+          return res.send(addInfo.message);
         }
-        res.send(user);
+        return res.send(user);
       });
 };
 
@@ -29,15 +30,13 @@ exports.register = function (req, res) {
 exports.findById = function (req, res) {
   User.findById(req.params.id, {}, function (err, result) {
     if (err) {
-      res.statusCode = 400;
       console.error(err);
-      res.send(err);
+      return res.send(err);
     }
     if (!result) {
       res.statusCode = 404;
-      res.send(result);
-      return;
+      return res.send(result);
     }
-    res.send(result);
+    return res.send(result);
   })
 };

@@ -16,6 +16,7 @@ mongoose
 
 // body parser:
 app.use(express.urlencoded({ extended: false }));
+//app.use(express.json);
 app.use(session({secret: config.SESSION_SECRET}));
 
 app.use(passport.initialize());
