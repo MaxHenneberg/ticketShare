@@ -23,7 +23,6 @@ passport.use(new LocalStrategy(
           return done(null, false, {message: 'Incorrect username.'});
         }
         validPassword(user, pepperPassword(password), done);
-
       });
     }
 ));
@@ -126,7 +125,7 @@ function passwordConstraints(password) {
  * @param user User to which the given password should match
  * @param password Password given by User
  */
-async function validPassword(user, password, callback) {
+function validPassword(user, password, callback) {
   bcrypt.compare(password, user.passwordHash, function (err, result) {
     if (err) {
       console.error(err);
