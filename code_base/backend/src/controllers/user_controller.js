@@ -28,7 +28,7 @@ exports.register = function (req, res) {
  * @param req Request
  * @param res Response
  */
-exports.findById = function (req, res) {
+exports.findUserById = function (req, res) {
   User.findById(req.params.id, {}, function (err, result) {
     if (err) {
       console.error(err);
@@ -40,4 +40,9 @@ exports.findById = function (req, res) {
     }
     return res.send(result);
   })
+};
+
+exports.findFromCookie = function (req, res) {
+  //console.log("User: "+req.user);
+  res.send(req.user);
 };
