@@ -28,11 +28,17 @@ passport.use(new LocalStrategy(
     }
 ));
 
+/**
+ * Standard Passport serialization of User into Session
+ */
 passport.serializeUser(function (user, done) {
   console.log("Serialize User: %s",user.username);
   done(null, user.id);
 });
 
+/**
+ * Standard Passport deserialization of User from Session
+ */
 passport.deserializeUser(function (id, done) {
   console.log("Try to deserializeUser: " + id);
   User.findById(id, function (err, user) {
@@ -41,6 +47,11 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+/**
+ * Checks if User is logged in via checking for req.user
+ * @param failureRedirect Redirect Route in case of failure
+ * @returns {function(...[*]=)} Middleware Function (req,res,next)
+ */
 exports.checkLogin = function(failureRedirect){
   return function (req, res, next) {
     if(req.user){
