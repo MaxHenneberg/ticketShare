@@ -1,12 +1,13 @@
 const User = require('../models/user/user');
 const authController = require('../controllers/auth_controller');
-/*
-exports.login = function (req, res) {
-  res.send("NOT IMPLEMENTED:Login");
-};
+
+/**
+ * Handles User Registration for Rest path /users/register
+ * Checks for duplicated Username and PW constraints
+ *
+ * @param req Request
+ * @param res Response
  */
-
-
 exports.register = function (req, res) {
   console.log("Recieved Register Request with: "+req.body.username+"/"+req.body.password);
   authController.handleRegister(req.body.username, req.body.password,
