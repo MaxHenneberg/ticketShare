@@ -1,7 +1,10 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user/user');
 const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
+const passwordValidator = require('password-validator');
+const crypto = require('crypto');
+
+const User = require('../models/user/user');
 const config = require("../../config/keys");
 
 passport.use(new LocalStrategy(
@@ -40,11 +43,43 @@ passport.deserializeUser(function (id, done) {
  * @param callback function(error, StoredUser, AdditonalInfo)
  */
 exports.handleRegister = function (username, password, callback) {
-  //TODO: password Constraints
-  //TODO: Move dupliate User check to here
-
-  return storeUserCredentials(username, password, callback);
+  //Duplicated User Check
+  User.findOne({username: username}, function (err, user) {
+    if (err) {
+      console.error(err);
+      return callback(err, null);
+    }
+    if (user) {
+      console.warn("User already exists!");
+      return callback(null, false, {message: 'User already exists!'});
+    }
+    //PW constraints
+    const list = passwordConstraints(password);
+    if (list.length<=0) {
+      return storeUserCredentials(username, password, callback);
+    } else {
+      console.warn("Password Constraint not matched!" + list);
+      return callback(null, false,
+          {message: 'Password Constraint not matched', failedConstraints: list});
+    }
+  });
 };
+
+function passwordConstraints(password) {
+  var pwConstraints = new passwordValidator();
+
+  pwConstraints
+  .is().min(config.PW_MIN_LENGTH)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
+  .has().symbols()
+  .has().not().spaces();
+
+  //TODO: Blacklist breached PWs
+
+  return pwConstraints.validate(password, {list: true});
+}
 
 /**
  * Validates password to given User
@@ -67,29 +102,25 @@ function validPassword(user, password) {
  * @param callback callback function(error, StoredUser, AdditonalInfo)
  */
 function storeUserCredentials(username, password, callback) {
-  User.findOne({username: username}, function (err, user) {
-    if (err) {
-      console.error(err);
-      return callback(err, null);
-    }
-    if (user) {
-      console.warn("User already exists!");
-      return callback(null, false, {message: 'User already exists!'});
-    }
-    bcrypt.hash(password, config.WORK_FACTOR, function (error, hash) {
-      if (error) {
-        return callback(error, null);
-      }
-      const nUser = new User({username: username, passwordHash: hash});
-      console.log("Instantiates User: "+nUser);
-      User.create(nUser, function (userError, createdUser) {
-        if (userError) {
-          console.error("Failed to save user: "+userError);
-          return callback(userError, null);
+
+  //Adding some Pepper to the Password to improve taste
+  const pepperedPW = crypto.createHmac('sha256', config.PEPPER).update(
+      password).digest('hex');
+  bcrypt.hash(pepperedPW, config.WORK_FACTOR,
+      function (error, hash) {
+        if (error) {
+          return callback(error, null);
         }
-        console.log("Stored User to Database");
-        return callback(null, createdUser);
+        const nUser = new User({username: username, passwordHash: hash});
+        console.log("Instantiates User: " + nUser);
+        User.create(nUser, function (userError, createdUser) {
+          if (userError) {
+            console.error("Failed to save user: " + userError);
+            return callback(userError, null);
+          }
+          console.log("Stored User to Database");
+          return callback(null, createdUser);
+        });
       });
-    });
-  });
+
 }
