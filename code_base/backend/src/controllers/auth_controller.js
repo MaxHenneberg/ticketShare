@@ -7,6 +7,9 @@ const crypto = require('crypto');
 const User = require('../models/user/user');
 const config = require("../../config/keys");
 
+/**
+ * Defining the `local` Strategy to use to auth a user login.
+ */
 passport.use(new LocalStrategy(
     function (username, password, done) {
       console.log("Tryed Login with: %s / %s", username, password);
@@ -69,6 +72,13 @@ exports.handleRegister = function (username, password, callback) {
   });
 };
 
+/**
+ * Checks if usechoosen password meets all constraints. (Should also be prechecked
+ * on client side for better UX)
+ *
+ * @param password plainText password to check for constraints
+ * @returns {string[]} List of all failed Constraints. Empty if all constraints are met.
+ */
 function passwordConstraints(password) {
   var pwConstraints = new passwordValidator();
 
@@ -104,6 +114,12 @@ async function validPassword(user, password, callback) {
   });
 }
 
+/**
+ * Adding some Pepper to the Password for a more refined taste
+ *
+ * @param password PlainText password
+ * @returns {string} Sha256 Hash in Hex using Pepper as Secret
+ */
 function pepperPassword(password) {
   return crypto.createHmac('sha256', config.PEPPER).update(
       password).digest('hex');
@@ -116,8 +132,6 @@ function pepperPassword(password) {
  * @param callback callback function(error, StoredUser, AdditonalInfo)
  */
 function storeUserCredentials(username, password, callback) {
-
-  //Adding some Pepper to the Password to improve taste
   const pepperedPW = pepperPassword(password);
   bcrypt.hash(pepperedPW, config.WORK_FACTOR,
       function (error, hash) {
