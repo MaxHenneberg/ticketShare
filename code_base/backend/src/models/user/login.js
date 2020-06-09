@@ -4,7 +4,7 @@ const LoginSchema = new mongoose.Schema({
       user: mongoose.Types.ObjectId,
 
       location: String,
-      String: browser
+      browser: String
     },
     {timestamps: true}
 );
