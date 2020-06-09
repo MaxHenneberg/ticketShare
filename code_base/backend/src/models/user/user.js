@@ -33,16 +33,5 @@ const UserSchema = new mongoose.Schema({
     {timestamps: true}
 );
 
-/**
- * Finds User by given Username
- * @param username Given username
- * @param callback function(err, result)
- */
-exports.findByUsername = function (username, callback) {
-  User.findOne({usename: searchedUsername}, function (err, result) {
-    callback(err, result);
-  })
-};
-
 module.exports = mongoose.model("user", UserSchema);
 
