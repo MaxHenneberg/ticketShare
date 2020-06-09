@@ -1,12 +1,14 @@
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
-
-const app = express();
 const mongoose = require("mongoose");
+const flash = require("connect-flash");
 
 // db config get from config folder
 const config = require("./config/keys");
+
+
+const app = express();
 
 // Connect to mongo
 mongoose
@@ -18,6 +20,8 @@ mongoose
 app.use(express.urlencoded({ extended: false }));
 //app.use(express.json);
 app.use(session({secret: config.SESSION_SECRET}));
+
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());

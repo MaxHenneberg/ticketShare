@@ -9,17 +9,18 @@ const config = require("../../config/keys");
 
 passport.use(new LocalStrategy(
     function (username, password, done) {
-      User.findByUsername(username, function (err, user) {
+      console.log("Tryed Login with: %s / %s", username, password);
+      User.findOne({username: username}, function (err, user) {
         if (err) {
+          console.error(err);
           return done(err);
         }
         if (!user) {
+          console.warn("No User Found for: %s", username);
           return done(null, false, {message: 'Incorrect username.'});
         }
-        if (!validPassword(user, password)) {
-          return done(null, false, {message: 'Incorrect password.'});
-        }
-        return done(null, user);
+        validPassword(user, pepperPassword(password), done);
+
       });
     }
 ));
@@ -55,12 +56,15 @@ exports.handleRegister = function (username, password, callback) {
     }
     //PW constraints
     const list = passwordConstraints(password);
-    if (list.length<=0) {
+    if (list.length <= 0) {
       return storeUserCredentials(username, password, callback);
     } else {
       console.warn("Password Constraint not matched!" + list);
       return callback(null, false,
-          {message: 'Password Constraint not matched', failedConstraints: list});
+          {
+            message: 'Password Constraint not matched',
+            failedConstraints: list
+          });
     }
   });
 };
@@ -86,13 +90,23 @@ function passwordConstraints(password) {
  * @param user User to which the given password should match
  * @param password Password given by User
  */
-function validPassword(user, password) {
+async function validPassword(user, password, callback) {
   bcrypt.compare(password, user.passwordHash, function (err, result) {
     if (err) {
       console.error(err);
     }
-    return result;
-  })
+    if(!result){
+      console.warn("Try to Login to %s with wrong password",user.username);
+      return callback(null, false, {message: 'Incorrect password.'});
+    }
+    console.log("User %s logged in successful", user.username);
+    return callback(null, user);
+  });
+}
+
+function pepperPassword(password) {
+  return crypto.createHmac('sha256', config.PEPPER).update(
+      password).digest('hex');
 }
 
 /**
@@ -104,8 +118,7 @@ function validPassword(user, password) {
 function storeUserCredentials(username, password, callback) {
 
   //Adding some Pepper to the Password to improve taste
-  const pepperedPW = crypto.createHmac('sha256', config.PEPPER).update(
-      password).digest('hex');
+  const pepperedPW = pepperPassword(password);
   bcrypt.hash(pepperedPW, config.WORK_FACTOR,
       function (error, hash) {
         if (error) {
