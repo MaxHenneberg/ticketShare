@@ -16,9 +16,7 @@ const GroupSchema = new mongoose.Schema({
       pricePerPerson: Price,
       joinDeadline: Date,
 
-      participants:[JoinInformation],
-
-      groupNotification: [GroupNotification],
+      participants:[mongoose.Types.ObjectId],
 
       creator: mongoose.Types.ObjectId
     },

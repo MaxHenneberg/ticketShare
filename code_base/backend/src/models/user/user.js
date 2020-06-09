@@ -18,17 +18,10 @@ const UserSchema = new mongoose.Schema({
 
         billingAdresses: [
           {
-            nickName: String,
-
-            street: String,
-            streetNumber: String,
-            city: String,
-            country: String,
-            countryCode: String
+            adress: mongoose.Types.ObjectId
           }
         ],
       },
-      searchTags: [String]
     },
     {timestamps: true}
 );
