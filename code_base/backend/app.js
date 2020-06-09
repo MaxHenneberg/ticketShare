@@ -4,6 +4,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const cookieParser = require('cookie-parser')
 
 // db config get from config folder
 const config = require("./config/keys");
@@ -18,6 +19,7 @@ mongoose
 
 // body parser:
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
 app.use(flash());
 
 //Session Stuff. DONT CHANGE ORDER

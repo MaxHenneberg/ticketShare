@@ -29,14 +29,29 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function (user, done) {
+  console.log("Serialize User: %s",user.username);
   done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
+  console.log("Try to deserializeUser: " + id);
   User.findById(id, function (err, user) {
+    //console.log("Deserialized User: "+user);
     done(err, user);
   });
 });
+
+exports.checkLogin = function(failureRedirect){
+  return function (req, res, next) {
+    if(req.user){
+      console.log("Active Session");
+      next();
+    }else{
+      console.log("No session");
+      res.redirect(failureRedirect);
+    }
+  }
+};
 
 /**
  * Function to handle Registration
@@ -105,8 +120,8 @@ async function validPassword(user, password, callback) {
     if (err) {
       console.error(err);
     }
-    if(!result){
-      console.warn("Try to Login to %s with wrong password",user.username);
+    if (!result) {
+      console.warn("Try to Login to %s with wrong password", user.username);
       return callback(null, false, {message: 'Incorrect password.'});
     }
     console.log("User %s logged in successful", user.username);
