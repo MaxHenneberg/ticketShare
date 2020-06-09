@@ -42,6 +42,11 @@ exports.findUserById = function (req, res) {
   })
 };
 
+/**
+ * Test Cookies
+ * @param req Request
+ * @param res Response
+ */
 exports.findFromCookie = function (req, res) {
   //console.log("User: "+req.user);
   res.send(req.user);
