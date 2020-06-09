@@ -9,7 +9,7 @@ exports.login = function (req, res) {
 
 exports.register = function (req, res) {
   console.log("Recieved Register Request with: "+req.body.username+"/"+req.body.password);
-  return authController.handleRegister(req.body.username, req.body.password,
+  authController.handleRegister(req.body.username, req.body.password,
       function (err, user, addInfo) {
         if (err) {
           return res.send(err);

@@ -81,11 +81,15 @@ function storeUserCredentials(username, password, callback) {
         return callback(error, null);
       }
       const nUser = new User({username: username, passwordHash: hash});
+      console.log("Instantiates User: "+nUser);
       User.create(nUser, function (userError, createdUser) {
-        if(userError) return callback(userError, null);
+        if (userError) {
+          console.error("Failed to save user: "+userError);
+          return callback(userError, null);
+        }
+        console.log("Stored User to Database");
         return callback(null, createdUser);
       });
-      return callback(null, nUser);
     });
   });
 }
