@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-const JoinInformation = require("joinInformation");
-const Price = require("../util/price");
-const GroupNotification = require("../chat/groupNotification")
 
 const GroupSchema = new mongoose.Schema({
       type: String,
@@ -13,7 +10,10 @@ const GroupSchema = new mongoose.Schema({
       headerPic: String,
 
       public: Boolean,
-      pricePerPerson: Price,
+      pricePerPerson: {
+            priceAmount: Number,
+            priceUnit: String
+      },
       joinDeadline: Date,
 
       participants:[mongoose.Types.ObjectId],

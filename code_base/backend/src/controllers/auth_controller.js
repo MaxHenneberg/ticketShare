@@ -52,12 +52,14 @@ passport.deserializeUser(function (id, done) {
  * @returns {function(...[*]=)} Middleware Function (req,res,next)
  */
 exports.checkLogin = function(failureRedirect){
+  console.log("Check Login");
   return function (req, res, next) {
     if(req.user){
       console.log("Active Session");
       next();
     }else{
       console.log("No session");
+      res.statusCode = 401;
       res.redirect(failureRedirect);
     }
   }

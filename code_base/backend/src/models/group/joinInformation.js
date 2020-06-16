@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
 const JoinInformationSchema = new mongoose.Schema({
-      payed: Boolean,
-
       ticketDelivered: Boolean,
       ticketRecieved: Boolean,
 
