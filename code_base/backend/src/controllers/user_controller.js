@@ -24,11 +24,11 @@ exports.register = function (req, res) {
 
 /**
  * REST function
- * Finds User by id given in req
+ * Finds User details by id given in req
  * @param req Request
  * @param res Response
  */
-exports.findUserById = function (req, res) {
+exports.getUserDetails = function (req, res) {
   User.findById(req.params.id, {}, function (err, result) {
     if (err) {
       console.error(err);
@@ -51,3 +51,33 @@ exports.findFromCookie = function (req, res) {
   //console.log("User: "+req.user);
   res.send(req.user);
 };
+
+/**
+ * Add user details to logged in user
+ * @param req Request
+ * @param res Response
+ */
+exports.addUserDetails = (req, res) => {
+  let userDetails = req.body;
+
+  User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+};
+
+// Gets all the users.
+exports.getAllUsers = (req, res) => {
+
+  User.find({}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(result);
+    }
+  })
+};
+
