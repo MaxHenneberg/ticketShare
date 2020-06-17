@@ -1,23 +1,33 @@
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
-
-const app = express();
 const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo")(session);
+const flash = require("connect-flash");
+const cookieParser = require('cookie-parser')
 
 // db config get from config folder
 const config = require("./config/keys");
 
+const app = express();
+
 // Connect to mongo
 mongoose
-	.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-	.then(() => console.log("MongoDB Connected successfully!"))
-	.catch((err) => console.log(err));
+.connect(config.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(() => console.log("MongoDB Connected successfully!"))
+.catch((err) => console.log(err));
 
 // body parser:
-app.use(express.urlencoded({ extended: false }));
-//app.use(express.json);
-app.use(session({secret: config.SESSION_SECRET}));
+app.use(express.urlencoded({extended: false}));
+
+app.use(cookieParser());
+app.use(flash());
+
+//Session Stuff. DONT CHANGE ORDER
+app.use(session({
+  secret: config.SESSION_SECRET,
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

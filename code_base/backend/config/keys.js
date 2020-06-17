@@ -2,5 +2,7 @@ module.exports = {
 	MONGO_URL:
 			"mongodb+srv://seba-user:bCufNxJDoGO3otuL@seba-aty2d.mongodb.net/Seba?retryWrites=true&w=majority",
 	SESSION_SECRET: "someSecret",
-	WORK_FACTOR: 10
+	WORK_FACTOR: 10,
+	PEPPER: "somePepper",
+	PW_MIN_LENGTH: 8,
 };

@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const Message = require("Message");
 
 const TargetedMessageSchema = new mongoose.Schema({
-      message: Message,
+      creator: mongoose.Types.ObjectId,
+      message: {
+        title: String,
+        text: String
+      },
       recipient: mongoose.Types.ObjectId
     },
     {timestamps: true}

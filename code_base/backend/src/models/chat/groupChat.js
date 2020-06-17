@@ -3,7 +3,7 @@ const Message = require("message");
 
 const GroupChatSchema = new mongoose.Schema({
     group: mongoose.Types.ObjectId,
-    messages: [Message]
+    messages: [mongoose.Types.ObjectId]
     },
     {timestamps: true}
 );
