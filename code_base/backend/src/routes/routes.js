@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 
 const routeConfig = require("../../config/routeConfig");
-const { addUserDetails, getUserDetails, getAllUsers } = require('../controllers/user_controller');
+const { addUserDetails, getUserDetails, getAllUsers, getUserTickets } = require('../controllers/user_controller');
 
 // Require controller modules.
 const user_controller = require("../controllers/user_controller");
@@ -38,5 +38,8 @@ router.get(routeConfig.USER_ID, getUserDetails);
 router.put(routeConfig.USER, isLoggedIn, addUserDetails);
 // Get all users from database
 router.get(routeConfig.USER, getAllUsers);
+// Get tickets of logged in user from database
+router.get(routeConfig.USER_TICKETS, isLoggedIn, getUserTickets);
+
 
 module.exports = router;

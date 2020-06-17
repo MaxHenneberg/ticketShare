@@ -1,4 +1,5 @@
 const User = require('../models/user/user');
+const Group = require('../models/group/group');
 const authController = require('../controllers/auth_controller');
 
 /**
@@ -59,6 +60,7 @@ exports.findFromCookie = function (req, res) {
  */
 exports.addUserDetails = (req, res) => {
   let userDetails = req.body;
+  // TODO: Couldn't update billing addresses via this method.
 
   User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
     if (err) {
@@ -73,6 +75,18 @@ exports.addUserDetails = (req, res) => {
 exports.getAllUsers = (req, res) => {
 
   User.find({}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(result);
+    }
+  })
+};
+
+// Gets all the tickets a user is related to.
+exports.getUserTickets = (req, res) => {
+  // TODO: Find a way to filter as "contains userid"
+  Group.find({participants: req.user._id}, function(err, result) {
     if (err) {
       res.send(err);
     } else {

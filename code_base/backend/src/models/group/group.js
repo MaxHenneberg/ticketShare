@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const JoinInformation = require("joinInformation");
-const Price = require("../util/price");
+// const JoinInformation = require("./joinInformation");
+const Price = require("../util/price").schema;
 const GroupNotification = require("../chat/groupNotification")
 
 const GroupSchema = new mongoose.Schema({

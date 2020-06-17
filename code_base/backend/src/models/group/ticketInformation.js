@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Price = require("../util/price");
-const EventInformation = require("eventInformation")
+const EventInformation = require("./eventInformation")
 
 const TicketInformationSchema = new mongoose.Schema({
       fullPrice: Price,

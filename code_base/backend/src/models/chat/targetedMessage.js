@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Message = require("Message");
+const Message = require("./message");
 
 const TargetedMessageSchema = new mongoose.Schema({
       creator: mongoose.Types.ObjectId,
