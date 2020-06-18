@@ -16,8 +16,7 @@ const GroupSchema = new mongoose.Schema({
       pricePerPerson: Price,
       joinDeadline: Date,
 
-      participants:[mongoose.Types.ObjectId],
-
+      //user
       creator: mongoose.Types.ObjectId
     },
     {timestamps: true}

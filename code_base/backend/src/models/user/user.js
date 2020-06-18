@@ -15,12 +15,6 @@ const UserSchema = new mongoose.Schema({
         surname: String,
         firstname: String,
         birthDate: Date,
-
-        billingAdresses: [
-          {
-            adress: mongoose.Types.ObjectId
-          }
-        ],
       },
     },
     {timestamps: true}
