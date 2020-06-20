@@ -15,20 +15,7 @@ const GroupSchema = new mongoose.Schema(
 
 		public: Boolean,
 
-		pricePerPerson: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Price",
-		},
-
-		joinDeadline: Date,
-
-		participants: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "User",
-			},
-		],
-
+		//user
 		creator: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",

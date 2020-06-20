@@ -10,6 +10,7 @@ const TicketInformationSchema = new mongoose.Schema({
       maxCoveredPeople: Number,
       initialFreeSlotsLeft: Number,
 
+      //EventInformation
       eventInformation: mongoose.Types.ObjectId
     },
     {timestamps: true}
