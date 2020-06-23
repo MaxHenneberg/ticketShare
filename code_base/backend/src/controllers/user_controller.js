@@ -120,3 +120,27 @@ exports.getUserAddresses = (req, res) => {
     }
   })
 };
+
+/**
+ * Add a new address to logged in user
+ * @param req Request
+ * @param res Response
+ */
+exports.addAddress = (req, res) => {
+  newAddress = Address();
+
+  newAddress.user = req.user._id;
+  newAddress.nickName = req.body.nickName;
+  newAddress.street = req.body.street;
+  newAddress.streetNumber = req.body.streetNumber;
+  newAddress.city = req.body.city;
+  newAddress.countryCode = req.body.countryCode;
+
+  newAddress.save(function(err){
+    if(err){ throw err; }
+    console.log('saved');
+  })
+
+  res.json({'message': 'address is saved'});
+};
+

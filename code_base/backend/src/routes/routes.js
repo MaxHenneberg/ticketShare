@@ -8,7 +8,8 @@ const {
   getUserDetails, 
   getAllUsers, 
   getUserTickets, 
-  getUserAddresses
+  getUserAddresses,
+  addAddress,
 } = require('../controllers/user_controller');
 const { getAllGroups } = require('../controllers/group_controller');
 
@@ -49,6 +50,8 @@ router.get(routeConfig.USERS, getAllUsers);
 router.get(routeConfig.USER_TICKETS, isLoggedIn, getUserTickets);
 // Get addresses of logged in user from database
 router.get(routeConfig.USER_ADDRESSES, isLoggedIn, getUserAddresses);
+// Add a new address to logged in user
+router.post(routeConfig.NEW_ADDRESS, isLoggedIn, addAddress);
 
 // Get all groups from database
 router.get(routeConfig.GROUPS, getAllGroups);

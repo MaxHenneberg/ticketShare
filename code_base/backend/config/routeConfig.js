@@ -8,4 +8,5 @@ module.exports = {
   USER_TICKETS: "/tickets",
   GROUPS: "/groups",
   USER_ADDRESSES: "/addresses",
+  NEW_ADDRESS: "/new_address",
 };
