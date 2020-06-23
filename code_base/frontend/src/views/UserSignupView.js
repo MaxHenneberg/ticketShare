@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import UserSignup from '../components/UserSignup';
+import UserSignup from '../components/Legacy/UserSignup';
 
 import UserService from '../services/UserService';
 
