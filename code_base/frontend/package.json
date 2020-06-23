@@ -33,14 +33,17 @@
     "webpack-merge": "4.1.0"
   },
   "dependencies": {
-    "react": "16.8.4",
-    "react-dom": "16.8.4",
-    "react-router-dom": "4.2.2",
-    "react-md": "1.2.11",
-    "webfontloader": "1.6.28",
-    "styled-components": "3.1.6",
+    "bcryptjs": "2.4.3",
+    "bootstrap": "^4.5.0",
     "jsonwebtoken": "8.1.1",
-    "bcryptjs": "2.4.3"
+    "react": "16.8.4",
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "16.8.4",
+    "react-md": "1.2.11",
+    "react-router-dom": "4.2.2",
+    "styled-components": "3.1.6",
+    "webfontloader": "1.6.28",
+    "react-bootstrap-icons": "latest"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { MenuButton, ListItem, Avatar, FontIcon } from 'react-md';
 import { withRouter } from 'react-router-dom'
 
-import UserService from  '../services/UserService';
+import UserService from '../../services/UserService';
 
 
 class KebabMenu extends React.Component {
