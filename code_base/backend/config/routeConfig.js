@@ -10,4 +10,5 @@ module.exports = {
   USER_ADDRESSES: "/addresses",
   NEW_ADDRESS: "/new_address",
   ADDRESS: "/address/:id",
+  JOIN_INFO: "/join/:groupId",
 };

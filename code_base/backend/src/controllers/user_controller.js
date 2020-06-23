@@ -161,3 +161,44 @@ exports.editAddress = (req, res) => {
     }
   })
 };
+
+/**
+ * Add a new join information for logged in user
+ * @param req Request
+ * @param res Response
+ */
+exports.addJoinInformation = (req, res) => {
+  newJoinInfo = JoinInformation();
+
+  newJoinInfo.group = req.params.groupId;
+  newJoinInfo.joinedUser = req.user._id;
+  newJoinInfo.payed = req.body.payed;
+  newJoinInfo.ticketDelivered = req.body.ticketDelivered;
+  newJoinInfo.ticketRecieved = req.body.ticketRecieved;
+  newJoinInfo.showPersonalInformation = req.body.showPersonalInformation;
+
+  newJoinInfo.save(function(err){
+    if(err){ throw err; }
+    console.log('saved');
+  })
+
+  res.json({'message': 'Join info is saved.'});
+};
+
+/**
+ * Edit a join information of logged in user
+ * @param req Request
+ * @param res Response
+ */
+exports.editJoinInformation = (req, res) => {
+  let joinInfoDetails = req.body;
+  let groupId = req.params.groupId;
+
+  JoinInformation.findOneAndUpdate({group: groupId, joinedUser: req.user._id }, joinInfoDetails, {upsert: true}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+};
