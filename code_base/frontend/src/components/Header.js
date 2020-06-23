@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Navbar from "react-bootstrap/Navbar";
-import Logo from "../Logo.png";
+//import Logo from "../Logo.png";
 import Button from "react-bootstrap/Button";
 import {Search, Shield, PersonCircle} from "react-bootstrap-icons";
 
@@ -16,7 +16,7 @@ class Header extends React.Component {
     return (
         <Navbar bg="primary">
           <Navbar.Brand>
-            <img alt="" src={Logo} width="100" height="30"
+            <img alt="" src="" width="100" height="30"
                  className="d-inline-block align-top"/>
           </Navbar.Brand>
           <Navbar.Toggle/>
