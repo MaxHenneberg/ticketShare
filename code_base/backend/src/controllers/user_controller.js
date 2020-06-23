@@ -1,6 +1,7 @@
 const User = require('../models/user/user');
-const Group = require('../models/group/group');
 const authController = require('../controllers/auth_controller');
+const JoinInformation = require('../models/group/joinInformation');
+const Address = require('../models/user/address');
 
 /**
  * Handles User Registration for Rest path /users/register
@@ -54,13 +55,17 @@ exports.findFromCookie = function (req, res) {
 };
 
 /**
- * Add user details to logged in user
+ * Change user details to logged in user
+ * Details like:
+ *    - username
+ *    - UserInformation.surname
+ *    - UserInformation.firstname
+ *    - UserInformation.birthDate
  * @param req Request
  * @param res Response
  */
-exports.addUserDetails = (req, res) => {
+exports.editUserDetails = (req, res) => {
   let userDetails = req.body;
-  // TODO: Couldn't update billing addresses via this method.
 
   User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
     if (err) {
@@ -71,9 +76,12 @@ exports.addUserDetails = (req, res) => {
   })
 };
 
-// Gets all the users.
+/**
+ * Get all users from database
+ * @param req Request
+ * @param res Response
+ */
 exports.getAllUsers = (req, res) => {
-
   User.find({}, function(err, result) {
     if (err) {
       res.send(err);
@@ -83,10 +91,13 @@ exports.getAllUsers = (req, res) => {
   })
 };
 
-// Gets all the tickets a user is related to.
+/**
+ * Gets all the tickets a user is related to.
+ * @param req Request
+ * @param res Response
+ */
 exports.getUserTickets = (req, res) => {
-  // TODO: Find a way to filter as "contains userid"
-  Group.find({participants: req.user._id}, function(err, result) {
+  JoinInformation.find({"joinedUser": req.user._id}, function(err, result) {
     if (err) {
       res.send(err);
     } else {
@@ -95,3 +106,17 @@ exports.getUserTickets = (req, res) => {
   })
 };
 
+/**
+ * Gets all the addresses a user is related to.
+ * @param req Request
+ * @param res Response
+ */
+exports.getUserAddresses = (req, res) => {
+  Address.find({"user": req.user._id}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(result);
+    }
+  })
+};

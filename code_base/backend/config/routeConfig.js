@@ -4,5 +4,8 @@ module.exports = {
   USERS_COOKIE: "/users/cookie",
   USER_ID: "/user/:id",
   USER: "/user",
-  USER_TICKETS: "/user/tickets",
+  USERS: "/users",
+  USER_TICKETS: "/tickets",
+  GROUPS: "/groups",
+  USER_ADDRESSES: "/addresses",
 };
