@@ -144,3 +144,20 @@ exports.addAddress = (req, res) => {
   res.json({'message': 'address is saved'});
 };
 
+/**
+ * Edit an address of logged in user
+ * @param req Request
+ * @param res Response
+ */
+exports.editAddress = (req, res) => {
+  let addressDetails = req.body;
+  let addressId = req.params.id;
+
+  Address.findOneAndUpdate({_id: addressId, user: req.user._id }, addressDetails, {upsert: true}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+};
