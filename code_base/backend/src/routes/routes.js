@@ -20,6 +20,6 @@ router.post(routeConfig.USERS_LOGIN,
     }));
 router.post(routeConfig.USERS_REGISTER, user_controller.register);
 router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
-router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.getAll);
+router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.validate('create'), currency_controller.getAll);
 
 module.exports = router;
