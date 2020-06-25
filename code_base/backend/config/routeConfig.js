@@ -4,4 +4,5 @@ module.exports = {
   USERS_COOKIE: "/users/cookie",
   USER_ID: "/user/:id",
   CREATE_GROUP: "/group/create",
+  CURRENCY: "/currency"
 };
