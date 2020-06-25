@@ -1,68 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TicketShare-frontend application
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+Both for the front end and the back end check:
 
-### `npm start`
+* nodejs [official website](https://nodejs.org/en/) - nodejs includes [npm](https://www.npmjs.com/) (node package manager)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+To get you started you can simply clone the repository and install all its dependencies:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+You need git to clone the   repository. You can get git from [http://git-scm.com/](http://git-scm.com/).
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+We also use a number of node.js tools to initialize and test the frontend. You must have node.js and its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Clone Movie Project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone this repository using [git](http://git-scm.com/):
 
-### `npm run eject`
+```
+git clone https://github.com/sebischair/sebamaster-movie-frontend.git
+cd sebamaster-movie-frontend
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Install Dependencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We get the tools we depend upon via `npm`, the [node package manager](https://www.npmjs.com).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+npm install
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Create a Bundle for the Application
 
-## Learn More
+This project use [webpack](https://github.com/webpack/webpack) version 1 for creating a bundle of the application and its dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+We have pre-configured `npm` to automatically run `webpack` so we can simply do:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm run build
+```
 
-### Code Splitting
+Behind the scenes this will call `webpack --config webpack.config.js `.  After, you should find that you have one new folder in your project.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+* `dist` - contains all the files of your application and their dependencies.
 
-### Analyzing the Bundle Size
+### Run the Application
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+We have preconfigured the project with a simple development web server.  The simplest way to start
+this server is:
 
-### Making a Progressive Web App
+```
+npm start
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Now browse to the app at `http://localhost:8000/index.html`.
