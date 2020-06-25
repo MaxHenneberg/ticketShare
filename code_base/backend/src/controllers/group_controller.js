@@ -7,60 +7,62 @@ const Ticket = require("../models/group/ticketInformation");
 const Currency = require("../models/group/currency");
 const Join_Info = require("../models/group/joinInformation");
 const Search_Tag = require("../models/group/searchTag");
+const { body, validationResult } = require("express-validator");
 
+exports.validate = (method) => {
+	switch (method) {
+		case "create": {
+			return [
+				body("name", "Group Name Required").exists(),
+				body("type", "Group Type Required").exists(),
+				body("desc", "Group Description Required").exists(),
+				body("is_public", "Public Parameter Required")
+					.exists()
+					.isBoolean()
+					.withMessage("Invalid Value for Public"),
+				// validate event info
+				body("eventInformation", "Event Information Required").exists(),
+				body("eventInformation.name", "Event Name Required").exists(),
+				body("eventInformation.desc", "Event Description Required").exists(),
+				body("eventInformation.eventStart", "Event StartDate Required")
+					.exists()
+					.isDate()
+					.withMessage("Invalid Date Format"),
+				body("eventInformation.eventEnd", "Event EndDate Required")
+					.exists()
+					.isDate()
+					.withMessage("Invalid Date Format"),
+				body("eventInformation.linkToEvent", "Link to Event Required").exists(),
+				// validate ticket info
+				body("ticketInfo", "Ticket Information Required").exists(),
+				body("ticketInfo.fullPrice", "Ticket Price Required").exists(),
+				body("ticketInfo.maxCoveredPeople", "Max People per Ticket Required")
+					.exists()
+					.isInt()
+					.withMessage("Max People must be a number"),
+				body("ticketInfo.initialFreeSlotsLeft", "Ticket Free Slots Required")
+					.exists()
+					.isInt()
+					.withMessage("Free Slots must be a number"),
+				body("ticketInfo.currency", "Ticket Currency Required")
+					.exists()
+					.isMongoId()
+					.withMessage("Invalid Value for Currency"),
+			];
+		}
+	}
+};
 exports.create = async (req, res) => {
 	// TODO: Header Pic and Price Per Person
-	var validation = null;
-	var errors = [];
-	try {
-		var is_all = true;
-		validation = has_all_params(req.body, [
-			"name",
-			"type",
-			"desc",
-			"is_public",
-			"eventInformation",
-			"ticketInfo",
-		]);
-		if (validation.is_valid == false) {
-			throw validation.errors;
-		}
-		// validation of EventInformation
-		validation = has_all_params(req.body.eventInformation, [
-			"name",
-			"desc",
-			"eventStart",
-			"eventEnd",
-			"linkToEvent",
-		]);
-		if (validation.is_valid == false) {
-			is_all = false;
-			errors = errors.concat({ eventInformation: validation.errors });
-		}
-		// validation of TicketInformation
-		validation = has_all_params(req.body.ticketInfo, [
-			"fullPrice",
-			"maxCoveredPeople",
-			"initialFreeSlotsLeft",
-			"currency",
-		]);
-		if (validation.is_valid == false) {
-			is_all = false;
-			errors = errors.concat({ ticketInfo: validation.errors });
-		}
-		if (!is_all) throw errors;
-	} catch (err) {
-		return res.status(400).send({
-			errors: err,
-		});
+	const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
+	if (!errors.isEmpty()) {
+		res.status(422).json({ errors: errors.array() });
+		return;
 	}
 
 	try {
 		// validate if currency exists in db
 		var currency_id = req.body.ticketInfo.currency;
-		if (!currency_id.match(/^[0-9a-fA-F]{24}$/)) {
-			throw "Invalid Currency ID format";
-		}
 		let currency_object = await Currency.findById(currency_id).exec();
 		if (!currency_object) throw "Invalid Currency";
 		/*
@@ -87,15 +89,3 @@ exports.create = async (req, res) => {
 		});
 	}
 };
-
-function has_all_params(body, params) {
-	var errors = [];
-	var is_valid = true;
-	params.forEach(function (item) {
-		if (typeof body[item] === "undefined") {
-			is_valid = false;
-			errors.push(item + " is required");
-		}
-	});
-	return { is_valid: is_valid, errors: errors };
-}
