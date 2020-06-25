@@ -1,3 +1,5 @@
+"use strict";
+
 const mongoose = require("mongoose");
 const JoinInformation = require("./joinInformation");
 const Price = require("../util/price");
@@ -15,6 +17,11 @@ const GroupSchema = new mongoose.Schema(
 
 		public: Boolean,
 
+		// event 
+		event: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "EventInformation",
+		},
 		//user
 		creator: {
 			type: mongoose.Schema.Types.ObjectId,
