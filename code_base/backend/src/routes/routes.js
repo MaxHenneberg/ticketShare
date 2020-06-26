@@ -7,6 +7,7 @@ const routeConfig = require("../../config/routeConfig");
 // Require controller modules.
 const user_controller = require("../controllers/user_controller");
 const auth_controller = require("../controllers/auth_controller");
+const group_controller = require("../controllers/group_controller");
 
 router.get("/", (req, res) => res.send("Welcome"));
 router.get(routeConfig.USER_ID, user_controller.findUserById);
@@ -18,5 +19,7 @@ router.post(routeConfig.USERS_LOGIN,
       failureFlash: true
     }));
 router.post(routeConfig.USERS_REGISTER, user_controller.register);
+
+router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
 
 module.exports = router;

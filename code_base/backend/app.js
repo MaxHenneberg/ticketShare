@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 
 // db config get from config folder
 const config = require("./config/keys");
+const cors = require("cors");
 
 const app = express();
 
@@ -33,7 +34,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(cors())
+
 // routes
 app.use("/", require("./src/routes/routes"));
 
-app.listen(8000);
+app.listen(8080);
