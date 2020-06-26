@@ -36,4 +36,4 @@ app.use(passport.session());
 // routes
 app.use("/", require("./src/routes/routes"));
 
-app.listen(8000);
+app.listen(8080);
