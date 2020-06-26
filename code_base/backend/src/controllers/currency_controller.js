@@ -11,6 +11,14 @@ exports.validate = (method) => {
 		}
 	}
 };
+
+/**
+ * Handles currency create request 
+ *
+ * @param req Request
+ * @param res Response
+ */
+
 exports.create = async (req, res) =>  {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 	if (!errors.isEmpty()) {
@@ -28,6 +36,14 @@ exports.create = async (req, res) =>  {
     }
     
 };
+
+/**
+ * Returns all the currencies in db
+ *
+ * @param req Request
+ * @param res Response
+ */
+
 exports.getAll = async (req, res) =>  {
     try {
         let c = await Currency.find({}).select('name');

@@ -9,6 +9,12 @@ const Join_Info = require("../models/group/joinInformation");
 const Search_Tag = require("../models/group/searchTag");
 const { body, validationResult } = require("express-validator");
 
+/**
+ * Validates the create group request
+ *
+ * @param method Argument from the middleware, name of function who's request is to be validated
+ */
+
 exports.validate = (method) => {
 	switch (method) {
 		case "create": {
@@ -52,6 +58,14 @@ exports.validate = (method) => {
 		}
 	}
 };
+
+/**
+ * Handles group create request
+ *
+ * @param req Request
+ * @param res Response
+ */
+
 exports.create = async (req, res) => {
 	// TODO: Header Pic and Price Per Person
 	const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
