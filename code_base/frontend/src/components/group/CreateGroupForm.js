@@ -9,6 +9,8 @@ import {
 	TextField,
 	SelectionControl,
 	CardTitle,
+	CardActions,
+	Button,
 	DatePicker,
 	FontIcon,
 } from "react-md";
@@ -24,7 +26,7 @@ class CreateGroupForm extends React.Component {
 	render() {
 		return (
 			<Form>
-				<CardTitle title="Basic Information"  subtitle="Required"/>
+				<CardTitle title="Basic Information" subtitle="Required" />
 				<Row>
 					<Col>
 						<Form.Group controlId="group_name">
@@ -84,7 +86,7 @@ class CreateGroupForm extends React.Component {
 					/>
 				</Form.Group>
 
-				<CardTitle title="Ticket Information" subtitle="Required"/>
+				<CardTitle title="Ticket Information" subtitle="Required" />
 				<Row>
 					<Col>
 						<Form.Group controlId="maxCoveredPeople">
@@ -109,8 +111,6 @@ class CreateGroupForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-
-				
 				<Row>
 					<Col>
 						<Form.Group controlId="currency">
@@ -134,10 +134,12 @@ class CreateGroupForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-				<Form.Text>Note: Total Price is the Combined Price of Ticket.</Form.Text>
+				<Form.Text>
+					Note: Total Price is the Combined Price of Ticket.
+				</Form.Text>
 				<Form.Text>100 Euros for 10 people: Total Price = 100</Form.Text>
-				
-				<CardTitle title="Event Information" subtitle="Optional"/>
+
+				<CardTitle title="Event Information" subtitle="Optional" />
 				<Row>
 					<Col>
 						<Form.Group controlId="event_name">
@@ -197,6 +199,11 @@ class CreateGroupForm extends React.Component {
 						/>
 					</Col>
 				</Row>
+				<CardActions className="lg-cell lg-cell--12">
+					<Button raised primary type="submit" className="md-cell--right">
+						Submit
+					</Button>
+				</CardActions>
 			</Form>
 		);
 	}
