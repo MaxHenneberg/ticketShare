@@ -21,13 +21,13 @@ class CurrencyDropdown extends React.Component {
 			})
 			.then((data) => {
 				let currenciesFromApi = data.map((c) => {
-					return { value: c._id, label: c.name };
+					return { value: c._id, display: c.name };
 				});
 				this.setState({
 					currencies: [
 						{
 							value: "",
-							label: "Currency of Ticket",
+							display: "Currency of Ticket",
 						},
 					].concat(currenciesFromApi),
 				});
@@ -39,40 +39,17 @@ class CurrencyDropdown extends React.Component {
 
 	render() {
 		return (
-			// <Form.Control as="select"
-			// 	name={this.props.name}
-			// 	value={this.state.selectedCurrency}
-			// 	onChange={(e) =>
-			// 		this.setState({
-			// 			selectedCurrency: e.target.value,
-			// 			// validationError:
-			// 			// 	e.target.value === "" ? "You must select a currency" : "",
-			// 		})
-			// 	}
-			// >
-			// 	{this.state.currencies.map((c) => (
-			// 		<option key={c.value} value={c.value}>
-			// 			{c.display}
-			// 		</option>
-			// 	))}
-			// </Form.Control>
-			<SelectField
-				required
-				id={this.props.id}
+			<Form.Control
+				as="select"
 				name={this.props.name}
-				placeholder="Currency"
-				fullWidth={true}
-				menuItems={this.state.currencies}
-				style={this.props.style}
-			></SelectField>
-			// <div
-			// 	style={{
-			// 		color: "red",
-			// 		marginTop: "5px",
-			// 	}}
-			// >
-			// 	{this.state.validationError}
-			// </div>
+				onChange={this.props.onChange}
+			>
+				{this.state.currencies.map((c) => (
+					<option key={c.value} value={c.value}>
+						{c.display}
+					</option>
+				))}
+			</Form.Control>
 		);
 	}
 }
