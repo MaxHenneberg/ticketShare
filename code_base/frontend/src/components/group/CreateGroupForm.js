@@ -5,15 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import CurrencyDropdown from "./CurrencyDropdown";
-import {
-	TextField,
-	SelectionControl,
-	CardTitle,
-	CardActions,
-	Button,
-	DatePicker,
-	FontIcon,
-} from "react-md";
+import { CardTitle, CardActions, Button } from "react-md";
 
 const select_style = {
 	marginTop: "1rem",
@@ -22,115 +14,131 @@ const select_style = {
 class CreateGroupForm extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = props.state;
+	}
+	handleSendData(event) {
+		event.preventDefault();
+		// console.log("handle send data");
+		// console.log(this.state);
+		this.props.onSubmit(this.state);
+	}
+	handleChangeGroup(field_name, event) {
+		let fields = this.state;
+		if (field_name == "is_public") {
+			fields[field_name] = event.target.checked;
+		} else {
+			fields[field_name] = event.target.value;
+		}
+		this.setState({ fields });
+		console.log(this.state);
+	}
+	handleChangeTicket(field_name, event) {
+		let fields = this.state.ticketInfo;
+		fields[field_name] = event.target.value;
+		this.setState({ fields });
+	}
+	handleChangeEventInfo(field_name, event) {
+		let fields = this.state.eventInformation;
+		fields[field_name] = event.target.value;
+		this.setState({ fields });
 	}
 	render() {
 		return (
-			<Form>
-				<CardTitle title="Basic Information" subtitle="Required" />
+			<Form onSubmit={this.handleSendData.bind(this)}>
+				<CardTitle title="Basic Information" subtitle="" />
 				<Row>
 					<Col>
-						<Form.Group controlId="group_name">
-							{/* <Form.Label>Group Name</Form.Label>
+						<Form.Group>
+							<Form.Label>Group Name</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="z.B Bavarian Group Ticket"
-							/> */}
-							<TextField
-								required
-								id="group_name"
-								type="text"
-								label="Group Name"
-								placeholder="z.B Bavarian Group Ticket"
-							></TextField>
+								onChange={this.handleChangeGroup.bind(this, "name")}
+							/>
 						</Form.Group>
 					</Col>
 					<Col>
-						<Form.Group controlId="group_type">
-							{/* <Form.Label>Group Type</Form.Label>
-							<Form.Control type="text" placeholder="z.B Travel, Concert" /> */}
-							<TextField
-								required
-								id="group_type"
+						<Form.Group>
+							<Form.Label>Group Type</Form.Label>
+							<Form.Control
 								type="text"
-								label="Group Type"
 								placeholder="z.B Travel, Concert"
-							></TextField>
+								onChange={this.handleChangeGroup.bind(this, "type")}
+							/>
 						</Form.Group>
 					</Col>
 				</Row>
-				<Form.Group controlId="group_desc">
-					{/* <Form.Label>Group Description</Form.Label>
-					<Form.Control as="textarea" rows="3" /> */}
-					<TextField
-						optional
-						id="group_desc"
-						label="Group Description"
-						lineDirection="right"
-						rows={2}
+				<Form.Group>
+					<Form.Label>Group Description</Form.Label>
+					<Form.Control
+						as="textarea"
+						rows="3"
 						placeholder="eg. Travel by train with a group of photographers"
+						onChange={this.handleChangeGroup.bind(this, "desc")}
 					/>
 				</Form.Group>
-				<Form.Group controlId="is_public">
-					{/* <Form.Check
-						type="checkbox"
-						label="Share your information in search results?"
-					/>
-					<Form.Text>
-						Will be only visible after someone joins the group
-					</Form.Text> */}
-					<SelectionControl
+				<Form.Group>
+					<Form.Check
 						id="is_public"
 						type="switch"
 						label="Share your information with people who join your group?"
-						name="is_public"
+						onChange={this.handleChangeGroup.bind(this, "is_public")}
 					/>
+					<Form.Text>
+						Will be only visible after someone joins the group
+					</Form.Text>
 				</Form.Group>
 
-				<CardTitle title="Ticket Information" subtitle="Required" />
+				<CardTitle title="Ticket Information" subtitle="" />
 				<Row>
 					<Col>
-						<Form.Group controlId="maxCoveredPeople">
-							<TextField
-								required
-								id="maxCoveredPeople"
-								name="maxCoveredPeople"
+						<Form.Group>
+							<Form.Label>People Covered</Form.Label>
+							<Form.Control
 								type="number"
-								label="Total People"
-							></TextField>
+								placeholder="Numbers only"
+								onChange={this.handleChangeTicket.bind(
+									this,
+									"maxCoveredPeople"
+								)}
+							/>
 						</Form.Group>
 					</Col>
 					<Col>
-						<Form.Group controlId="initialFreeSlotsLeft">
-							<TextField
-								required
-								id="initialFreeSlotsLeft"
-								name="initialFreeSlotsLeft"
+						<Form.Group>
+							<Form.Label>Free Slots</Form.Label>
+							<Form.Control
 								type="number"
-								label="Free Slots"
-							></TextField>
+								placeholder="Numbers only"
+								onChange={this.handleChangeTicket.bind(
+									this,
+									"initialFreeSlotsLeft"
+								)}
+							/>
 						</Form.Group>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
-						<Form.Group controlId="currency">
+						<Form.Group>
+							<Form.Label>Currency</Form.Label>
 							<CurrencyDropdown
 								name="currency"
 								id="currency"
 								style={select_style}
+								onChange={this.handleChangeTicket.bind(this, "currency")}
 							></CurrencyDropdown>
 						</Form.Group>
 					</Col>
 					<Col>
-						<Form.Group controlId="amount">
-							<TextField
-								required
-								id="amount"
-								name="amount"
+						<Form.Group>
+							<Form.Label>Total Price</Form.Label>
+							<Form.Control
 								type="number"
-								label="Total Price"
 								step="0.01"
-							></TextField>
+								placeholder="Price of combined ticket"
+								onChange={this.handleChangeTicket.bind(this, "fullPrice")}
+							/>
 						</Form.Group>
 					</Col>
 				</Row>
@@ -142,68 +150,52 @@ class CreateGroupForm extends React.Component {
 				<CardTitle title="Event Information" subtitle="Optional" />
 				<Row>
 					<Col>
-						<Form.Group controlId="event_name">
-							{/* <Form.Label>Event Name</Form.Label>
-					<Form.Control type="text" placeholder="z.B Daddy Yankee Concert" /> */}
-							<TextField
-								id="event_name"
+						<Form.Group>
+							<Form.Label>Event Name</Form.Label>
+							<Form.Control
+								id="name"
 								type="text"
-								label="Event Name"
-								placeholder="eg. Daddy Yankee Concert"
-							></TextField>
+								placeholder="z.B Daddy Yankee Concert"
+								onChange={this.handleChangeEventInfo.bind(this, "name")}
+							/>
 						</Form.Group>
 					</Col>
 					<Col>
-						<Form.Group controlId="event_name">
-							{/* <Form.Label>Short Event Description</Form.Label>
-					<Form.Control
-						type="text"
-						placeholder="z.B Concert of the latin pop star"
-					/> */}
-							<TextField
-								id="event_type"
+						<Form.Group>
+							<Form.Label>Short Event Description</Form.Label>
+							<Form.Control
 								type="text"
-								label="Event Type"
-								placeholder="Concert of the latin pop star"
-							></TextField>
+								placeholder="z.B Concert of the latin pop star"
+								onChange={this.handleChangeEventInfo.bind(this, "desc")}
+							/>
 						</Form.Group>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
-						<Row>
-							<DatePicker
-								id="inline-date-picker-auto"
-								label="Event Start Date"
-								inline
-								fullWidth={false}
-								className="col"
+						<Form.Group>
+							<Form.Label>Event Start Date</Form.Label>
+							<Form.Control
+								type="date"
+								placeholder="StartDate"
+								onChange={this.handleChangeEventInfo.bind(this, "eventStart")}
 							/>
-							<DatePicker
-								id="inline-date-picker-portait"
-								label="Event End Date"
-								inline
-								displayMode="portrait"
-								fullWidth={false}
-								className="col"
-							/>
-						</Row>
+						</Form.Group>
 					</Col>
 					<Col>
-						<TextField
-							id="linkToEvent"
-							label="Weblink of Event"
-							type="text"
-							rightIcon={<FontIcon>link</FontIcon>}
-							fullWidth={true}
-						/>
+						<Form.Group>
+							<Form.Label>Event End Date</Form.Label>
+							<Form.Control
+								type="date"
+								placeholder="EndDate"
+								onChange={this.handleChangeEventInfo.bind(this, "eventEnd")}
+							/>
+						</Form.Group>
 					</Col>
 				</Row>
-				<CardActions className="lg-cell lg-cell--12">
-					<Button raised primary type="submit" className="md-cell--right">
-						Submit
-					</Button>
-				</CardActions>
+				<Button raised primary type="submit">
+					Submit
+				</Button>
 			</Form>
 		);
 	}
