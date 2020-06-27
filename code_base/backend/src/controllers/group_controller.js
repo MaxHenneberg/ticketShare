@@ -69,16 +69,14 @@ exports.validate = (method) => {
 exports.create = async (req, res) => {
 	// TODO: Header Pic and Price Per Person
 	const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
-	if (!errors.isEmpty()) {
-		res.status(422).json({ errors: errors.array() });
-		return;
-	}
-
 	try {
+		if (!errors.isEmpty()) {
+			throw errors;
+		}
 		// validate if currency exists in db
 		var currency_id = req.body.ticketInfo.currency;
 		let currency_object = await Currency.findById(currency_id).exec();
-		if (!currency_object) throw "Invalid Currency";
+		if (!currency_object) throw { msg: "Invalid Currency" };
 		/*
 			Create documents.
 		*/
@@ -96,10 +94,8 @@ exports.create = async (req, res) => {
 			creator: req.user.id,
 			event: event_info.id,
 		});
-		return res.status(200).send({ group: group.id });
+		return res.status(200).json({ group: group.id });
 	} catch (err) {
-		return res.status(400).send({
-			errors: err,
-		});
+		return res.status(400).json(err);
 	}
 };
