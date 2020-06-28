@@ -10,7 +10,7 @@ import { Card, CardTitle } from "react-md";
 
 export class CreateGroupView extends React.Component {
 	static baseURL() {
-		return "";
+		return "http://localhost:8080/group/create";
 	}
 
 	constructor(props) {
@@ -43,26 +43,22 @@ export class CreateGroupView extends React.Component {
 	}
 	async handleSubmit(data) {
 		await this.setState({ errors: [] });
-		console.log(this.state.errors.length);
 		await this.setState(data);
 
 		var request_options = {
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
 			method: "POST",
-			body: data,
+			body: JSON.stringify(data),
 		};
 		try {
-			let response = await fetch(
-				"http://localhost:8080/group/create",
-				request_options
-			);
+			let response = await fetch(CreateGroupView.baseURL(), request_options);
 			response = await response.json();
-			// console.log(response);
-
 			if (response.errors) throw response.errors;
 		} catch (errors) {
-			console.log("Eror occur");
 			this.setState({ errors: errors });
-			// console.log(this.state.errors);
 		}
 	}
 
@@ -74,6 +70,7 @@ export class CreateGroupView extends React.Component {
 					<Col xs={10}>
 						<Card>
 							<CardTitle title="Create Group" />
+							<hr></hr>
 							<Row>
 								<Col xs={1}></Col>
 								<Col xs={10}>

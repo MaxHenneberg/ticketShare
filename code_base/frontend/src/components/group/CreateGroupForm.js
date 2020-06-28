@@ -18,8 +18,6 @@ class CreateGroupForm extends React.Component {
 	}
 	handleSendData(event) {
 		event.preventDefault();
-		// console.log("handle send data");
-		// console.log(this.state);
 		this.props.onSubmit(this.state);
 	}
 	handleChangeGroup(field_name, event) {
@@ -30,7 +28,6 @@ class CreateGroupForm extends React.Component {
 			fields[field_name] = event.target.value;
 		}
 		this.setState({ fields });
-		console.log(this.state);
 	}
 	handleChangeTicket(field_name, event) {
 		let fields = this.state.ticketInfo;
