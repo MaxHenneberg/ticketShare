@@ -24,6 +24,7 @@ export class CreateGroupView extends React.Component {
 			name: "",
 			type: "",
 			desc: "No Description Available",
+			joinDeadline: "",
 			is_public: false,
 			eventInformation: {
 				name: "",

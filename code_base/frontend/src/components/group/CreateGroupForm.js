@@ -50,6 +50,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Group Name</Form.Label>
 							<Form.Control
+								required
 								type="text"
 								placeholder="z.B Bavarian Group Ticket"
 								onChange={this.handleChangeGroup.bind(this, "name")}
@@ -60,6 +61,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Group Type</Form.Label>
 							<Form.Control
+								required
 								type="text"
 								placeholder="z.B Travel, Concert"
 								onChange={this.handleChangeGroup.bind(this, "type")}
@@ -76,24 +78,38 @@ class CreateGroupForm extends React.Component {
 						onChange={this.handleChangeGroup.bind(this, "desc")}
 					/>
 				</Form.Group>
+				<Row>
+					<Col>
+						<Form.Group>
+							<Form.Label>Join Deadline</Form.Label>
+							<Form.Control
+								required
+								type="date"
+								placeholder="Group Join Last Date"
+								onChange={this.handleChangeGroup.bind(this, "joinDeadline")}
+							/>
+						</Form.Group>
+					</Col>
+					<Col></Col>
+				</Row>
 				<Form.Group>
 					<Form.Check
 						id="is_public"
 						type="switch"
-						label="Share your information with people who join your group?"
+						label="Share your information with group joiners?"
 						onChange={this.handleChangeGroup.bind(this, "is_public")}
 					/>
 					<Form.Text>
 						Will be only visible after someone joins the group
 					</Form.Text>
 				</Form.Group>
-
 				<CardTitle title="Ticket Information" subtitle="" />
 				<Row>
 					<Col>
 						<Form.Group>
 							<Form.Label>People Covered</Form.Label>
 							<Form.Control
+								required
 								type="number"
 								placeholder="Numbers only"
 								onChange={this.handleChangeTicket.bind(
@@ -107,6 +123,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Free Slots</Form.Label>
 							<Form.Control
+								required
 								type="number"
 								placeholder="Numbers only"
 								onChange={this.handleChangeTicket.bind(
@@ -122,6 +139,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Currency</Form.Label>
 							<CurrencyDropdown
+								required
 								name="currency"
 								id="currency"
 								style={select_style}
@@ -133,6 +151,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Total Price</Form.Label>
 							<Form.Control
+								required
 								type="number"
 								step="0.01"
 								placeholder="Price of combined ticket"
@@ -146,12 +165,13 @@ class CreateGroupForm extends React.Component {
 				</Form.Text>
 				<Form.Text>100 Euros for 10 people: Total Price = 100</Form.Text>
 
-				<CardTitle title="Event Information"/>
+				<CardTitle title="Event Information" />
 				<Row>
 					<Col>
 						<Form.Group>
 							<Form.Label>Event Name</Form.Label>
 							<Form.Control
+								required
 								id="name"
 								type="text"
 								placeholder="z.B Daddy Yankee Concert"
@@ -175,6 +195,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Event Start Date</Form.Label>
 							<Form.Control
+								required
 								type="date"
 								placeholder="StartDate"
 								onChange={this.handleChangeEventInfo.bind(this, "eventStart")}
@@ -185,6 +206,7 @@ class CreateGroupForm extends React.Component {
 						<Form.Group>
 							<Form.Label>Event End Date</Form.Label>
 							<Form.Control
+								required
 								type="date"
 								placeholder="EndDate"
 								onChange={this.handleChangeEventInfo.bind(this, "eventEnd")}
