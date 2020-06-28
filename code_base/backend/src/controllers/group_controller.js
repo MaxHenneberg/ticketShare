@@ -19,41 +19,56 @@ exports.validate = (method) => {
 	switch (method) {
 		case "create": {
 			return [
-				body("name", "Group Name Required").exists(),
-				body("type", "Group Type Required").exists(),
-				body("desc", "Group Description Required").exists(),
+				body("name", "Group Name Required").exists().notEmpty(),
+				body("type", "Group Type Required").exists().notEmpty(),
+				body("desc", "Group Description Required").exists().notEmpty(),
 				body("is_public", "Public Parameter Required")
 					.exists()
 					.isBoolean()
 					.withMessage("Invalid Value for Public"),
+				// validate ticket info
+				body("ticketInfo", "Ticket Information Required").exists().notEmpty(),
+				body("ticketInfo.fullPrice", "Ticket Price Required")
+					.exists()
+					.notEmpty()
+					.bail()
+					.isFloat()
+					.withMessage("Invalid Price value"),
+				body("ticketInfo.maxCoveredPeople", "Max People per Ticket Required")
+					.exists()
+					.notEmpty()
+					.bail()
+					.isInt({ gt: 1 })
+					.withMessage("Invalid value for Max People"),
+				body("ticketInfo.initialFreeSlotsLeft", "Ticket Free Slots Required")
+					.exists()
+					.notEmpty()
+					.bail()
+					.isInt({ gt: 0 })
+					.withMessage("Invalid value for Free Slots"),
+				body("ticketInfo.currency", "Ticket Currency Required")
+					.exists()
+					.notEmpty()
+					.bail()
+					.isMongoId()
+					.withMessage("Invalid Value for Currency"),
 				// validate event info
-				body("eventInformation", "Event Information Required").exists(),
-				body("eventInformation.name", "Event Name Required").exists(),
-				body("eventInformation.desc", "Event Description Required").exists(),
-				body("eventInformation.eventStart", "Event StartDate Required")
+				body("eventInformation", "Event Information Required").exists().notEmpty(),
+				body("eventInformation.name", "Event Name Required").exists().notEmpty(),
+				body("eventInformation.desc", "Event Description Required").exists().notEmpty(),
+				body("eventInformation.eventStart", "Event Start Date Required")
 					.exists()
+					.notEmpty()
+					.bail()
 					.isDate()
-					.withMessage("Invalid Date Format"),
-				body("eventInformation.eventEnd", "Event EndDate Required")
+					.withMessage("Invalid Start Date Format"),
+				body("eventInformation.eventEnd", "Event End Date Required")
 					.exists()
+					.notEmpty()
+					.bail()
 					.isDate()
 					.withMessage("Invalid Date Format"),
 				body("eventInformation.linkToEvent", "Link to Event Required").exists(),
-				// validate ticket info
-				body("ticketInfo", "Ticket Information Required").exists(),
-				body("ticketInfo.fullPrice", "Ticket Price Required").exists(),
-				body("ticketInfo.maxCoveredPeople", "Max People per Ticket Required")
-					.exists()
-					.isInt()
-					.withMessage("Max People must be a number"),
-				body("ticketInfo.initialFreeSlotsLeft", "Ticket Free Slots Required")
-					.exists()
-					.isInt()
-					.withMessage("Free Slots must be a number"),
-				body("ticketInfo.currency", "Ticket Currency Required")
-					.exists()
-					.isMongoId()
-					.withMessage("Invalid Value for Currency"),
 			];
 		}
 	}
@@ -73,25 +88,34 @@ exports.create = async (req, res) => {
 		if (!errors.isEmpty()) {
 			throw errors;
 		}
-		// validate if currency exists in db
+
 		var currency_id = req.body.ticketInfo.currency;
 		let currency_object = await Currency.findById(currency_id).exec();
 		if (!currency_object) throw { msg: "Invalid Currency" };
+
 		/*
 			Create documents.
 		*/
 		// create EventInformation
 		let event_info = await EventInformation.create(req.body.eventInformation);
+
 		// create ticket info
 		req.body.ticketInfo.eventInformation = event_info.id;
 		let ticket = await Ticket.create(req.body.ticketInfo);
+
 		// create group
+		if(req.user){
+			var creator_id = req.user.id
+		}
+		else{
+			var creator_id = '5ef48f419e78460424b2c250'
+		}
 		let group = await Group.create({
 			name: req.body.name,
 			type: req.body.type,
 			desc: req.body.desc,
 			public: req.body.is_public,
-			creator: req.user.id,
+			creator: creator_id,
 			event: event_info.id,
 		});
 		return res.status(200).json({ group: group.id });
