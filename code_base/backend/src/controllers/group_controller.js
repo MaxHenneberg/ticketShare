@@ -130,8 +130,12 @@ exports.create = async (req, res) => {
 		req.body.ticketInfo.eventInformation = event_info.id;
 		let ticket = await Ticket.create(req.body.ticketInfo);
 
-		var creator_id = req.user.id;
-
+		// TODO: remove this creator ID = None after session state done
+		if (req.user) {
+			var creator_id = req.user.id;
+		} else {
+			var creator_id = "5eee5486819541076dd07482";
+		}
 		// create group
 		let group = await Group.create({
 			name: req.body.name,
