@@ -38,9 +38,6 @@ export class CreateGroupView extends React.Component {
 			},
 		};
 	}
-	componentDidMount() {
-		this.myRef.current.scrollTo(0, 0);
-	}
 	async handleSubmit(data) {
 		await this.setState({ errors: [] });
 		await this.setState(data);
@@ -59,6 +56,8 @@ export class CreateGroupView extends React.Component {
 			if (response.errors) throw response.errors;
 		} catch (errors) {
 			this.setState({ errors: errors });
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+
 		}
 	}
 
@@ -76,7 +75,6 @@ export class CreateGroupView extends React.Component {
 								<Col xs={10}>
 									<Row>
 										<Col>
-											<div ref={this.myRef}></div>
 											{this.state.errors.length > 0 && (
 												<Alert variant="danger">
 													<Alert.Heading>Oops!</Alert.Heading>
