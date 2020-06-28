@@ -29,7 +29,7 @@ exports.register = function (req, res) {
  * @param res Response
  */
 exports.findUserById = function (req, res) {
-  User.findById(req.params.id, {}, function (err, result) {
+  User.findById(req.query.id, {}, function (err, result) {
     if (err) {
       console.error(err);
       return res.send(err);
