@@ -1,9 +1,6 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const JoinInformation = require("./joinInformation");
-const Price = require("../util/price");
-const GroupNotification = require("../chat/groupNotification");
 
 const GroupSchema = new mongoose.Schema(
 	{
@@ -14,13 +11,13 @@ const GroupSchema = new mongoose.Schema(
 		//For now only the Path because of limited Resources on DB
 		// Maybe GridFS(https://docs.mongodb.com/manual/core/gridfs/) later
 		headerPic: String,
-
+		joinDeadline: Date,
 		public: Boolean,
 
-		// event 
-		event: {
+		// ticket
+		ticket: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "EventInformation",
+			ref: "TicketInformation",
 		},
 		//user
 		creator: {
