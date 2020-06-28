@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import CurrencyDropdown from "./CurrencyDropdown";
-import { CardTitle, CardActions, Button } from "react-md";
+import { CardTitle, Button } from "react-md";
 
 const select_style = {
 	marginTop: "1rem",
@@ -16,9 +16,11 @@ class CreateGroupForm extends React.Component {
 		super(props);
 		this.state = props.state;
 	}
-	handleSendData(event) {
+	async handleSendData(event) {
 		event.preventDefault();
-		this.props.onSubmit(this.state);
+		await this.setState({ isLoading: true });
+		await this.props.onSubmit(this.state);
+		this.setState({ isLoading: false });
 	}
 	handleChangeGroup(field_name, event) {
 		let fields = this.state;
@@ -144,7 +146,7 @@ class CreateGroupForm extends React.Component {
 				</Form.Text>
 				<Form.Text>100 Euros for 10 people: Total Price = 100</Form.Text>
 
-				<CardTitle title="Event Information" subtitle="Optional" />
+				<CardTitle title="Event Information"/>
 				<Row>
 					<Col>
 						<Form.Group>
@@ -190,8 +192,8 @@ class CreateGroupForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-				<Button raised primary type="submit">
-					Submit
+				<Button raised primary disabled={this.state.isLoading} type="submit">
+					{this.state.isLoading ? "Loading..." : "Submit"}
 				</Button>
 			</Form>
 		);
