@@ -14,27 +14,67 @@ import "./GroupInfoModal.css"
 import ModalFooter from "react-bootstrap/ModalFooter";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
+import GroupService from "../services/GroupService";
+import Spinner from "react-bootstrap/Spinner";
 
 class GroupInfoModal extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state={
+      loading: false,
+      error: false,
+      occSlots: 0,
+      pricePerPerson: 0
+    }
   }
 
-  renderSlots(occupied, max) {
-    console.log("startedRenderSlots");
-    let slotList = [];
-    for (let i = 0; i < max; i++) {
-      console.log(i);
-      if (i < occupied) {
-        slotList.push(<PersonFill className="occupiedSlot"/>);
-        console.log("occ");
-      } else {
-        slotList.push(<PersonFill className="freeSlot"/>);
-        console.log("free")
+  renderSlots() {
+    if(this.state.loading){
+      return <Spinner animation="border" />
+    }else{
+      if(!this.state.error) {
+        console.log("Render Slots");
+        console.log(this.props.group.ticketInformation.maxCoveredPeople);
+        let slotList = [];
+        for (let i = 0; i < this.props.group.ticketInformation.maxCoveredPeople; i++) {
+          console.log(i);
+          if (i < this.state.occSlots) {
+            slotList.push(<PersonFill className="occupiedSlot"/>);
+            console.log("occ");
+          } else {
+            slotList.push(<PersonFill className="freeSlot"/>);
+            console.log("free")
+          }
+        }
+        return slotList;
+      }else{
+        console.log("Error");
+        return <div>Error...</div>
       }
     }
-    return slotList;
+
+
+  }
+
+  renderDate(deadline) {
+    if(deadline){
+      let date = Date.parse(deadline);
+      return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+    }else{
+      return "-";
+    }
+
+  }
+
+  renderPrice(){
+    return this.props.pricePerPerson+" "+this.props.group.ticketInformation.currency.name;
+  }
+
+  componentDidMount(): void {
+    this.setState({loading:true});
+    GroupService.countOccSlots(this.props.group._id).then((data) => this.setState({occSlots: data, loading:false})).catch((error)=>this.setState({loading:false, error:true}));
   }
 
   render() {
@@ -47,17 +87,17 @@ class GroupInfoModal extends React.Component {
           </ModalHeader>
           <ModalBody>
             <Col xs={2}/>
-            <Col xs={8}>
+            <Col xs={10}>
               <Row className="modalRow">
-                <Col xs={6}>
+                <Col xs={4}>
                   Name:
                 </Col>
-                <Col>
+                <Col xs={8}>
                   {this.props.group.name}
                 </Col>
               </Row>
               <Row className="modalRow">
-                <Col xs={6}>
+                <Col xs={4}>
                   Type:
                 </Col>
                 <Col>
@@ -65,23 +105,25 @@ class GroupInfoModal extends React.Component {
                 </Col>
               </Row>
               <Row className="modalRow">
-                <Col xs={6}>
+                <Col xs={4}>
                   Price:
                 </Col>
                 <Col>
-                  12 EUR
+                  {this.renderPrice()}
                 </Col>
               </Row>
               <Row className="modalRow">
-                <Col xs={6}>
+                <Col xs={4}>
                   Slots:
                 </Col>
                 <Col>
-                  <div>{this.renderSlots(3, 5)}</div>
+                  {
+                   this.renderSlots()
+                  }
                 </Col>
               </Row>
               <Row className="modalRow">
-                <Col xs={6}>
+                <Col xs={4}>
                   Payment Address:
                 </Col>
                 <Col>
@@ -92,13 +134,19 @@ class GroupInfoModal extends React.Component {
                   </FormControl>
                 </Col>
               </Row>
+              <Row className="modalRow">
+                <Col xs={4}>
+                  Deadline:
+                </Col>
+                <Col>
+                  {this.renderDate(this.props.group.joinDeadline)}
+                </Col>
+              </Row>
             </Col>
-            < Col
-                xs={2}
-            />
           </ModalBody>
           <ModalFooter>
-            <Button variant={"Primary"} onClick={this.props.openPayment}>Checkout</Button>
+            <Button variant={"Primary"}
+                    onClick={this.props.openPayment}>Checkout</Button>
             <Button variant={"secondary"}>Close</Button>
           </ModalFooter>
         </Modal>

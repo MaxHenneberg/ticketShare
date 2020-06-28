@@ -22,7 +22,7 @@ class ListGroup extends React.Component {
   }
 
   componentDidMount(){
-    GroupService.getGroupById("5eedef5b7dd1cd49a4143ba7").then(result=> {this.setState({group: result, isLoaded: true})}).catch(error => console.error(error));
+    GroupService.getGroupById("5ef8963e4026346727ed3e75").then(result=> {this.setState({group: result, isLoaded: true})}).catch(error => console.error(error));
   }
 
   render() {
@@ -43,7 +43,6 @@ class ListGroup extends React.Component {
                     <div className="float-sm-right">
                       Already bought <Check/>
                     </div>
-
                   </Col>
                   <Col xs={1} className="float-sm-right">
                     <JoinGroupButton group={this.state.group}/>

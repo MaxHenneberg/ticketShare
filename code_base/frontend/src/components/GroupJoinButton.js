@@ -16,7 +16,8 @@ class GroupJoinButton extends React.Component {
       group: props.group,
       groupInfoVisible: false,
       paymentModalVisible: false,
-      successModalVisible: false
+      successModalVisible: false,
+      pricePerPerson: 0
     }
   }
 
@@ -34,6 +35,15 @@ class GroupJoinButton extends React.Component {
     this.setState({paymentModalVisible: false, successModalVisible: true});
   }
 
+  calcPricePerPerson(){
+    let price = this.props.group.ticketInformation.fullPrice/this.props.group.ticketInformation.maxCoveredPeople;
+    this.setState({pricePerPerson: price.toFixed(2)})
+  }
+
+  componentDidMount(): void {
+    this.calcPricePerPerson()
+  }
+
   render() {
     return (
         <div>
@@ -41,8 +51,8 @@ class GroupJoinButton extends React.Component {
                   onClick={() => this.openGroupInfo()}>X</Button>
           <GroupInfoModal
               visible={this.state.groupInfoVisible}
-              openPayment={() => this.openPaymentModal()} group={this.state.group}/>
-          <PaymentModal visible={this.state.paymentModalVisible} successCallBack={() => this.openSuccessModal()}/>
+              openPayment={() => this.openPaymentModal()} group={this.state.group} pricePerPerson={this.state.pricePerPerson}/>
+          <PaymentModal visible={this.state.paymentModalVisible} successCallBack={() => this.openSuccessModal()} group={this.state.group} pricePerPerson={this.state.pricePerPerson}/>
           <GroupJoinSuccessModal visible={this.state.successModalVisible}/>
         </div>
     );

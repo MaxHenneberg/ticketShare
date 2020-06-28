@@ -21,7 +21,7 @@ class PaymentModal extends React.Component {
           <ModalHeader closeButton>
             <ModalTitle>Payment</ModalTitle>
           </ModalHeader>
-          <PaypalButton successCallBack={this.props.successCallBack}/>
+          <PaypalButton successCallBack={this.props.successCallBack} group={this.props.group} pricePerPerson={this.props.pricePerPerson}/>
         </Modal>
     );
   }

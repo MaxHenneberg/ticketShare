@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import scriptLoader from "react-async-script-loader";
 import Spinner from "react-bootstrap/Spinner";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const CLIENT = {
   sandbox:
@@ -58,13 +60,14 @@ class PaypalButton extends React.Component {
 
   createOrder(data, actions) {
     //https://developer.paypal.com/docs/api/orders/v2/
+    console.log(this.props.group.ticketInformation.currency.short_form);
     return actions.order.create({
       purchase_units: [
         {
-          description: +"Mercedes G-Wagon",
+          description: this.props.group.name,
           amount: {
-            currency: "USD",
-            value: 200
+            currency: this.props.group.ticketInformation.currency.short_form,
+            value: this.props.pricePerPerson
           },
           invoice_number: "INV5511231",
           payment_descriptor: "My Shop"
@@ -108,6 +111,7 @@ class PaypalButton extends React.Component {
 
     return (
         <div className="main">
+          {!showButtons && <Row> <Col xs={4}/><Col><Spinner animation="border" /></Col><Col xs={4}/></Row>}
           {showButtons && (
               <PayPalButton
                   createOrder={(data, actions) => this.createOrder(data,
