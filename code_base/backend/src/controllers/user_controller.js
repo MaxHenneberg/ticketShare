@@ -82,13 +82,14 @@ exports.editUserDetails = (req, res) => {
  * @param res Response
  */
 exports.getAllUsers = (req, res) => {
-  User.find({}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(result);
-    }
-  })
+  try {
+    User.find({}, function(err, result) {
+        res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -97,13 +98,14 @@ exports.getAllUsers = (req, res) => {
  * @param res Response
  */
 exports.getUserTickets = (req, res) => {
-  JoinInformation.find({"joinedUser": req.user._id}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(result);
-    }
-  })
+  try {
+    JoinInformation.find({"joinedUser": req.user._id}, function(err, result) {
+        res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -112,13 +114,14 @@ exports.getUserTickets = (req, res) => {
  * @param res Response
  */
 exports.getUserAddresses = (req, res) => {
-  Address.find({"user": req.user._id}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(result);
-    }
-  })
+  try {
+    Address.find({"user": req.user._id}, function(err, result) {
+        res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -127,21 +130,26 @@ exports.getUserAddresses = (req, res) => {
  * @param res Response
  */
 exports.addAddress = (req, res) => {
-  newAddress = Address();
+  try {
+    newAddress = Address();
 
-  newAddress.user = req.user._id;
-  newAddress.nickName = req.body.nickName;
-  newAddress.street = req.body.street;
-  newAddress.streetNumber = req.body.streetNumber;
-  newAddress.city = req.body.city;
-  newAddress.countryCode = req.body.countryCode;
+    newAddress.user = req.user._id;
+    newAddress.nickName = req.body.nickName;
+    newAddress.street = req.body.street;
+    newAddress.streetNumber = req.body.streetNumber;
+    newAddress.city = req.body.city;
+    newAddress.countryCode = req.body.countryCode;
 
-  newAddress.save(function(err){
-    if(err){ throw err; }
-    console.log('saved');
-  })
+    newAddress.save(function(err){
+      if(err){ throw err; }
+      console.log('saved');
+    })
 
-  res.json({'message': 'address is saved'});
+    res.json({'message': 'address is saved'});
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -150,16 +158,16 @@ exports.addAddress = (req, res) => {
  * @param res Response
  */
 exports.editAddress = (req, res) => {
-  let addressDetails = req.body;
-  let addressId = req.params.id;
-
-  Address.findOneAndUpdate({_id: addressId, user: req.user._id }, addressDetails, {upsert: true}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
-    }
-  })
+  try {
+    let addressDetails = req.body;
+    let addressId = req.params.id;
+    Address.findOneAndUpdate({_id: addressId, user: req.user._id }, addressDetails, {upsert: true}, function(err, result) {
+        res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -168,21 +176,23 @@ exports.editAddress = (req, res) => {
  * @param res Response
  */
 exports.addJoinInformation = (req, res) => {
-  newJoinInfo = JoinInformation();
+  try {
+    newJoinInfo = JoinInformation();
 
-  newJoinInfo.group = req.params.groupId;
-  newJoinInfo.joinedUser = req.user._id;
-  newJoinInfo.payed = req.body.payed;
-  newJoinInfo.ticketDelivered = req.body.ticketDelivered;
-  newJoinInfo.ticketRecieved = req.body.ticketRecieved;
-  newJoinInfo.showPersonalInformation = req.body.showPersonalInformation;
-
-  newJoinInfo.save(function(err){
-    if(err){ throw err; }
-    console.log('saved');
-  })
-
-  res.json({'message': 'Join info is saved.'});
+    newJoinInfo.group = req.params.groupId;
+    newJoinInfo.joinedUser = req.user._id;
+    newJoinInfo.payed = req.body.payed;
+    newJoinInfo.ticketDelivered = req.body.ticketDelivered;
+    newJoinInfo.ticketRecieved = req.body.ticketRecieved;
+    newJoinInfo.showPersonalInformation = req.body.showPersonalInformation;
+  
+    newJoinInfo.save(function(err){
+        res.status(200).send({'message': 'Join info is saved.'})
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -191,14 +201,16 @@ exports.addJoinInformation = (req, res) => {
  * @param res Response
  */
 exports.editJoinInformation = (req, res) => {
-  let joinInfoDetails = req.body;
-  let groupId = req.params.groupId;
 
-  JoinInformation.findOneAndUpdate({group: groupId, joinedUser: req.user._id }, joinInfoDetails, {upsert: true}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
-    }
-  })
+  try {
+    let joinInfoDetails = req.body;
+    let groupId = req.params.groupId;
+    
+    JoinInformation.findOneAndUpdate({group: groupId, joinedUser: req.user._id }, joinInfoDetails, {upsert: true}, function(err, result) {
+      res.status(200).send({'message': 'Change has been made.'})
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };

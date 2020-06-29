@@ -2,13 +2,15 @@ const Group = require('../models/group/group');
 
 // Gets all groups.
 exports.getAllGroups = (req, res) => {
-  Group.find({}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(result);
-    }
-  })
+
+  try {
+    Group.find({}, function(err, result) {
+        res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
   
   
