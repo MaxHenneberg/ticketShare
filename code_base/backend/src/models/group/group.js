@@ -1,9 +1,11 @@
 "use strict";
 
 const mongoose = require("mongoose");
+
 const JoinInformation = require("./joinInformation");
 const Price = require("../util/price");
 const GroupNotification = require("../chat/groupNotification");
+
 
 const GroupSchema = new mongoose.Schema(
 	{
