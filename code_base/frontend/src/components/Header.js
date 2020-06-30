@@ -25,10 +25,10 @@ class Header extends React.Component {
               <Button>Search <Search/></Button>
             </div>
             <div>
-              <Button>MyTickets<Shield/></Button>
+              <Button>MyTickets <Shield/></Button>
             </div>
             <div>
-              <Button>Login<PersonCircle/></Button>
+              <Button>Login <PersonCircle/></Button>
             </div>
           </Navbar.Collapse>
         </Navbar>
