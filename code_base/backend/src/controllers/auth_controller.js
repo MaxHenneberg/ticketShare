@@ -31,7 +31,7 @@ passport.use(new LocalStrategy(
  * Standard Passport serialization of User into Session
  */
 passport.serializeUser(function (user, done) {
-  console.log("Serialize User: %s",user.username);
+  console.log("Serialize User: %s", user.username);
   done(null, user.id);
 });
 
@@ -51,12 +51,12 @@ passport.deserializeUser(function (id, done) {
  * @param failureRedirect Redirect Route in case of failure
  * @returns {function(...[*]=)} Middleware Function (req,res,next)
  */
-exports.checkLogin = function(failureRedirect){
+exports.checkLogin = function (failureRedirect) {
   return function (req, res, next) {
-    if(req.user){
+    if (req.user) {
       console.log("Active Session");
       next();
-    }else{
+    } else {
       console.log("No session");
       res.redirect(failureRedirect);
     }
@@ -97,6 +97,12 @@ exports.handleRegister = function (username, password, callback) {
   });
 };
 
+exports.loginFail = function (req, res) {
+  console.log("Login Failed: Removing Session");
+  req.logout();
+  res.status(401).send();
+};
+
 /**
  * Checks if usechoosen password meets all constraints. (Should also be prechecked
  * on client side for better UX)
@@ -129,6 +135,7 @@ function validPassword(user, password, callback) {
   bcrypt.compare(password, user.passwordHash, function (err, result) {
     if (err) {
       console.error(err);
+      return callback(err);
     }
     if (!result) {
       console.warn("Try to Login to %s with wrong password", user.username);

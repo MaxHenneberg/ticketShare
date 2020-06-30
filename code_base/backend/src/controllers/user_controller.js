@@ -30,8 +30,8 @@ exports.register = function (req, res) {
  * @param req Request
  * @param res Response
  */
-exports.getUserDetails = function (req, res) {
-  User.findById(req.params.id, {}, function (err, result) {
+exports.findUserById = function (req, res) {
+  User.findById(req.query.id, {}, function (err, result) {
     if (err) {
       console.error(err);
       return res.send(err);
@@ -185,7 +185,7 @@ exports.addJoinInformation = (req, res) => {
     newJoinInfo.ticketDelivered = req.body.ticketDelivered;
     newJoinInfo.ticketRecieved = req.body.ticketRecieved;
     newJoinInfo.showPersonalInformation = req.body.showPersonalInformation;
-  
+
     newJoinInfo.save(function(err){
         res.status(200).send({'message': 'Join info is saved.'})
     })
@@ -205,7 +205,7 @@ exports.editJoinInformation = (req, res) => {
   try {
     let joinInfoDetails = req.body;
     let groupId = req.params.groupId;
-    
+
     JoinInformation.findOneAndUpdate({group: groupId, joinedUser: req.user._id }, joinInfoDetails, {upsert: true}, function(err, result) {
       res.status(200).send({'message': 'Change has been made.'})
     })
