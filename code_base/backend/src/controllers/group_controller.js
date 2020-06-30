@@ -11,6 +11,19 @@ const Join_Info = require("../models/group/joinInformation");
 const Search_Tag = require("../models/group/searchTag");
 const {body, validationResult} = require("express-validator");
 
+// Gets all groups.
+exports.getAllGroups = (req, res) => {
+
+  try {
+    Group.find({}, function(err, result) {
+        res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
+};
+
 /**
  * Validates the create group request
  *
