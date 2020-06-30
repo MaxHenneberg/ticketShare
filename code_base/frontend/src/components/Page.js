@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-
+import { Paper } from 'react-md';
 import Header from './Header';
 import { Footer } from './Footer';
 
@@ -24,11 +24,21 @@ export default class Page extends React.Component {
 
     render() {
         return (
-            <section>
+            <div style={{
+                flexDirection: 'column',
+            }}>
                 <Header title={this.state.title} />
-                {this.props.children}
+                <Paper
+                    style={{
+                        flexDirection: 'column',
+                        position: 'absolute', left: '50%', top: '50%',
+                        transform: 'translate(-50%, -50%)'
+                    }}
+                >
+                    {this.props.children}
+                </Paper>
                 <Footer />
-            </section>
+            </div>
         );
     }
 }

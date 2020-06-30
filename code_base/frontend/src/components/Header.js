@@ -1,11 +1,11 @@
 "use strict";
 
 import React from 'react';
-import { Toolbar, Button } from 'react-md';
+import { Toolbar } from 'react-md';
 import { withRouter } from 'react-router-dom'
+import logo from '../../public/Logo.png';
 
-import KebabMenu from './KebabMenu';
-
+import HeaderActions from './HeaderActions';
 
 class Header extends React.Component {
 
@@ -15,12 +15,16 @@ class Header extends React.Component {
 
     render() {
         return (
-            <Toolbar
-                colored
-                nav={<Button onClick={() => this.props.history.push('/')} icon>home</Button>}
-                title={this.props.title}
-                actions={<KebabMenu id="toolbar-colored-kebab-menu" />}>
-            </Toolbar>
+            <div>
+                <Toolbar
+                    fixed
+                    children={<img className="img-responsive" src={logo} height='70' onClick={() => this.props.history.push('/')} />}
+                    //nav={<Button onClick={() => this.props.history.push('/')} imageurl="././resources/Logo.png">Image Button</Button>}
+                    actions={<HeaderActions id="toolbar-colored-kebab-menu" />}
+                    zDepth={0}/>
+
+            </div>
+
         );
     }
 };

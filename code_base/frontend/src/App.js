@@ -7,6 +7,7 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { UserLoginView } from "./views/UserLoginView";
 import { UserSignupView } from "./views/UserSignupView";
 import UserService from "./services/UserService";
+import {SearchView} from "./views/SearchView";
 
 
 export default class App extends React.Component {
@@ -17,7 +18,7 @@ export default class App extends React.Component {
         this.state = {
             title: 'TicketShare App',
             routes: [
-                { component: UserLoginView , path: '/', exact: true},
+                { component: SearchView , path: '/', exact: true},
                 { component: UserLoginView, path: '/login'},
                 { component: UserSignupView, path: '/register'}
             ]
