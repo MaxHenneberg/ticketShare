@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-
 const routeConfig = require("../../config/routeConfig");
 const { 
   editUserDetails, 
@@ -19,6 +18,8 @@ const { getAllGroups } = require('../controllers/group_controller');
 // Require controller modules.
 const user_controller = require("../controllers/user_controller");
 const auth_controller = require("../controllers/auth_controller");
+const group_controller = require("../controllers/group_controller");
+const currency_controller = require("../controllers/currency_controller");
 
 // Home page
 router.get("/", (req, res) => res.send("Welcome"));
@@ -32,6 +33,8 @@ router.post(routeConfig.USERS_LOGIN,
       failureFlash: true
     }));
 router.post(routeConfig.USERS_REGISTER, user_controller.register);
+router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
+router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.validate('create'), currency_controller.getAll);
 
 
 function isLoggedIn(req, res, next) {

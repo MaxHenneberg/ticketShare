@@ -11,4 +11,6 @@ module.exports = {
   NEW_ADDRESS: "/new_address",
   ADDRESS: "/address/:id",
   JOIN_INFO: "/join/:groupId",
+  CREATE_GROUP: "/group/create",
+  CURRENCY: "/currency"
 };
