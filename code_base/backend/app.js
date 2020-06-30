@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser')
 const config = require("./config/keys");
 
 const app = express();
-
 // Connect to mongo
 mongoose
 .connect(config.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -32,6 +31,10 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// allow requests from other sources
+var cors = require('cors');
+app.use(cors());
 
 // routes
 app.use("/", require("./src/routes/routes"));
