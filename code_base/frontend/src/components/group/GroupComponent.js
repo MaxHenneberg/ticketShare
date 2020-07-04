@@ -5,26 +5,43 @@ import { withRouter } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
+import GroupService from "../../services/GroupService";
 
 class GroupComponent extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { ticket: { currency: {} } };
+		this.state = {
+			_id: "",
+			name: "Loading...",
+			type: "Loading...",
+			desc: "No Description Available",
+			joinDeadline: "Loading...",
+			public: "Loading...",
+			creator: "Loading...",
+			ticket: {
+				_id: "",
+				fullPrice: "Loading...",
+				maxCoveredPeople: "Loading...",
+				currency: {
+					_id: "",
+					symbol: "Loading...",
+				},
+			},
+		};
 	}
 	componentDidMount() {
-		fetch("http://localhost:8080/group/" + this.props.group_id)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				this.setState(data);
+		let id = this.props.id;
+
+		(async () => {
+			try {
+				let group = await GroupService.getGroup(id);
+				this.setState(group);
 				this.populatePricePerPerson();
 				this.convertDate();
-				console.log(this.state);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+			} catch (err) {
+				console.error(err);
+			}
+		})();
 	}
 	populatePricePerPerson() {
 		var price_per_person =
