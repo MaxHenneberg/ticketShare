@@ -4,7 +4,7 @@ const passport = require("passport");
 const routeConfig = require("../../config/routeConfig");
 const { 
   editUserDetails, 
-  getUserDetails, 
+  findUserById, 
   getAllUsers, 
   getUserTickets, 
   getUserAddresses,
@@ -51,7 +51,7 @@ function isLoggedIn(req, res, next) {
 }
 
 // Get user by his id
-router.get(routeConfig.USER_ID, getUserDetails);
+router.get(routeConfig.USER_ID, findUserById);
 // Edit user details of logged in user 
 // TODO: If not logged in, redirect creates a put request but login is a post request.
 router.put(routeConfig.USER, isLoggedIn, editUserDetails);
@@ -73,5 +73,5 @@ router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 // Get all groups from database
 router.get(routeConfig.GROUP, getAllGroups);
 
-router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
+// router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
 module.exports = router;
