@@ -10,6 +10,7 @@ import Col from "react-bootstrap/Col";
 import {ListView} from "./views/ListView";
 import UserView from "./views/UserView";
 import CreateGroupView from "./views/CreateGroupView";
+import TempGroupView from "./views/TempGroupView";
 
 export default class App extends React.Component {
 
@@ -21,7 +22,8 @@ export default class App extends React.Component {
       routes: [
         {component: ListView, path: '/', exact: true},
         {component: UserView, path: '/user', exact: true},
-        {component: CreateGroupView, path: '/group/create', exact: true}
+        {component: CreateGroupView, path: '/group/create', exact: true},
+        {component: TempGroupView, path: '/group/temp', exact: true}
       ]
     };
   }
