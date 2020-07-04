@@ -36,8 +36,9 @@ router.post(routeConfig.USERS_REGISTER, user_controller.register);
 // router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
 // router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.getAll);
 // router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
-router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
 router.get(routeConfig.CURRENCY, currency_controller.getAll);
+router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
+router.get(routeConfig.GET_GROUP, group_controller.validate('getOne'),group_controller.getOne);
 
 
 function isLoggedIn(req, res, next) {
@@ -69,6 +70,6 @@ router.post(routeConfig.JOIN_INFO, isLoggedIn, addJoinInformation);
 router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 
 // Get all groups from database
-router.get(routeConfig.GROUPS, getAllGroups);
+router.get(routeConfig.GROUP, getAllGroups);
 
 module.exports = router;
