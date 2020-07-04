@@ -7,20 +7,9 @@ const Ticket = require("../models/group/ticketInformation");
 const Currency = require("../models/group/currency");
 const Join_Info = require("../models/group/joinInformation");
 const Search_Tag = require("../models/group/searchTag");
-const { body, validationResult } = require("express-validator");
+const { body, params, check, validationResult } = require("express-validator");
 
-// Gets all groups.
-exports.getAllGroups = (req, res) => {
 
-  try {
-    Group.find({}, function(err, result) {
-        res.status(200).send(result)
-    })
-  } catch (err) {
-      err = { errors: [{ msg: err }] };
-      return res.status(400).json(err);
-  }
-};
 
 /**
  * Validates the create group request
@@ -96,6 +85,17 @@ exports.validate = (method) => {
 				body("eventInformation.linkToEvent", "Link to Event Required").exists(),
 			];
 		}
+		case "getOne": {
+			return [
+				check("id", "Group ID Required")
+					.exists()
+					.bail()
+					.notEmpty()
+					.bail()
+					.isMongoId()
+					.withMessage("Invalid Value for Group"),
+			];
+		}
 	}
 };
 
@@ -162,6 +162,37 @@ exports.create = async (req, res) => {
 		console.log(group);
 		return res.status(200).json({ group: group.id });
 	} catch (err) {
+		err = { errors: [{ msg: err }] };
+		return res.status(400).json(err);
+	}
+};
+
+// Gets all groups.
+exports.getAllGroups = async (req, res) => {
+	try {
+		let all = await Group.find({}).exec();
+		return res.status(200).send(all);
+	} catch (err) {
+		err = { errors: [{ msg: err }] };
+		return res.status(400).json(err);
+	}
+};
+
+// Gets one groups.
+exports.getOne = async (req, res) => {
+	const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
+	if (!errors.isEmpty()) {
+		return res.status(400).json(errors);
+	}
+	try {
+		
+		let result = await Group.findById(req.params.id).populate("ticket")
+		.populate({path: "ticket", populate: {path: "eventInformation"}})
+		.populate({path: "ticket", populate: {path: "currency"}}).exec();
+		console.log(result);
+		res.status(200).send(result);
+	} catch (err) {
+		console.log(err);
 		err = { errors: [{ msg: err }] };
 		return res.status(400).json(err);
 	}
