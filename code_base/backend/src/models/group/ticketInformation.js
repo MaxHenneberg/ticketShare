@@ -14,7 +14,7 @@ const TicketInformationSchema = new mongoose.Schema(
 		// currency
 		currency: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Currency",
+			ref: "currency",
 		},
 	},
 	{ timestamps: true }
