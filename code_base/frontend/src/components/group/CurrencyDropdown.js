@@ -3,7 +3,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import { SelectField } from "react-md";
 
 class CurrencyDropdown extends React.Component {
 	constructor(props) {
