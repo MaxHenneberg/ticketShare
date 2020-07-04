@@ -9,8 +9,6 @@ const Join_Info = require("../models/group/joinInformation");
 const Search_Tag = require("../models/group/searchTag");
 const { body, params, check, validationResult } = require("express-validator");
 
-
-
 /**
  * Validates the create group request
  *
@@ -185,11 +183,13 @@ exports.getOne = async (req, res) => {
 		return res.status(400).json(errors);
 	}
 	try {
-		
-		let result = await Group.findById(req.params.id).populate("ticket")
-		.populate({path: "ticket", populate: {path: "eventInformation"}})
-		.populate({path: "ticket", populate: {path: "currency"}}).exec();
-		console.log(result);
+		let result = await Group.findById(req.params.id)
+			.populate({
+				path: "ticket",
+				select: "fullPrice currency maxCoveredPeople",
+				populate: { path: "currency", select: "symbol" },
+			})
+			.exec();
 		res.status(200).send(result);
 	} catch (err) {
 		console.log(err);
