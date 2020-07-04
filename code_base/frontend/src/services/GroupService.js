@@ -23,5 +23,21 @@ export default class GroupService {
             });
         });
     }
+    static createGroup(data) {
+        return new Promise((resolve, reject) => {
+            var url = GroupService.baseURL()+"create";
+            console.log(url);
+            HttpService.post(url, data, function(data) {
+                if(data != undefined || Object.keys(data).length !== 0) {
+                    resolve(data);
+                }
+                else {
+                    reject('Error while retrieving group');
+                }
+            }, function(textStatus) {
+                reject(textStatus);
+            });
+        });
+    }
 
 }
