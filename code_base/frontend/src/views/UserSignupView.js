@@ -4,7 +4,7 @@ import React from 'react';
 
 import UserSignup from '../components/Legacy/UserSignup';
 
-import UserService from '../services/UserService';
+import UserService from '../services/legacy/UserService';
 
 
 export class UserSignupView extends React.Component {

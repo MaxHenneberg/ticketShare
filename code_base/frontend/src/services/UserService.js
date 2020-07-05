@@ -1,63 +1,34 @@
-"use strict";
+import HttpService from "./HttpService";
 
-import UsersAPISimulator from "./UsersAPISimulator";
+const ApiEndpoint = "http://localhost:8080/";
 
 export default class UserService {
 
-    constructor() {
-    }
+  static async login() {
+    console.log("Test Login");
+    let data = {username: "max", "password": "testPassword-123"};
+    return new Promise((resolve, reject) => {
+      HttpService.post("http://localhost:8080/users/login", data,
+          function (result) {
+            resolve(result);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    });
+  }
 
-    static register(user, pass) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let resp = await UsersAPISimulator.register(user, pass);
-                if(resp != undefined && resp.token != undefined) {
-                    window.localStorage['jwtToken'] = resp.token;
-                    resolve(resp.token);
-                }
-                else {
-                    reject('Error while signing up user');
-                }
-            } catch(err) {
-                reject(err);
-            }
-        });
-    }
+  static async getAddress() {
+    return new Promise((resolve, reject) => {
+      HttpService.get(ApiEndpoint + "addresses",
+          function (data) {
+            console.log("Got Addresses: " + data);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
 
-    static login(user, pass) {
-        return new Promise(async(resolve, reject) => {
-            try {
-                let resp = await UsersAPISimulator.login(user, pass);
-                if(resp != undefined && resp.token != undefined) {
-                    window.localStorage['jwtToken'] = resp.token;
-                    resolve(resp.token);
-                }
-                else {
-                    reject('Error while logging in');
-                }
-            } catch(err) {
-                reject(err);
-            }
-        });
-    }
-
-    static logout(){
-        window.localStorage.removeItem('jwtToken');
-    }
-
-    static getCurrentUser() {
-        let token = window.localStorage['jwtToken'];
-        if (!token) return {};
-
-        let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace('-', '+').replace('_', '/');
-        return {
-            id : JSON.parse(window.atob(base64)).id,
-            username: JSON.parse(window.atob(base64)).username
-        };
-    }
-
-    static isAuthenticated() {
-        return !!window.localStorage['jwtToken'];
-    }
 }

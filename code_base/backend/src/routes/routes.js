@@ -23,7 +23,7 @@ const currency_controller = require("../controllers/currency_controller");
 
 // Home page
 router.get("/", (req, res) => res.send("Welcome"));
-router.get(routeConfig.USER_ID, user_controller.findUserById);
+router.get(routeConfig.USER_ID, getUserDetails);
 // Register & Login & Cookies
 router.get(routeConfig.USERS_COOKIE, auth_controller.checkLogin("/"), user_controller.findFromCookie);
 router.get(routeConfig.USER_LOGIN_FAIL, auth_controller.loginFail);
@@ -73,5 +73,9 @@ router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
 
 router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
 router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
+
+router.post(routeConfig.GROUP_INITJOIN, isLoggedIn, group_controller.initGroupJoin);
+router.post(routeConfig.GROUP_REVERT_INITJOIN, isLoggedIn, group_controller.revertInitGroupJoin);
+router.get(routeConfig.GROUP_VERFIY_PAYMENT, isLoggedIn, group_controller.verifyPayment);
 
 module.exports = router;

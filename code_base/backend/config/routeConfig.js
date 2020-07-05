@@ -15,5 +15,8 @@ module.exports = {
   CREATE_GROUP: "/group/create",
   CURRENCY: "/currency",
   GROUP_ID: "/group/",
-  GROUP_OCCSLOTS: "/group/occSlots"
+  GROUP_OCCSLOTS: "/group/occSlots",
+  GROUP_INITJOIN: "/group/initJoin",
+  GROUP_REVERT_INITJOIN: "/group/revertInitJoin",
+  GROUP_VERFIY_PAYMENT: "/group/verifyPayment"
 };

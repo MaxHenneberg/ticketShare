@@ -30,7 +30,7 @@ exports.register = function (req, res) {
  * @param req Request
  * @param res Response
  */
-exports.findUserById = function (req, res) {
+exports.getUserDetails = function (req, res) {
   User.findById(req.query.id, {}, function (err, result) {
     if (err) {
       console.error(err);
@@ -114,6 +114,7 @@ exports.getUserTickets = (req, res) => {
  * @param res Response
  */
 exports.getUserAddresses = (req, res) => {
+  console.log("Get Address by User");
   try {
     Address.find({"user": req.user._id}, function(err, result) {
         res.status(200).send(result)

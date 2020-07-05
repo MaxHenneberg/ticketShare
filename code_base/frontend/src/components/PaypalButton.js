@@ -4,6 +4,7 @@ import scriptLoader from "react-async-script-loader";
 import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import GroupService from "../services/GroupService";
 
 const CLIENT = {
   sandbox:
@@ -58,52 +59,73 @@ class PaypalButton extends React.Component {
     }
   }
 
-  createOrder(data, actions) {
-    //https://developer.paypal.com/docs/api/orders/v2/
-    console.log(this.props.group.ticketInformation.currency.short_form);
-    return actions.order.create({
+  buildOrder(){
+    console.log("JoinInfo ID: "+this.props.joinInformation._id);
+    let order = {
       purchase_units: [
         {
           description: this.props.group.name,
           amount: {
-            currency: this.props.group.ticketInformation.currency.short_form,
-            value: this.props.pricePerPerson
+            currency_code: this.props.group.ticket.currency.short_form,
+            value: this.props.pricePerPerson,
+            breakdown:{
+              item_total: {
+                currency_code: this.props.group.ticket.currency.short_form,
+                value: this.props.pricePerPerson
+              }
+            }
           },
-          invoice_number: "INV5511231",
-          payment_descriptor: "My Shop"
+          reference_id: this.props.joinInformation._id,
+          invoice_number: this.props.joinInformation._id,
+          payment_descriptor: "Ticket Share"
         }
       ],
       application_context: {
         shipping_preference: "NO_SHIPPING",
-        brand_name: "Seba Test"
+        brand_name: "Ticket Share"
       },
-      payer:{
-        name:{
+      payer: {
+        name: {
           given_name: "This",
           surname: "Name"
         },
         address: {
-          address_line_1: "Jochbergweg 7",
-          address_line_2: "7",
-          admin_area_2: "Garching",
-          admin_area_1: "Germany",
-          postal_code: "85748",
+          address_line_1: this.props.selectedAddress.street,
+          address_line_2: this.props.selectedAddress.streetNumber,
+          admin_area_2: this.props.selectedAddress.city,
+          admin_area_1: this.props.selectedAddress.country,
+          postal_code: this.props.selectedAddress.countryCode,
           country_code: "DE"
         }
       }
-    });
+    };
+    console.log(order);
+    return order;
+  }
+
+  createOrder(data, actions) {
+    //https://developer.paypal.com/docs/api/orders/v2/
+    console.log("Paypal Desc: "+this.props.group.name);
+    try{
+      return actions.order.create(this.buildOrder());
+    }catch (e) {
+      console.error(e);
+    }
+
   };
 
-  onApprove(data, actions) {
+  async onApprove(data, actions) {
+    console.log("On Approve");
     actions.order.capture().then(details => {
+      console.log("Details:"+details);
       const paymentData = {
         payerID: data.payerID,
         orderID: data.orderID
       };
       console.log("Payment Approved: ", paymentData);
       this.setState({showButtons: false, paid: true});
-    });
-    this.props.successCallBack();
+      let joinInfo = GroupService.verifyPayment(paymentData.orderID,paymentData.payerID);
+    }).catch(e => console.error(e));
   };
 
   render() {
@@ -111,7 +133,8 @@ class PaypalButton extends React.Component {
 
     return (
         <div className="main">
-          {!showButtons && <Row> <Col xs={4}/><Col><Spinner animation="border" /></Col><Col xs={4}/></Row>}
+          {!showButtons && <Row> <Col xs={4}/><Col><Spinner animation="border"/></Col><Col
+              xs={4}/></Row>}
           {showButtons && (
               <PayPalButton
                   createOrder={(data, actions) => this.createOrder(data,
@@ -124,4 +147,4 @@ class PaypalButton extends React.Component {
 }
 
 export default scriptLoader(
-    `https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}`)(PaypalButton);
+    `https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}&currency=EUR`)(PaypalButton);

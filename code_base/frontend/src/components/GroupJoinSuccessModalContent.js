@@ -8,17 +8,29 @@ import ModalBody from "react-bootstrap/ModalBody";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-class GroupJoinSuccessModal extends React.Component {
+class GroupJoinSuccessModalContent extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  renderDate(deadline) {
+    if (deadline) {
+      let date = new Date(Date.parse(deadline));
+      return date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+    } else {
+      return "-";
+    }
+  }
+
+  renderPrice() {
+    return this.props.pricePerPerson + " "
+        + this.props.group.ticket.currency.name;
+  }
+
   render() {
     return (
         <div>
-          <Modal centered animation={false} backdrop="static"
-                 show={this.props.visible}>
             <ModalHeader closeButton>
               <ModalTitle>Join Group Finish</ModalTitle>
             </ModalHeader>
@@ -33,7 +45,7 @@ class GroupJoinSuccessModal extends React.Component {
                     Payed:
                   </Col>
                   <Col>
-                    12€
+                    {this.renderPrice()}
                   </Col>
                 </Row>
                 <Row>
@@ -46,7 +58,7 @@ class GroupJoinSuccessModal extends React.Component {
                         Street:
                       </Col>
                       <Col>
-                        ABC Street 7
+                        {this.props.selectedAddress.street}
                       </Col>
                     </Row>
                     <Row>
@@ -54,7 +66,7 @@ class GroupJoinSuccessModal extends React.Component {
                         City:
                       </Col>
                       <Col>
-                        ABC City
+                        {this.props.selectedAddress.city}
                       </Col>
                     </Row>
                     <Row>
@@ -62,7 +74,7 @@ class GroupJoinSuccessModal extends React.Component {
                         PostalCode:
                       </Col>
                       <Col>
-                        12345
+                        {this.props.selectedAddress.countryCode}
                       </Col>
                     </Row>
                     <Row>
@@ -70,7 +82,7 @@ class GroupJoinSuccessModal extends React.Component {
                         Country:
                       </Col>
                       <Col>
-                        ABC Country
+                        {this.props.selectedAddress.country}
                       </Col>
                     </Row>
                   </Col>
@@ -83,7 +95,7 @@ class GroupJoinSuccessModal extends React.Component {
                     Group Name:
                   </Col>
                   <Col>
-                    ABC Group
+                    {this.props.group.name}
                   </Col>
                 </Row>
                 <Row>
@@ -91,15 +103,14 @@ class GroupJoinSuccessModal extends React.Component {
                     Date:
                   </Col>
                   <Col>
-                    12.06.2020
+                    {this.renderDate(this.props.group.ticket.eventInformation.eventStart)+" - "+this.renderDate(this.props.group.ticket.eventInformation.eventEnd)}
                   </Col>
                 </Row>
               </Col>
             </ModalBody>
-          </Modal>
         </div>
     );
   }
 };
 
-export default GroupJoinSuccessModal;
+export default GroupJoinSuccessModalContent;

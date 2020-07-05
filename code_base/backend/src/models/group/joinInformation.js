@@ -7,9 +7,10 @@ const JoinInformationSchema = new mongoose.Schema({
       joinedUser: mongoose.Types.ObjectId,
 
       payed: Boolean,
+      payer_id: String,
 
       ticketDelivered: Boolean,
-      ticketRecieved: Boolean,
+      ticketReceived: Boolean,
 
       showPersonalInformation: Boolean
     },

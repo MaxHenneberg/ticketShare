@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
 const AddressSchema = new mongoose.Schema({
-      //user
-      user: mongoose.Types.ObjectId,
+          //user
+          user: mongoose.Types.ObjectId,
 
-      nickName: String,
+          nickName: String,
 
-      street: String,
-      streetNumber: String,
-      city: String,
-      country: String,
-      countryCode: String
+          street: String,
+          streetNumber: String,
+          city: String,
+          country: String,
+          countryCode: String
     },
     {timestamps: true}
 );

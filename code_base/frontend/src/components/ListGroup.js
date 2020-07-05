@@ -22,7 +22,7 @@ class ListGroup extends React.Component {
   }
 
   componentDidMount(){
-    GroupService.getGroupById("5ef8963e4026346727ed3e75").then(result=> {this.setState({group: result, isLoaded: true})}).catch(error => console.error(error));
+    GroupService.getGroupById("5ef8f53db82250555776281f").then(result=> {this.setState({group: result, isLoaded: true})}).catch(error => console.error(error));
   }
 
   render() {

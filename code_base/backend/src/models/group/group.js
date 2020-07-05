@@ -20,7 +20,7 @@ const GroupSchema = new mongoose.Schema(
 		public: Boolean,
 
       // ticket
-			ticketInformation: {
+			ticket: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "ticketInformation",
       },
