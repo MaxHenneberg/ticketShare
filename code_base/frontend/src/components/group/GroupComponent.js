@@ -27,6 +27,7 @@ class GroupComponent extends React.Component {
 					symbol: "Loading...",
 				},
 			},
+			emptySlots: "Loading.."
 		};
 	}
 	componentDidMount() {
@@ -38,6 +39,7 @@ class GroupComponent extends React.Component {
 				this.setState(group);
 				this.populatePricePerPerson();
 				this.convertDate();
+				this.getEmptySlots(id);
 			} catch (err) {
 				console.error(err);
 			}
@@ -52,6 +54,11 @@ class GroupComponent extends React.Component {
 	convertDate() {
 		var d = new Date(this.state.joinDeadline).toDateString();
 		this.setState({ joinDeadline: d });
+		return;
+	}
+	async getEmptySlots(id) {
+		let response = await GroupService.getFreeSlots(id);
+		this.setState({ emptySlots: response.free_slots });
 		return;
 	}
 	render() {
@@ -73,7 +80,14 @@ class GroupComponent extends React.Component {
 									<Col>
 										Join Last Date: <h3>{this.state.joinDeadline}</h3>
 									</Col>
-									<Col>TODO. places remaining</Col>
+									<Col>
+										Places Remaining:{" "}
+										<h3>
+											{" "}
+											{this.state.emptySlots}{" "}/{" "}
+											{this.state.ticket.maxCoveredPeople}
+										</h3>
+									</Col>
 								</Row>
 							</Col>
 						</Card.Body>

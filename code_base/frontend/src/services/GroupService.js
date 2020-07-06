@@ -23,6 +23,23 @@ export default class GroupService {
             });
         });
     }
+    static getFreeSlots(id){
+        return new Promise((resolve, reject) => {
+            var url = GroupService.baseURL()+"info/freeslots/"+id;
+            console.log(url);
+            HttpService.get(url, function(data) {
+                if(data != undefined || Object.keys(data).length !== 0) {
+                    resolve(data);
+                }
+                else {
+                    reject('Error while retrieving group');
+                }
+            }, function(textStatus) {
+                reject(textStatus);
+            });
+        });
+
+    }
     static createGroup(data) {
         return new Promise((resolve, reject) => {
             var url = GroupService.baseURL()+"create";
