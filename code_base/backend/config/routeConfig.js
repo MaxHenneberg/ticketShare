@@ -14,6 +14,8 @@ module.exports = {
 	GET_GROUP: "/group/:id",
   GROUP_OCCSLOTS: "/group/occSlots",
 
+  GROUP_FREE_SLOTS: "/group/info/freeslots/:id",
+  
   //end group routers
   CURRENCY: "/currency",
   USER_ADDRESSES: "/addresses",
