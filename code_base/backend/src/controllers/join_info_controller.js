@@ -24,7 +24,8 @@ exports.validate = (method) => {
 		}
 	}
 };
-// Gets one groups.
+// Gets free slots for a given group ID.
+
 exports.getFreeSlots = async (req, res) => {
 	const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 	if (!errors.isEmpty()) {
@@ -38,11 +39,18 @@ exports.getFreeSlots = async (req, res) => {
 			})
 			.exec();
 		var initial_slots = group.ticket.initialFreeSlotsLeft;
-		// Get the documents JoinInfo for the group
+		/****
+		 *
+		 *  Get the documents JoinInfo for the group
+		 *  joined users is the number of results
+		 **/
 		let joinees = await Join_Info.find({ group: group.id }).exec();
 		var joined_users = joinees.length;
-		// Calculate free slots
+		/*
+         Calculate free slots
+        */
 		var free_slots = initial_slots - joined_users;
+		// Return free slots
 		res.status(200).send({ group: group.id, free_slots: free_slots });
 	} catch (err) {
 		console.log(err);
