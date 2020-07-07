@@ -52,5 +52,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.js",
     "start": "webpack-dev-server --open 'Google Chrome' --config webpack.dev.js"
-  }
+  },
+  "proxy2": "localhost:8080/"
 }

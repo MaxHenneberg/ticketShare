@@ -10,6 +10,10 @@ import Col from "react-bootstrap/Col";
 import {ListView} from "./views/ListView";
 import UserView from "./views/UserView";
 
+import axios from 'axios';
+
+// axios.defaults.baseURL = "localhost:8080/";
+
 export default class App extends React.Component {
 
   constructor(props) {

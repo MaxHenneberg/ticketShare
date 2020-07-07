@@ -9,7 +9,11 @@ const cookieParser = require('cookie-parser')
 // db config get from config folder
 const config = require("./config/keys");
 
-const app = express();
+const cors = require("cors");
+
+var app = express();
+
+// app.use(cors());
 
 // Connect to mongo
 mongoose
