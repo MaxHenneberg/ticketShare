@@ -59,15 +59,9 @@ exports.validate = (method) => {
 					.isMongoId()
 					.withMessage("Invalid Value for Currency"),
 				// validate event info
-				body("eventInformation", "Event Information Required")
-					.exists()
-					.notEmpty(),
-				body("eventInformation.name", "Event Name Required")
-					.exists()
-					.notEmpty(),
-				body("eventInformation.desc", "Event Description Required")
-					.exists()
-					.notEmpty(),
+				body("eventInformation", "Event Information Required").exists().notEmpty(),
+				body("eventInformation.name", "Event Name Required").exists().notEmpty(),
+				body("eventInformation.desc", "Event Description Required").exists().notEmpty(),
 				body("eventInformation.eventStart", "Event Start Date Required")
 					.exists()
 					.notEmpty()
@@ -125,10 +119,7 @@ exports.create = async (req, res) => {
 		let currency_object = await Currency.findById(currency_id).exec();
 		if (!currency_object) throw "Invalid Currency";
 
-		if (
-			req.body.ticketInfo.initialFreeSlotsLeft >
-			req.body.ticketInfo.maxCoveredPeople
-		) {
+		if (req.body.ticketInfo.initialFreeSlotsLeft > req.body.ticketInfo.maxCoveredPeople) {
 			throw "Free Slots must be less than Max Covered People";
 		}
 		/*
@@ -184,12 +175,11 @@ exports.getOne = async (req, res) => {
 	}
 	try {
 		let result = await Group.findById(req.params.id)
-			.populate({
-				path: "ticket",
-				select: "fullPrice currency maxCoveredPeople",
-				populate: { path: "currency", select: "symbol" },
-			})
+			.populate("ticket")
+			.populate({ path: "ticket", populate: { path: "eventInformation" } })
+			.populate({ path: "ticket", populate: { path: "currency" } })
 			.exec();
+		console.log(result);
 		res.status(200).send(result);
 	} catch (err) {
 		console.log(err);
