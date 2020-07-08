@@ -5,9 +5,7 @@ const Group = require("../models/group/group");
 const EventInformation = require("../models/group/eventInformation");
 const Ticket = require("../models/group/ticketInformation");
 const Currency = require("../models/group/currency");
-const Join_Info = require("../models/group/joinInformation");
-const Search_Tag = require("../models/group/searchTag");
-const { body, params, check, validationResult } = require("express-validator");
+const { body, check, validationResult } = require("express-validator");
 
 /**
  * Validates the create group request
@@ -179,7 +177,6 @@ exports.getOne = async (req, res) => {
 			.populate({ path: "ticket", populate: { path: "eventInformation" } })
 			.populate({ path: "ticket", populate: { path: "currency" } })
 			.exec();
-		console.log(result);
 		res.status(200).send(result);
 	} catch (err) {
 		console.log(err);
