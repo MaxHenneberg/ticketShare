@@ -23,7 +23,7 @@ class ListGroup extends React.Component {
               <Col xs={10}>
                 <Row>
                   <Col>
-                    GroupTitel
+                    GroupTitel {this.props.group.name}
                   </Col>
                   <Col>
                     <div className="float-sm-right">
@@ -61,7 +61,7 @@ class ListGroup extends React.Component {
                   </Col>
                   <Col>
                     <div className="float-sm-right">
-                      Already bought <Check/>
+                      Already bought2 <Check/>
                     </div>
 
                   </Col>
