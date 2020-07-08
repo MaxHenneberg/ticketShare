@@ -30,18 +30,19 @@ exports.register = function (req, res) {
  * @param req Request
  * @param res Response
  */
-exports.findUserById = function (req, res) {
-  User.findById(req.query.id, {}, function (err, result) {
-    if (err) {
-      console.error(err);
-      return res.send(err);
-    }
-    if (!result) {
-      res.statusCode = 404;
-      return res.send(result);
-    }
-    return res.send(result);
-  })
+exports.getUserDetails = (req, res) => {
+  try {
+    User.findById(req.query.id, {}, function (err, result) {
+      if (!result) {
+        res.statusCode = 404;
+        return res.send(result);
+      }
+      res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -65,15 +66,16 @@ exports.findFromCookie = function (req, res) {
  * @param res Response
  */
 exports.editUserDetails = (req, res) => {
-  let userDetails = req.body;
+  try {
+    let userDetails = req.body;
 
-  User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
-    }
-  })
+    User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
+      res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**

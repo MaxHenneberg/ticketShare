@@ -72,6 +72,6 @@ router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 // Get all groups from database
 router.get(routeConfig.GROUPS, getAllGroups);
 
-router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
-router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
+// router.get(routeConfig.GROUP_ID, group_controller.findGroupById);
+// router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
 module.exports = router;

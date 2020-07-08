@@ -14,6 +14,6 @@ module.exports = {
   JOIN_INFO: "/join/:groupId",
   CREATE_GROUP: "/group/create",
   CURRENCY: "/currency",
-  GROUP_ID: "/group/",
+  GROUP_ID: "/group",
   GROUP_OCCSLOTS: "/group/occSlots"
 };
