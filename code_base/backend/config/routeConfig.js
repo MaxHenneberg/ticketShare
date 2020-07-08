@@ -10,16 +10,18 @@ module.exports = {
   GROUPS: "/groups",
   //group routers
   GROUP: "/groups/all",
-	CREATE_GROUP: "/group/create",
 	GET_GROUP: "/group/:id",
   GROUP_OCCSLOTS: "/group/occSlots",
 
   GROUP_FREE_SLOTS: "/group/info/freeslots/:id",
   
   //end group routers
-  CURRENCY: "/currency",
   USER_ADDRESSES: "/addresses",
   NEW_ADDRESS: "/new_address",
   ADDRESS: "/address/:id",
   JOIN_INFO: "/join/:groupId",
+  CREATE_GROUP: "/group/create",
+  CURRENCY: "/currency",
+  GROUP_ID: "/group",
+  GROUP_OCCSLOTS: "/group/occSlots"
 };
