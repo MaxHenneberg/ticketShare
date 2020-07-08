@@ -126,10 +126,10 @@ exports.create = async (req, res) => {
 		if (!currency_object) throw "Invalid Currency";
 
 		if (
-			req.body.ticketInfo.initialFreeSlotsLeft >=
+			req.body.ticketInfo.initialFreeSlotsLeft >
 			req.body.ticketInfo.maxCoveredPeople
 		) {
-			throw "Free Slots must be less than Max Covered People. We include you as one ;)";
+			throw "Free Slots must be less than Max Covered People";
 		}
 		/*
 			Create documents.
