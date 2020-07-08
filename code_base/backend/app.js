@@ -8,13 +8,9 @@ const cookieParser = require('cookie-parser')
 
 // db config get from config folder
 const config = require("./config/keys");
-
 const cors = require("cors");
 
-var app = express();
-
-// app.use(cors());
-
+const app = express();
 // Connect to mongo
 mongoose
 .connect(config.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -36,6 +32,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use(cors({credentials: true, origin: 'http://localhost:8000'}));
 
 // routes
 app.use("/", require("./src/routes/routes"));

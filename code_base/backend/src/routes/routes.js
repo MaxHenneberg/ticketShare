@@ -26,15 +26,19 @@ router.get("/", (req, res) => res.send("Welcome"));
 
 // Register & Login & Cookies
 router.get(routeConfig.USERS_COOKIE, auth_controller.checkLogin("/"), user_controller.findFromCookie);
+router.get(routeConfig.USER_LOGIN_FAIL, auth_controller.loginFail);
 router.post(routeConfig.USERS_LOGIN,
     passport.authenticate('local', {
       successRedirect: '/',
-      failureRedirect: '/users/login',
+      failureRedirect: routeConfig.USER_LOGIN_FAIL,
       failureFlash: true
     }));
 router.post(routeConfig.USERS_REGISTER, user_controller.register);
-router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
-router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.validate('create'), currency_controller.getAll);
+// router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
+// router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.getAll);
+// router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
+router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
+router.get(routeConfig.CURRENCY, currency_controller.getAll);
 
 
 function isLoggedIn(req, res, next) {
@@ -68,4 +72,6 @@ router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 // Get all groups from database
 router.get(routeConfig.GROUPS, getAllGroups);
 
+// router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
+// router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
 module.exports = router;
