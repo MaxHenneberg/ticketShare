@@ -58,3 +58,28 @@ exports.getFreeSlots = async (req, res) => {
 		return res.status(400).json(err);
 	}
 };
+
+/**
+ * Get groups joined by user based on user id. Returns list of groupids
+ * @param req Request
+ * @param res Response => list of group id's
+ */
+exports.getJoinedGroups = async (req, res) => {
+	try {
+		let user_id = req.params.user_id;
+		let objects = await Join_Info.find({ joinedUser: user_id }, "group").exec();
+		/*
+		the object format: [ {id:str,group:str}, {id:str,group:str}]
+		*/
+		var result = [];
+		objects.forEach(function (object) {
+			result.push(object["group"]);
+		});
+		console.log(result);
+		return res.status(200).send(result);
+	} catch (err) {
+		console.log(err);
+		err = { errors: [{ msg: err }] };
+		return res.status(400).json(err);
+	}
+};

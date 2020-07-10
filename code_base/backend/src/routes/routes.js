@@ -46,6 +46,7 @@ router.get(routeConfig.GET_GROUP, group_controller.validate('getOne'),group_cont
 router.get(routeConfig.GROUP_FREE_SLOTS, join_info_controller.validate('getFreeSlots'),join_info_controller.getFreeSlots);
 // get user's created groups
 router.get(routeConfig.GetCreatedGroups, getCreatedGroups);
+router.get(routeConfig.GetJoinedGroups, join_info_controller.getJoinedGroups);
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
