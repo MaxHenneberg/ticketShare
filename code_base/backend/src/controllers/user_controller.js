@@ -2,6 +2,7 @@ const User = require('../models/user/user');
 const authController = require('../controllers/auth_controller');
 const JoinInformation = require('../models/group/joinInformation');
 const Address = require('../models/user/address');
+const Group = require("../models/group/group");
 
 /**
  * Handles User Registration for Rest path /users/register
@@ -215,4 +216,27 @@ exports.editJoinInformation = (req, res) => {
       err = { errors: [{ msg: err }] };
       return res.status(400).json(err);
   }
+};
+
+/**
+ * Get user's created groups based on user id. Returns list of groupids
+ * @param req Request
+ * @param res Response => list of group id's
+ */
+exports.getCreatedGroups = async (req, res) => {
+	try {
+		let user_id = req.params.user_id;
+		let objects = await Group.find({ creator: user_id }, "_id").exec();
+		/*
+    the object format: [ {id:str}, {id:str}]
+    */
+		result = [];
+		objects.forEach(function (object) {
+			result.push(object["_id"]);
+		});
+		return res.status(200).send(result);
+	} catch (err) {
+		err = { errors: [{ msg: err }] };
+		return res.status(400).json(err);
+	}
 };

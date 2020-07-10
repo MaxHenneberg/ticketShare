@@ -12,6 +12,7 @@ const {
   editAddress,
   addJoinInformation,
   editJoinInformation,
+  getCreatedGroups,
 } = require('../controllers/user_controller');
 const { getAllGroups } = require('../controllers/group_controller');
 
@@ -43,7 +44,8 @@ router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group
 router.get(routeConfig.GET_GROUP, group_controller.validate('getOne'),group_controller.getOne);
 // get free slots left of a group
 router.get(routeConfig.GROUP_FREE_SLOTS, join_info_controller.validate('getFreeSlots'),join_info_controller.getFreeSlots);
-
+// get user's created groups
+router.get(routeConfig.GetCreatedGroups, getCreatedGroups);
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

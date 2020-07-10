@@ -14,6 +14,7 @@ module.exports = {
   GROUP_OCCSLOTS: "/group/occSlots",
 
   GROUP_FREE_SLOTS: "/group/info/freeslots/:id",
+  GetCreatedGroups: "/user/createdgroups/:user_id",
   
   //end group routers
   USER_ADDRESSES: "/addresses",
