@@ -2,6 +2,7 @@ const User = require('../models/user/user');
 const authController = require('../controllers/auth_controller');
 const JoinInformation = require('../models/group/joinInformation');
 const Address = require('../models/user/address');
+const Group = require("../models/group/group");
 
 /**
  * Handles User Registration for Rest path /users/register
@@ -30,18 +31,19 @@ exports.register = function (req, res) {
  * @param req Request
  * @param res Response
  */
-exports.getUserDetails = function (req, res) {
-  User.findById(req.query.id, {}, function (err, result) {
-    if (err) {
-      console.error(err);
-      return res.send(err);
-    }
-    if (!result) {
-      res.statusCode = 404;
-      return res.send(result);
-    }
-    return res.send(result);
-  })
+exports.getUserDetails = (req, res) => {
+  try {
+    User.findById(req.query.id, {}, function (err, result) {
+      if (!result) {
+        res.statusCode = 404;
+        return res.send(result);
+      }
+      res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -65,15 +67,16 @@ exports.findFromCookie = function (req, res) {
  * @param res Response
  */
 exports.editUserDetails = (req, res) => {
-  let userDetails = req.body;
+  try {
+    let userDetails = req.body;
 
-  User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(result);
-    }
-  })
+    User.findOneAndUpdate({_id: req.user._id}, userDetails, {upsert: true}, function(err, result) {
+      res.status(200).send(result)
+    })
+  } catch (err) {
+      err = { errors: [{ msg: err }] };
+      return res.status(400).json(err);
+  }
 };
 
 /**
@@ -186,7 +189,7 @@ exports.addJoinInformation = (req, res) => {
     newJoinInfo.ticketDelivered = req.body.ticketDelivered;
     newJoinInfo.ticketRecieved = req.body.ticketRecieved;
     newJoinInfo.showPersonalInformation = req.body.showPersonalInformation;
-
+  
     newJoinInfo.save(function(err){
         res.status(200).send({'message': 'Join info is saved.'})
     })
@@ -206,7 +209,7 @@ exports.editJoinInformation = (req, res) => {
   try {
     let joinInfoDetails = req.body;
     let groupId = req.params.groupId;
-
+    
     JoinInformation.findOneAndUpdate({group: groupId, joinedUser: req.user._id }, joinInfoDetails, {upsert: true}, function(err, result) {
       res.status(200).send({'message': 'Change has been made.'})
     })
@@ -214,4 +217,27 @@ exports.editJoinInformation = (req, res) => {
       err = { errors: [{ msg: err }] };
       return res.status(400).json(err);
   }
+};
+
+/**
+ * Get user's created groups based on user id. Returns list of groupids
+ * @param req Request
+ * @param res Response => list of group id's
+ */
+exports.getCreatedGroups = async (req, res) => {
+	try {
+		let user_id = req.params.user_id;
+		let objects = await Group.find({ creator: user_id }, "_id").exec();
+		/*
+    the object format: [ {id:str}, {id:str}]
+    */
+		result = [];
+		objects.forEach(function (object) {
+			result.push(object["_id"]);
+		});
+		return res.status(200).send(result);
+	} catch (err) {
+		err = { errors: [{ msg: err }] };
+		return res.status(400).json(err);
+	}
 };

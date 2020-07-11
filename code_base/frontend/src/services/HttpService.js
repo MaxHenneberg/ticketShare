@@ -116,9 +116,11 @@
          resp = await resp.json();
          console.log("Resp: "+resp);
        }
-
        if(resp.error) {
          onError(resp.error);
+       }
+       else if(resp.errors){
+        onError(resp.errors);
        }
        else {
          onSuccess(resp);

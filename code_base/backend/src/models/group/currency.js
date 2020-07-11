@@ -3,9 +3,20 @@
 const mongoose = require("mongoose");
 
 const CurrencySchema = new mongoose.Schema({
-      name: String,
-      short_form : String,
-    },
-);
+	name: {
+		type: String,
+		required: true,
+	},
+	short_form: {
+		type: String,
+		required: true,
+		uppercase: true,
+		maxlength: 3,
+	},
+	symbol: {
+		type: String,
+		required: true,
+	},
+});
 
 module.exports = mongoose.model("currency", CurrencySchema);
