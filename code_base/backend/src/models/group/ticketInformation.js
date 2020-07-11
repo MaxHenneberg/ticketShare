@@ -9,12 +9,15 @@ const TicketInformationSchema = new mongoose.Schema(
 		initialFreeSlotsLeft: Number,
 
 		// EventInformation
-		eventInformation: mongoose.Types.ObjectId,
+		eventInformation: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "eventInformation"
+		},
 
 		// currency
 		currency: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Currency",
+			ref: "currency",
 		},
 	},
 	{ timestamps: true }

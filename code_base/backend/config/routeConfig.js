@@ -8,6 +8,16 @@ module.exports = {
   USERS: "/users",
   USER_TICKETS: "/tickets",
   GROUPS: "/groups",
+  //group routers
+  GROUP: "/groups/all",
+	GET_GROUP: "/group/:id",
+  GROUP_OCCSLOTS: "/group/occSlots",
+
+  GROUP_FREE_SLOTS: "/group/info/freeslots/:id",
+  GetCreatedGroups: "/user/createdgroups/:user_id",
+  GetJoinedGroups: "/user/joinedgroups/:user_id",
+  
+  //end group routers
   USER_ADDRESSES: "/addresses",
   NEW_ADDRESS: "/new_address",
   ADDRESS: "/address/:id",

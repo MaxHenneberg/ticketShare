@@ -8,11 +8,9 @@ import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import { Card, CardTitle } from "react-md";
 import LoadingOverlay from "react-loading-overlay";
+import GroupService from "../services/GroupService";
 
 export class CreateGroupView extends React.Component {
-	static baseURL() {
-		return "http://localhost:8080/group/create";
-	}
 
 	constructor(props) {
 		super(props);
@@ -44,26 +42,18 @@ export class CreateGroupView extends React.Component {
 	async handleSubmit(data) {
 		await this.setState({ errors: [] });
 		await this.setState(data);
-
-		var request_options = {
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-			method: "POST",
-			body: JSON.stringify(data),
-		};
-		try {
-			let response = await fetch(CreateGroupView.baseURL(), request_options);
-			response = await response.json();
-			if (response.errors) throw response.errors;
-		} catch (errors) {
-			this.setState({ errors: errors });
-			window.scrollTo({ top: 0, behavior: "smooth" });
-		}
-		finally{
-			this.setState({ isLoading: false });
-		}
+		(async () => {
+			try {
+				let group = await GroupService.createGroup(data);
+				// TODO SHOW SUCCESS!
+			} catch (errors) {
+				this.setState({ errors: errors });
+				window.scrollTo({ top: 0, behavior: "smooth" });
+			}
+			finally{
+				this.setState({ isLoading: false });
+			}
+		})();
 	}
 
 	render() {

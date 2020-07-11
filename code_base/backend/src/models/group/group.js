@@ -17,7 +17,7 @@ const GroupSchema = new mongoose.Schema(
 		// ticket
 		ticket: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "TicketInformation",
+			ref: "ticketInformation",
 		},
 		//user
 		creator: {

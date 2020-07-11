@@ -4,7 +4,7 @@ const passport = require("passport");
 const routeConfig = require("../../config/routeConfig");
 const { 
   editUserDetails, 
-  getUserDetails, 
+  getUserDetails,
   getAllUsers, 
   getUserTickets, 
   getUserAddresses,
@@ -12,6 +12,7 @@ const {
   editAddress,
   addJoinInformation,
   editJoinInformation,
+  getCreatedGroups,
 } = require('../controllers/user_controller');
 const { getAllGroups } = require('../controllers/group_controller');
 
@@ -19,6 +20,7 @@ const { getAllGroups } = require('../controllers/group_controller');
 const user_controller = require("../controllers/user_controller");
 const auth_controller = require("../controllers/auth_controller");
 const group_controller = require("../controllers/group_controller");
+const join_info_controller = require("../controllers/join_info_controller");
 const currency_controller = require("../controllers/currency_controller");
 
 // Home page
@@ -37,9 +39,14 @@ router.post(routeConfig.USERS_REGISTER, user_controller.register);
 // router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
 // router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.getAll);
 // router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
-router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
 router.get(routeConfig.CURRENCY, currency_controller.getAll);
-
+router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
+router.get(routeConfig.GET_GROUP, group_controller.validate('getOne'),group_controller.getOne);
+// get free slots left of a group
+router.get(routeConfig.GROUP_FREE_SLOTS, join_info_controller.validate('getFreeSlots'),join_info_controller.getFreeSlots);
+// get user's created groups
+router.get(routeConfig.GetCreatedGroups, getCreatedGroups);
+router.get(routeConfig.GetJoinedGroups, join_info_controller.getJoinedGroups);
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
@@ -70,7 +77,7 @@ router.post(routeConfig.JOIN_INFO, isLoggedIn, addJoinInformation);
 router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 
 // Get all groups from database
-router.get(routeConfig.GROUPS, getAllGroups);
+router.get(routeConfig.GROUP, getAllGroups);
 
 // router.get(routeConfig.GROUP_ID, group_controller.findGroupById);
 // router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
