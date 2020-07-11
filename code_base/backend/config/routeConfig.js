@@ -16,10 +16,10 @@ module.exports = {
   GetCreatedGroups: "/user/createdgroups/:user_id",
   GetJoinedGroups: "/user/joinedgroups/:user_id",
 
-  GROUP_OCCSLOTS: "/group/occSlots",
-  GROUP_INITJOIN: "/group/initJoin",
-  GROUP_REVERT_INITJOIN: "/group/revertInitJoin",
-  GROUP_VERFIY_PAYMENT: "/group/verifyPayment"
+  GROUP_OCCSLOTS: "/group/info/occSlots",
+  GROUP_INITJOIN: "/group/join/initJoin",
+  GROUP_REVERT_INITJOIN: "/group/join/revertInitJoin",
+  GROUP_VERFIY_PAYMENT: "/group/join/verifyPayment",
 
   //end group routers
   USER_ADDRESSES: "/addresses",

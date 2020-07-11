@@ -75,7 +75,7 @@ export default class GroupService {
     console.log("Init Group Join");
     const body = {group: id};
     return new Promise((resolve, reject) => {
-      HttpService.post(GroupService.baseURL() + "/initJoin", body,
+      HttpService.post(GroupService.baseURL() + "join/initJoin", body,
           function (data) {
             console.log("GroupJoin:" + data._id);
             resolve(data);
@@ -90,7 +90,7 @@ export default class GroupService {
     console.log("Revert Init Group Join");
     const body = {group: id};
     return new Promise((resolve, reject) => {
-      HttpService.post(GroupService.baseURL() + "/revertInitJoin", body,
+      HttpService.post(GroupService.baseURL() + "join/revertInitJoin", body,
           function (data) {
             resolve(data);
           }, function (textStatus) {
@@ -102,7 +102,7 @@ export default class GroupService {
 
   static async verifyPayment(orderId, payerId) {
     return new Promise((resolve, reject) => {
-      HttpService.get(GroupService.baseURL() +`/verifyPayment?orderId=${orderId}&payerId=${payerId}`,
+      HttpService.get(GroupService.baseURL() +`join/verifyPayment?orderId=${orderId}&payerId=${payerId}`,
           function (data) {
             resolve(data);
           }, function (textStatus) {
@@ -114,7 +114,7 @@ export default class GroupService {
 
   static async countOccSlots(groupId) {
     return new Promise((resolve, reject) => {
-      HttpService.get(GroupService.baseURL() + '/occSlots?group=' + groupId + "",
+      HttpService.get(GroupService.baseURL() + 'info/occSlots?group=' + groupId,
           function (data) {
             resolve(data);
           }, function (textStatus) {
@@ -123,6 +123,5 @@ export default class GroupService {
           });
     })
   }
-}
 
 }

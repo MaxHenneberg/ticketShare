@@ -79,7 +79,7 @@ router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 // Get all groups from database
 router.get(routeConfig.GROUP, getAllGroups);
 
-router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
+router.get(routeConfig.GROUP_OCCSLOTS, join_info_controller.countOccSlotsForGroup);
 
 router.post(routeConfig.GROUP_INITJOIN, isLoggedIn, group_controller.initGroupJoin);
 router.post(routeConfig.GROUP_REVERT_INITJOIN, isLoggedIn, group_controller.revertInitGroupJoin);
