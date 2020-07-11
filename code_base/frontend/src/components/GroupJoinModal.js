@@ -18,6 +18,8 @@ class GroupJoinModal extends React.Component {
     };
 
     this.paymentCallback = this.paymentCallback.bind(this);
+    this.openPaymentHandler = this.openPaymentHandler.bind(this);
+    this.finishCallback = this.finishCallback.bind(this);
   }
 
   hasFreeSlot() {
@@ -31,33 +33,37 @@ class GroupJoinModal extends React.Component {
     this.setState({currentBody: "payment", selectedAddress: address});
   }
 
-  paymentCallback(promise) {
+  async paymentCallback(result) {
+    console.log(this);
     console.log("paymentCallback");
-    promise.then(function (result) {
-          if (result) {
-            console.log(result.payed);
-            if (result.payed) {
-             this.setState({currentBody: "success"});
-            }
-          }
-        }
-    ).catch((error) => console.error(error));
+    if (result) {
+      console.log(result.payed);
+      if (result.payed) {
+        this.setState({currentBody: "success"});
+      }
+    }
+  }
+
+  finishCallback() {
+    this.props.onClose();
+    this.setState({currentBody: "info", selectedAddress: null});
   }
 
   reset() {
+    this.props.onAbort();
     this.setState({currentBody: "info", selectedAddress: null});
-    this.props.onClose();
   }
 
   renderBody() {
     switch (this.state.currentBody) {
       case "info":
-        return <GroupJoinModalContent group={this.props.group} openPayment={(address) => this.openPaymentHandler(address)} pricePerPerson={this.props.pricePerPerson}/>;
+        return <GroupJoinModalContent group={this.props.group} openPayment={this.openPaymentHandler} pricePerPerson={this.props.pricePerPerson}/>;
       case "payment":
-        return <PaymentModalContent group={this.props.group} callback={(promise) => this.paymentCallback(promise)} caller={this} pricePerPerson={this.props.pricePerPerson}
+        return <PaymentModalContent group={this.props.group} callback={this.paymentCallback} pricePerPerson={this.props.pricePerPerson}
                                     selectedAddress={this.state.selectedAddress} joinInformation={this.state.joinInformation}/>;
       case "success":
-        return <GroupJoinSuccessModalContent group={this.props.group} pricePerPerson={this.props.pricePerPerson} selectedAddress={this.state.selectedAddress}/>
+        return <GroupJoinSuccessModalContent group={this.props.group} pricePerPerson={this.props.pricePerPerson} selectedAddress={this.state.selectedAddress}
+                                             callback={this.finishCallback}/>
     }
   }
 

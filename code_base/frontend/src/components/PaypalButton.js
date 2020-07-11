@@ -26,7 +26,8 @@ class PaypalButton extends React.Component {
       showButtons: false,
       loading: true,
       paymentPending: false,
-      paid: false
+      paid: false,
+      paymentData: null
     };
 
     window.React = React;
@@ -115,17 +116,15 @@ class PaypalButton extends React.Component {
   };
 
   async onApprove(data, actions) {
-    console.log("On Approve");
-    actions.order.capture().then(details => {
-      console.log("Details:"+details);
-      const paymentData = {
-        payerID: data.payerID,
-        orderID: data.orderID
-      };
-      console.log("Payment Approved: ", paymentData);
-      this.setState({showButtons: false, paid: true});
-      let joinInfo = GroupService.verifyPayment(paymentData.orderID,paymentData.payerID);
+    const paymentData = {
+      payerID: data.payerID,
+      orderID: data.orderID
+    };
+    await actions.order.capture().then(details => {
+      this.setState({showButtons: false, paid: true, paymentData: paymentData});
     }).catch(e => console.error(e));
+    let joinInfo = await GroupService.verifyPayment(this.state.paymentData.orderID,this.state.paymentData.payerID)
+    this.props.callback(joinInfo);
   };
 
   render() {

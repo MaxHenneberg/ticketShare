@@ -16,6 +16,9 @@ class GroupJoinButton extends React.Component {
       groupJoinModalVisible: false,
       pricePerPerson: 0
     }
+
+    this.handleClose = this.handleClose.bind(this);
+    this.handleAbort = this.handleAbort.bind(this);
   }
 
   openGroupJoinModal() {
@@ -32,7 +35,12 @@ class GroupJoinButton extends React.Component {
   }
 
   async handleClose() {
-    await GroupService.revertInitGroupJoin(this.state.group).then(result => console.log(result)).catch(error => console.error(error));
+    this.setState({groupJoinModalVisible: false});
+  }
+
+  async handleAbort(){
+    console.log("ABORT: "+this.state.group._id);
+    await GroupService.revertInitGroupJoin(this.state.group._id).then(result => console.log(result)).catch(error => console.error(error));
     this.setState({groupJoinModalVisible: false});
   }
 
@@ -43,7 +51,7 @@ class GroupJoinButton extends React.Component {
                   onClick={() => this.openGroupJoinModal()}>X</Button>
           <GroupJoinModal
               visible={this.state.groupJoinModalVisible} group={this.state.group} pricePerPerson={this.state.pricePerPerson}
-              onClose={() => this.handleClose()}/>
+              onClose={this.handleClose} onAbort={this.handleAbort}/>
         </div>
     );
   }

@@ -239,8 +239,10 @@ exports.initGroupJoin = async function (req, res) {
 
 exports.revertInitGroupJoin = async function (req, res) {
   console.log("revertInitGroupJoin")
+  console.log(req.body.group);
+  console.log(req.user);
   try {
-    let joinInfo = await Join_Info.findOneAndDelete({group: req.query.group, joinedUser: req.user, payed: false}).exec();
+    let joinInfo = await Join_Info.findOneAndDelete({group: req.body.group, joinedUser: req.user, payed: false}).exec();
     if (!joinInfo) {
       console.log("No JoinInfo Found");
       res.statusCode = 200;
@@ -355,6 +357,7 @@ exports.verifyPayment = async function (req, res) {
     joinInfo.payed = true;
     joinInfo.payer_id = order.payer.payer_id;
     await joinInfo.save();
+    console.log(`Order ${ref_id} verified successfully!`);
     res.send(joinInfo);
 
   } catch (e) {

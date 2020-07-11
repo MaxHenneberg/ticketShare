@@ -19,6 +19,7 @@ export default class UserService {
   }
 
   static async getAddress() {
+    this.login();
     return new Promise((resolve, reject) => {
       HttpService.get(ApiEndpoint + "addresses",
           function (data) {

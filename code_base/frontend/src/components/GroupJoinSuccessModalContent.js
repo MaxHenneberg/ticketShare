@@ -7,6 +7,8 @@ import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalBody from "react-bootstrap/ModalBody";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import Button from "react-bootstrap/Button";
 
 class GroupJoinSuccessModalContent extends React.Component {
 
@@ -108,6 +110,9 @@ class GroupJoinSuccessModalContent extends React.Component {
                 </Row>
               </Col>
             </ModalBody>
+          <ModalFooter>
+          <Button variant={"primary"} onClick={this.props.callback}>Finish</Button>
+        </ModalFooter>
         </div>
     );
   }
