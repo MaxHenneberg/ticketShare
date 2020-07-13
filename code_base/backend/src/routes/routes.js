@@ -3,8 +3,8 @@ const router = express.Router();
 const passport = require("passport");
 const routeConfig = require("../../config/routeConfig");
 const { 
-  editUserDetails, 
-  getUserDetails, 
+  editUserDetails,
+  findUserById,
   getAllUsers, 
   getUserTickets, 
   getUserAddresses,
@@ -13,7 +13,10 @@ const {
   addJoinInformation,
   editJoinInformation,
 } = require('../controllers/user_controller');
-const { getAllGroups } = require('../controllers/group_controller');
+const {
+    getGroups,
+    getGroupIds,
+} = require('../controllers/group_controller');
 
 // Require controller modules.
 const user_controller = require("../controllers/user_controller");
@@ -50,7 +53,7 @@ function isLoggedIn(req, res, next) {
 }
 
 // Get user by his id
-router.get(routeConfig.USER_ID, getUserDetails);
+router.get(routeConfig.USER_ID, findUserById);
 // Edit user details of logged in user 
 // TODO: If not logged in, redirect creates a put request but login is a post request.
 router.put(routeConfig.USER, isLoggedIn, editUserDetails);
@@ -70,8 +73,9 @@ router.post(routeConfig.JOIN_INFO, isLoggedIn, addJoinInformation);
 router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 
 // Get all groups from database
-router.get(routeConfig.GROUPS, getAllGroups);
-
-router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
-router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
+router.get(routeConfig.GROUPS, getGroups);
+// Get group ids from database
+router.get(routeConfig.GROUP_IDS, getGroupIds);
+//router.get(routeConfig.GROUP_ID,group_controller.findGroupById);
+//router.get(routeConfig.GROUP_OCCSLOTS, group_controller.countOccSlotsForGroup);
 module.exports = router;

@@ -8,6 +8,7 @@ module.exports = {
   USERS: "/users",
   USER_TICKETS: "/tickets",
   GROUPS: "/groups",
+  GROUP_IDS: "/groups/ids",
   USER_ADDRESSES: "/addresses",
   NEW_ADDRESS: "/new_address",
   ADDRESS: "/address/:id",

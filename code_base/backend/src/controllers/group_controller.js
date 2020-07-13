@@ -10,16 +10,33 @@ const Search_Tag = require("../models/group/searchTag");
 const { body, validationResult } = require("express-validator");
 
 // Gets all groups.
-exports.getAllGroups = (req, res) => {
+exports.getGroups = (req, res) => {
 
   try {
     Group.find({}, function(err, result) {
         res.status(200).send(result)
-    })
+    }).limit( req.body.get('number') )
+		.sort( '-createdOn' )
   } catch (err) {
       err = { errors: [{ msg: err }] };
       return res.status(400).json(err);
   }
+};
+
+// Gets all groups.
+exports.getGroupIds = (req, res) => {
+
+	try {
+		Group.find({}, function(err, result) {
+			res.status(200).send(result)
+		}).select('id')
+			.limit( 10 )
+			.sort( '-createdOn' )
+	} catch (err) {
+		err = { errors: [{ msg: err }] };
+		return res.status(400).json(err);
+	}
+
 };
 
 /**
