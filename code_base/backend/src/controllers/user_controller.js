@@ -25,6 +25,10 @@ exports.register = function (req, res) {
       });
 };
 
+exports.getCurrentUser = (req,res) => {
+  return req.user;
+};
+
 /**
  * REST function
  * Finds User details by id given in req

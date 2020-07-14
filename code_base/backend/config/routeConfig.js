@@ -26,6 +26,8 @@ module.exports = {
   NEW_ADDRESS: "/new_address",
   ADDRESS: "/address/:id",
   JOIN_INFO: "/join/:groupId",
+  JOININFOS_FOR_GROUP: "/group/joinInformation/byGroupId",
+  GET_JOIN_INFORMATION: "/joinInformation/:id",
   CREATE_GROUP: "/group/create",
   CURRENCY: "/currency",
   GROUP_ID: "/group",

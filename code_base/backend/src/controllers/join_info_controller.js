@@ -122,3 +122,19 @@ exports.getJoinedGroups = async (req, res) => {
     return res.status(400).json(err);
   }
 };
+
+exports.getJoinInfoByGroup = async function (req, res) {
+  try {
+    const joinInfo = await Join_Info.find({group: req.query.groupId}).populate("joinedUser");
+    if(!joinInfo){
+      res.status = 404;
+      return res.send();
+    }
+    res.status = 200;
+    return res.send(joinInfo);
+  }catch (e) {
+    res.status =400;
+    res.send({error: e});
+  }
+};
+
