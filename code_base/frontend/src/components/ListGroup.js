@@ -9,6 +9,8 @@ import JoinGroupButton from "./GroupJoinButton";
 
 import GroupService from "../services/GroupService";
 import Spinner from "react-bootstrap/Spinner";
+import GroupDetailModal from "./GroupDetailModal";
+import GroupDetailButton from "./GroupDetailButton";
 
 class ListGroup extends React.Component {
 
@@ -45,7 +47,8 @@ class ListGroup extends React.Component {
                     </div>
                   </Col>
                   <Col xs={1} className="float-sm-right">
-                    <JoinGroupButton group={this.state.group}/>
+                    {/*<JoinGroupButton group={this.state.group}/>*/}
+                    <GroupDetailButton group={this.state.group}/>
                   </Col>
                 </Row>
                 <Row>

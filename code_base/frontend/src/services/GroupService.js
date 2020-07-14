@@ -124,4 +124,17 @@ export default class GroupService {
     })
   }
 
+  static async joinInfosForGroup(groupId){
+    return new Promise((resolve, reject) => {
+      HttpService.get(GroupService.baseURL() + "joinInformation/byGroupId?groupId="+groupId,
+          function (data) {
+            console.log("Got JoinInfo: "+data);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
 }

@@ -5,7 +5,10 @@ const JoinInformationSchema = new mongoose.Schema(
 		//group
 		group: mongoose.Types.ObjectId,
 		//user
-		joinedUser: mongoose.Types.ObjectId,
+		joinedUser: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "user",
+		},
 
 		payed: Boolean,
       payer_id: String,

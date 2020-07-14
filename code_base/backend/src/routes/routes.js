@@ -71,6 +71,7 @@ router.get(routeConfig.USER_ADDRESSES, isLoggedIn, getUserAddresses);
 router.post(routeConfig.NEW_ADDRESS, isLoggedIn, addAddress);
 // Edit an address of logged in user
 router.put(routeConfig.ADDRESS, isLoggedIn, editAddress);
+router.get(routeConfig.JOIN_INFO, )
 // Add a join information for logged in user
 router.post(routeConfig.JOIN_INFO, isLoggedIn, addJoinInformation);
 // Edit a join information for logged in user
@@ -80,9 +81,12 @@ router.put(routeConfig.JOIN_INFO, isLoggedIn, editJoinInformation);
 router.get(routeConfig.GROUP, getAllGroups);
 
 router.get(routeConfig.GROUP_OCCSLOTS, join_info_controller.countOccSlotsForGroup);
+router.get(routeConfig.GET_JOIN_INFORMATION, )
 
 router.post(routeConfig.GROUP_INITJOIN, isLoggedIn, group_controller.initGroupJoin);
 router.post(routeConfig.GROUP_REVERT_INITJOIN, isLoggedIn, group_controller.revertInitGroupJoin);
 router.get(routeConfig.GROUP_VERFIY_PAYMENT, isLoggedIn, group_controller.verifyPayment);
+
+router.get(routeConfig.JOININFOS_FOR_GROUP, join_info_controller.getJoinInfoByGroup);
 
 module.exports = router;

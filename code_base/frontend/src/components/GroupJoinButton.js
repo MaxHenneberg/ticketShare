@@ -23,6 +23,7 @@ class GroupJoinButton extends React.Component {
 
   openGroupJoinModal() {
     this.setState({groupJoinModalVisible: true});
+    this.props.onClick();
   }
 
   calcPricePerPerson() {
@@ -48,7 +49,7 @@ class GroupJoinButton extends React.Component {
     return (
         <div>
           <Button variant={"primary"}
-                  onClick={() => this.openGroupJoinModal()}>X</Button>
+                  onClick={() => this.openGroupJoinModal()}>Join!</Button>
           <GroupJoinModal
               visible={this.state.groupJoinModalVisible} group={this.state.group} pricePerPerson={this.state.pricePerPerson}
               onClose={this.handleClose} onAbort={this.handleAbort}/>

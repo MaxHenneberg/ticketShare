@@ -5,7 +5,9 @@ import Modal from "react-bootstrap/Modal";
 import PaymentModalContent from "./PaymentModalContent";
 import GroupJoinSuccessModalContent from "./GroupJoinSuccessModalContent";
 import GroupService from "../services/GroupService";
+import styled from "styled-components";
 
+import "./GroupInfoModal.css"
 class GroupJoinModal extends React.Component {
 
   constructor(props) {
@@ -69,7 +71,7 @@ class GroupJoinModal extends React.Component {
 
   render() {
     return (
-        <Modal centered animation={false} backdrop="static"
+        <Modal centered animation={false} backdrop="static" backdropClassName={"backdrop"}
                show={this.props.visible} onHide={() => this.reset()}>
           {this.renderBody()}
         </Modal>

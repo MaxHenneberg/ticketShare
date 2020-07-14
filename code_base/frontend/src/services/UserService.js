@@ -18,6 +18,33 @@ export default class UserService {
     });
   }
 
+  static async getCurrentUser(){
+     this.login();
+    return new Promise((resolve, reject) => {
+      HttpService.get(ApiEndpoint + "users/cookie",
+          function (data) {
+            console.log("Got User: " + data._id);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
+  static async getJoinInformation(id){
+    return new Promise((resolve, reject) => {
+      HttpService.get(ApiEndpoint + "join/"+id,
+          function (data) {
+            console.log("Got Join Info: " + data);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
   static async getAddress() {
     this.login();
     return new Promise((resolve, reject) => {
