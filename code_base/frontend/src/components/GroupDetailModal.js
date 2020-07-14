@@ -12,7 +12,7 @@ import JoinedUserCard from "./JoinedUserCard";
 function isUserJoined(user, joinInformation) {
   console.log(joinInformation);
   for (const info of joinInformation) {
-    console.log("INFO:"+info);
+    console.log("INFO :"+info);
     if (info.joinedUser._id === user._id) {
       return true;
     }
