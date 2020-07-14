@@ -19,6 +19,7 @@
        if(this.checkIfUnauthorized(resp)) {
          window.location = '/#/';
        } else {
+         console.log(resp);
          resp = await resp.json();
        }
 

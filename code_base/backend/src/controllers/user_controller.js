@@ -117,6 +117,7 @@ exports.getUserTickets = (req, res) => {
  * @param res Response
  */
 exports.getUserAddresses = (req, res) => {
+  console.log("Get Address by User");
   try {
     Address.find({"user": req.user._id}, function(err, result) {
         res.status(200).send(result)

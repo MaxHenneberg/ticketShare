@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 const cookieParser = require('cookie-parser')
+const cronController = require("./src/controllers/cronjob_controller");
 
 // db config get from config folder
 const config = require("./config/keys");
@@ -35,6 +36,8 @@ app.use(passport.session());
 
 
 app.use(cors({credentials: true, origin: 'http://localhost:8000'}));
+
+cronController.setupCrons();
 
 // routes
 app.use("/", require("./src/routes/routes"));

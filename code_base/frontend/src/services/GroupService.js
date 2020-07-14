@@ -7,6 +7,20 @@ export default class GroupService {
 
     static baseURL() {return 'http://localhost:8080/group/' }
 
+  // static async login() {
+  //   console.log("Test Login");
+  //   let data = {username: "max", "password": "testPassword-123"};
+  //   return new Promise((resolve, reject) => {
+  //     HttpService.post("http://localhost:8080/users/login", data,
+  //         function (result) {
+  //           resolve(result);
+  //         }, function (textStatus) {
+  //           console.error("Error in Get:" + textStatus);
+  //           reject(textStatus);
+  //         });
+  //   });
+  // }
+
     static getGroup(id) {
         return new Promise((resolve, reject) => {
             var url = GroupService.baseURL()+id;
@@ -56,5 +70,58 @@ export default class GroupService {
             });
         });
     }
+
+  static async initGroupJoin(id) {
+    console.log("Init Group Join");
+    const body = {group: id};
+    return new Promise((resolve, reject) => {
+      HttpService.post(GroupService.baseURL() + "join/initJoin", body,
+          function (data) {
+            console.log("GroupJoin:" + data._id);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Post:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
+  static async revertInitGroupJoin(id) {
+    console.log("Revert Init Group Join");
+    const body = {group: id};
+    return new Promise((resolve, reject) => {
+      HttpService.post(GroupService.baseURL() + "join/revertInitJoin", body,
+          function (data) {
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Post:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
+  static async verifyPayment(orderId, payerId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(GroupService.baseURL() +`join/verifyPayment?orderId=${orderId}&payerId=${payerId}`,
+          function (data) {
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
+  static async countOccSlots(groupId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(GroupService.baseURL() + 'info/occSlots?group=' + groupId,
+          function (data) {
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
 
 }

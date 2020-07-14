@@ -1,0 +1,11 @@
+.occupiedSlot{
+  color: red !important;
+}
+
+.freeSlot{
+  color: green !important;
+}
+
+.modalRow{
+  margin-bottom: 5px !important;
+}

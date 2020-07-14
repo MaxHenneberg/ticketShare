@@ -11,12 +11,16 @@ module.exports = {
   //group routers
   GROUP: "/groups/all",
 	GET_GROUP: "/group/:id",
-  GROUP_OCCSLOTS: "/group/occSlots",
 
   GROUP_FREE_SLOTS: "/group/info/freeslots/:id",
   GetCreatedGroups: "/user/createdgroups/:user_id",
   GetJoinedGroups: "/user/joinedgroups/:user_id",
-  
+
+  GROUP_OCCSLOTS: "/group/info/occSlots",
+  GROUP_INITJOIN: "/group/join/initJoin",
+  GROUP_REVERT_INITJOIN: "/group/join/revertInitJoin",
+  GROUP_VERFIY_PAYMENT: "/group/join/verifyPayment",
+
   //end group routers
   USER_ADDRESSES: "/addresses",
   NEW_ADDRESS: "/new_address",
@@ -25,5 +29,4 @@ module.exports = {
   CREATE_GROUP: "/group/create",
   CURRENCY: "/currency",
   GROUP_ID: "/group",
-  GROUP_OCCSLOTS: "/group/occSlots"
 };

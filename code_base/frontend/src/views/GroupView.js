@@ -4,7 +4,7 @@ import React from 'react';
 
 import UserLogin from '../components/Legacy/UserLogin';
 
-import UserService from '../services/UserService';
+import UserService from '../services/legacy/UserService';
 import GroupJoinButton from "../components/GroupJoinButton";
 
 
