@@ -210,6 +210,7 @@ exports.getOne = async (req, res) => {
 function getOneImpl(id) {
   return Group.findById(id)
   .populate("ticket")
+  .populate("creator")
   .populate({path: "ticket", populate: {path: "eventInformation"}})
   .populate({path: "ticket", populate: {path: "currency"}});
 }

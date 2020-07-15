@@ -35,6 +35,7 @@
   background-color: gray;
   border-radius: 60px;
 
+  margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
   width: 60px;
@@ -53,11 +54,41 @@
   overflow-x: auto;
 }
 
-.greenIcon{
-  color: green !important;
+.green{
+  color: green;
+}
+
+.orange{
+  color: orange;
+}
+
+.red{
+  color: red;
 }
 
 .redIcon{
   color: red !important;
   transform: rotate(45deg);
+}
+
+.userCard{
+  cursor: pointer;
+}
+.userCard:hover{
+  background-color: lightgrey;
+}
+
+.ticketTradeModalUserCardBody{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.buttonWrapper{
+  width: fit-content;
+}
+.deliverArrow{
+  padding-top: 50%;
+  padding-bottom: 50%;
+
+  color: black;
 }

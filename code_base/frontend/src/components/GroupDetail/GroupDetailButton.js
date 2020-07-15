@@ -3,8 +3,8 @@
 import React from 'react';
 import Button from "react-bootstrap/Button";
 import GroupDetailModal from "./GroupDetailModal";
-import UserService from "../services/UserService";
-import GroupService from "../services/GroupService";
+import UserService from "../../services/UserService";
+import GroupService from "../../services/GroupService";
 
 class GroupDetailButton extends React.Component {
 
@@ -16,6 +16,8 @@ class GroupDetailButton extends React.Component {
       infoVisible: false,
       pricePerPerson: 0
     }
+
+    this.onHide = this.onHide.bind(this);
   }
 
   async calcPricePerPerson() {
@@ -34,12 +36,16 @@ class GroupDetailButton extends React.Component {
     }
   }
 
+  onHide(){
+    this.setState({infoVisible: false});
+  }
+
   render() {
     return (
         <div>
           <Button variant={"primary"}
                   onClick={() => this.setState({infoVisible: true})}>X</Button>
-          <GroupDetailModal visible={this.state.infoVisible} group={this.props.group} user={this.state.user} joinInformation={this.state.joinInfos} pricePerPerson={this.state.pricePerPerson}/>
+          <GroupDetailModal visible={this.state.infoVisible} group={this.props.group} user={this.state.user} joinInformation={this.state.joinInfos} pricePerPerson={this.state.pricePerPerson} onHideCallback={this.onHide}/>
         </div>
     );
   }

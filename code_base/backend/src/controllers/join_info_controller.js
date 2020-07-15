@@ -25,7 +25,7 @@ exports.validate = (method) => {
   }
 };
 
-exports.createJoinInformationImpl =function (userId, groupId) {
+exports.createJoinInformationImpl = function (userId, groupId) {
   const joinInformation = {
     group: groupId,
     joinedUser: userId,
@@ -35,7 +35,7 @@ exports.createJoinInformationImpl =function (userId, groupId) {
 
     showPersonalInformation: false
   };
-	return Join_Info.create(joinInformation);
+  return Join_Info.create(joinInformation);
 };
 
 // Gets free slots for a given group ID.
@@ -72,9 +72,9 @@ exports.getFreeSlots = async (req, res) => {
   }
 };
 
-exports.countOccSlotsForGroupImpl = function(id){
+exports.countOccSlotsForGroupImpl = function (id) {
   return Join_Info.countDocuments(
-      {group:id});
+      {group: id});
 };
 
 exports.countOccSlotsForGroup = function (req, res) {
@@ -95,8 +95,6 @@ exports.countOccSlotsForGroup = function (req, res) {
     return res.status(400).send({error: error});
   });
 };
-
-
 
 /**
  * Get groups joined by user based on user id. Returns list of groupids
@@ -126,15 +124,34 @@ exports.getJoinedGroups = async (req, res) => {
 exports.getJoinInfoByGroup = async function (req, res) {
   try {
     const joinInfo = await Join_Info.find({group: req.query.groupId}).populate("joinedUser");
-    if(!joinInfo){
+    if (!joinInfo) {
       res.status = 404;
       return res.send();
     }
     res.status = 200;
     return res.send(joinInfo);
-  }catch (e) {
-    res.status =400;
+  } catch (e) {
+    res.status = 400;
     res.send({error: e});
+  }
+};
+
+exports.updateJoinInfo = async function (req, res) {
+  try {
+    let updatedJoinInfo;
+    if (req.query.ticketDelivered) {
+      updatedJoinInfo = await Join_Info.findOneAndUpdate({_id: req.params.id}, {ticketDelivered: true}, {new: true, useFindAndModify: false}).exec();
+    }
+    if (req.query.ticketReceived) {
+      updatedJoinInfo = await Join_Info.findOneAndUpdate({_id: req.params.id}, {ticketReceived: true}, {new: true, useFindAndModify: false}).exec();
+    }
+    console.log(updatedJoinInfo);
+    res.status = 200;
+    return res.send(updatedJoinInfo);
+  } catch (e) {
+    console.error(e);
+    res.status = 400;
+    return res.send(e);
   }
 };
 

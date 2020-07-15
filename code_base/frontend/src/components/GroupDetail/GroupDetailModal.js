@@ -5,27 +5,17 @@ import React, {useState} from "react";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalBody from "react-bootstrap/ModalBody";
 import GroupInfo from "./GroupInfo";
-import GroupJoinButton from "./GroupJoinButton";
+import GroupJoinButton from "../GroupJoinButton";
 import CardDeck from "react-bootstrap/CardDeck";
 import JoinedUserCard from "./JoinedUserCard";
-
-function isUserJoined(user, joinInformation) {
-  console.log(joinInformation);
-  for (const info of joinInformation) {
-    console.log("INFO :"+info);
-    if (info.joinedUser._id === user._id) {
-      return true;
-    }
-  }
-  return false;
-};
+import Utils from "../../utils/Util";
 
 function loggedInArea(props) {
   if (props.user) {
-    if (isUserJoined(props.user, props.joinInformation)) {
+    if (Utils.isUserJoined(props.user, props.joinInformation) || Utils.isUserCreator(props.user, props.group)) {
       let joinedInfo = [];
       for (const info of props.joinInformation) {
-        joinedInfo.push(<JoinedUserCard joinInformation={info}/>)
+        joinedInfo.push(<JoinedUserCard joinInformation={info} user={props.user} group={props.group}/>)
       }
 
       return <CardDeck className={"scrollableCardDeck"}>{joinedInfo}</CardDeck>
@@ -46,7 +36,7 @@ function loggedInArea(props) {
 function GroupDetailModal(props) {
   return (
       <Modal centered animation={false} backdrop="static" backdropClassName={"backdrop"}
-             show={props.visible}>
+             show={props.visible} onHide={props.onHideCallback}>
         <ModalHeader closeButton>
           <ModalTitle>Group Details</ModalTitle>
         </ModalHeader>
