@@ -43,9 +43,7 @@ class GroupComponent extends React.Component {
 			emptySlots: "Loading..",
 			eventStart: "Loading",
 			eventEnd: "Loading",
-			collapsed: false,
 		};
-		this.changeCollapse = this.changeCollapse_fn.bind(this);
 	}
 	componentDidMount() {
 		let id = this.props.id;
@@ -82,10 +80,7 @@ class GroupComponent extends React.Component {
 		this.setState({ emptySlots: response.free_slots });
 		return;
 	}
-	changeCollapse_fn() {
-		let current = this.state.collapsed;
-		this.setState({ collapsed: !current });
-	}
+	
 	render() {
 		return (
 			<Row>
@@ -94,19 +89,14 @@ class GroupComponent extends React.Component {
 						<Row style={{ paddingTop: "10px" }}>
 							<Col xs={8}>
 								<center>
-									<h2><b>{this.state.name}</b></h2>
+									<h2>
+										<b>{this.state.name}</b>
+									</h2>
 								</center>
 							</Col>
 							<Col>
 								<center>
-									<Button
-										variant="warning"
-										onClick={this.changeCollapse}
-										aria-controls={"collapse_" + this.props.id}
-										aria-expanded={this.state.collapsed}
-									>
-										Show Details
-									</Button>
+									<Button variant="success">+ Join Group</Button>
 								</center>
 							</Col>
 						</Row>
@@ -135,40 +125,14 @@ class GroupComponent extends React.Component {
 										</h3>
 									</center>
 								</Col>
-							</Row>
-							<br></br>
-							<Row>
 								<Col>
-									<Collapse in={this.state.collapsed}>
-										<div id={"collapse_" + this.props.id}>
-											<Row>
-												<Col>
-													<center>
-														Event Name: <h3> {this.state.ticket.eventInformation.name}</h3>
-													</center>
-												</Col>
-
-												<Col>
-													<center>
-														Event Dates:{" "}
-														<h3>
-															{" "}
-															{this.state.eventStart}
-															{" - "}
-															{this.state.eventEnd}
-														</h3>
-													</center>
-												</Col>
-												<Col>
-													<center>
-														<Button variant="success">+ Join Group</Button>
-													</center>
-												</Col>
-											</Row>
-										</div>
-									</Collapse>
+									<center>
+										Event Name: <h3> {this.state.ticket.eventInformation.name}</h3>
+									</center>
 								</Col>
 							</Row>
+							<br></br>
+							
 						</Card.Body>
 					</Card>
 				</Col>
