@@ -1,15 +1,18 @@
 import Card from "react-bootstrap/Card";
 import React from "react";
 
-import userLogo from "../../contrib/img/user.png";
+import userLogo from "../../../contrib/img/user.png";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import {CheckCircle, PlusCircle} from "react-bootstrap-icons";
+import TicketTradeModal from "./TicketDelivery/TicketTradeModal";
 
 function JoinedUserCard(props){
+  const [tradeModelVisible, setTradeModelVisible] = React.useState(false);
   return(
-      <Card className={"userCardTitle"}>
+      <div>
+      <Card className={"userCard"} onClick={() => setTradeModelVisible(true)}>
         <div className={"userCardImageWrapper"}>
         <Card.Img variant={"top"} src={userLogo} className={"userCardImage"}/>
         </div>
@@ -21,7 +24,7 @@ function JoinedUserCard(props){
                 Payed:
               </Col>
               <Col>
-                {(props.joinInformation.payed) && <CheckCircle className={"greenIcon"}/>}
+                {(props.joinInformation.payed) && <CheckCircle className={"green"}/>}
                 {(!props.joinInformation.payed) && <PlusCircle className={"redIcon"}/>}
               </Col>
             </Row>
@@ -30,7 +33,7 @@ function JoinedUserCard(props){
                 Ticket Delivered:
               </Col>
               <Col>
-                {(props.joinInformation.ticketDelivered) && <CheckCircle className={"greenIcon"}/>}
+                {(props.joinInformation.ticketDelivered) && <CheckCircle className={"green"}/>}
                 {(!props.joinInformation.ticketDelivered) && <PlusCircle className={"redIcon"}/>}
               </Col>
             </Row>
@@ -39,13 +42,15 @@ function JoinedUserCard(props){
                 Ticket Recieved:
               </Col>
               <Col>
-                {(props.joinInformation.ticketReceived) && <CheckCircle className={"greenIcon"}/>}
+                {(props.joinInformation.ticketReceived) && <CheckCircle className={"green"}/>}
                 {(!props.joinInformation.ticketReceived) && <PlusCircle className={"redIcon"}/>}
               </Col>
             </Row>
           </Card.Text>
         </Card.Body>
       </Card>
+        <TicketTradeModal visible={tradeModelVisible} joinInformation={props.joinInformation} user={props.user} group={props.group} onHideCallback={setTradeModelVisible}/>
+      </div>
   )
 }
 

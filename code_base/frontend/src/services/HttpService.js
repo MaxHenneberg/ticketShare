@@ -69,6 +69,8 @@
        let resp = await fetch(url, {
          method: 'PUT',
          headers: header,
+         withCredentials: true,
+         credentials:'include',
          body: JSON.stringify(data)
        });
 
@@ -78,18 +80,18 @@
        }
        else {
          resp = await resp.json();
+         console.log("RESP: "+resp);
        }
 
        if(resp.error) {
+         console.log("ERROR:"+resp.error)
          onError(resp.error);
        }
        else {
-         if(resp.hasOwnProperty('token')) {
-           window.localStorage['jwtToken'] = resp.token;
-         }
          onSuccess(resp);
        }
      } catch(err) {
+       console.log("ERROR:"+err)
        onError(err.message);
      }
    }

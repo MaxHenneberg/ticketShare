@@ -137,4 +137,30 @@ export default class GroupService {
     })
   }
 
+  static async deliverTicket(joinInfoId, file){
+    return new Promise((resolve, reject) => {
+      HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketDelivered=true`,{},
+          function (data) {
+            console.log("Got JoinInfo: "+data);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
+  static async receiveTicket(joinInfoId){
+    return new Promise((resolve, reject) => {
+      HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketReceived=true`,{},
+          function (data) {
+            console.log("Got JoinInfo: "+data);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
 }

@@ -5,3 +5,14 @@
 .content{
   overflow: hidden;
 }
+
+.horizontalCenter{
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.square{
+  width: fit-content;
+  padding-top: 50%;
+  padding-bottom: 50%;
+}

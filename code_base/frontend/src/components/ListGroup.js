@@ -9,8 +9,8 @@ import JoinGroupButton from "./GroupJoinButton";
 
 import GroupService from "../services/GroupService";
 import Spinner from "react-bootstrap/Spinner";
-import GroupDetailModal from "./GroupDetailModal";
-import GroupDetailButton from "./GroupDetailButton";
+import GroupDetailModal from "./GroupDetail/GroupDetailModal";
+import GroupDetailButton from "./GroupDetail/GroupDetailButton";
 
 class ListGroup extends React.Component {
 
