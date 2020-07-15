@@ -6,8 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Collapse from "react-bootstrap/Collapse";
 import GroupService from "../../services/GroupService";
+import GroupJoinButton from "../GroupJoinButton";
 
 class GroupComponent extends React.Component {
 	constructor(props) {
@@ -43,6 +43,7 @@ class GroupComponent extends React.Component {
 			emptySlots: "Loading..",
 			eventStart: "Loading",
 			eventEnd: "Loading",
+			display_join_button: false,
 		};
 	}
 	componentDidMount() {
@@ -54,6 +55,7 @@ class GroupComponent extends React.Component {
 				this.populatePricePerPerson();
 				this.convertDate();
 				this.getEmptySlots(id);
+				this.setState({display_join_button:true});
 			} catch (err) {
 				console.error(err);
 			}
@@ -66,12 +68,8 @@ class GroupComponent extends React.Component {
 	}
 	convertDate() {
 		var d = new Date(this.state.joinDeadline).toDateString().split(" ").slice(1).join(" ");
-		var d2 = new Date(this.state.ticket.eventInformation.eventStart).toDateString().split(" ").slice(1).join(" ");
-		var d3 = new Date(this.state.ticket.eventInformation.eventEnd).toDateString().split(" ").slice(1).join(" ");
 		this.setState({
 			joinDeadline: d,
-			eventStart: d2,
-			eventEnd: d3,
 		});
 		return;
 	}
@@ -80,8 +78,9 @@ class GroupComponent extends React.Component {
 		this.setState({ emptySlots: response.free_slots });
 		return;
 	}
-	
+
 	render() {
+		let display_join_button = this.state.display_join_button;
 		return (
 			<Row>
 				<Col>
@@ -95,9 +94,7 @@ class GroupComponent extends React.Component {
 								</center>
 							</Col>
 							<Col>
-								<center>
-									<Button variant="success">+ Join Group</Button>
-								</center>
+								<center>{display_join_button && <GroupJoinButton group={this.state}></GroupJoinButton>}</center>
 							</Col>
 						</Row>
 						<Card.Body>
@@ -132,7 +129,6 @@ class GroupComponent extends React.Component {
 								</Col>
 							</Row>
 							<br></br>
-							
 						</Card.Body>
 					</Card>
 				</Col>
