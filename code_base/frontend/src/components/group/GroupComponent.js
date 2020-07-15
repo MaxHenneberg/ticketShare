@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import GroupService from "../../services/GroupService";
 import GroupJoinButton from "../GroupJoinButton";
 
@@ -86,14 +85,13 @@ class GroupComponent extends React.Component {
 				<Col>
 					<Card>
 						<Row style={{ paddingTop: "10px" }}>
+							<Col xs={1}></Col>
 							<Col xs={8}>
-								<center>
 									<h2>
 										<b>{this.state.name}</b>
 									</h2>
-								</center>
 							</Col>
-							<Col>
+							<Col xs={3}>
 								<center>{display_join_button && <GroupJoinButton group={this.state}></GroupJoinButton>}</center>
 							</Col>
 						</Row>
