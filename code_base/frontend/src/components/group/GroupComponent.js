@@ -51,6 +51,7 @@ class GroupComponent extends React.Component {
 		(async () => {
 			try {
 				let group = await GroupService.getGroup(id);
+				console.log(`In Component ${group.name}`);
 				this.setState(group);
 				this.populatePricePerPerson();
 				this.convertDate();

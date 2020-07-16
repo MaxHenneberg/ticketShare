@@ -1,18 +1,62 @@
-.advertisementComponent{
+.advertisementComponent {
   background-color: red !important;
+  max-height: 80vh !important;
+  height: 80vh;
+  width: 10vw;
+
+  margin-top: 5vh;
+  margin-bottom: auto;
+  margin-right: 2vw;
 }
 
-.content{
-  overflow: hidden;
+.content {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
-.horizontalCenter{
+.views{
+  width: 80vw;
+  height: 90vh;
+  max-height: 90vh;
+}
+
+.horizontalCenter {
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
-.square{
+.square {
   width: fit-content;
   padding-top: 50%;
   padding-bottom: 50%;
+}
+
+body {
+  height: 100vh !important;
+  width: 100vw !important;
+}
+
+#app {
+  height: 100vh !important;
+  width: 100vw !important;
+}
+
+.inheritHeight{
+  height: 100% !important;
+  max-height: 100%;
+}
+
+.inheritHeight > .row{
+  max-height: 100% !important;
+}
+
+.scrollY{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.searchResult{
+  overflow-y: auto;
+  overflow-x: hidden;
 }

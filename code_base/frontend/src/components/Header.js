@@ -14,7 +14,7 @@ class Header extends React.Component {
 
   render() {
     return (
-        <Navbar bg="primary">
+        <Navbar bg="primary" sticky={"top"}>
           <Navbar.Brand>
             <img alt="" src="" width="100" height="30"
                  className="d-inline-block align-top"/>

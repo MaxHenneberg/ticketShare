@@ -2,10 +2,12 @@ import HttpService from './HttpService';
 
 export default class GroupService {
 
-    constructor(){
-    }
+  constructor() {
+  }
 
-    static baseURL() {return 'http://localhost:8080/group/' }
+  static baseURL() {
+    return 'http://localhost:8080/group/'
+  }
 
   // static async login() {
   //   console.log("Test Login");
@@ -21,55 +23,54 @@ export default class GroupService {
   //   });
   // }
 
-    static getGroup(id) {
-        return new Promise((resolve, reject) => {
-            var url = GroupService.baseURL()+id;
-            console.log(url);
-            HttpService.get(url, function(data) {
-                if(data != undefined || Object.keys(data).length !== 0) {
-                    resolve(data);
-                }
-                else {
-                    reject('Error while retrieving group');
-                }
-            }, function(textStatus) {
-                reject(textStatus);
-            });
-        });
-    }
-    static getFreeSlots(id){
-        return new Promise((resolve, reject) => {
-            var url = GroupService.baseURL()+"info/freeslots/"+id;
-            console.log(url);
-            HttpService.get(url, function(data) {
-                if(data != undefined || Object.keys(data).length !== 0) {
-                    resolve(data);
-                }
-                else {
-                    reject('Error while retrieving group');
-                }
-            }, function(textStatus) {
-                reject(textStatus);
-            });
-        });
+  static getGroup(id) {
+    return new Promise((resolve, reject) => {
+      var url = GroupService.baseURL() + id;
+      console.log(url);
+      HttpService.get(url, function (data) {
+        if (data != undefined || Object.keys(data).length !== 0) {
+          resolve(data);
+        } else {
+          reject('Error while retrieving group');
+        }
+      }, function (textStatus) {
+        reject(textStatus);
+      });
+    });
+  }
 
-    }
-    static createGroup(data) {
-        return new Promise((resolve, reject) => {
-            var url = GroupService.baseURL()+"create";
-            console.log(url);
-            HttpService.post(url, data, function(data) {
-                if(data != undefined || Object.keys(data).length !== 0) {
-                    resolve(data);
-                }
-                else {
-                    reject('Error while retrieving group');
-                }
-            }, function(textStatus) {
-                reject(textStatus);
-            });
-        });
-    }
+  static getFreeSlots(id) {
+    return new Promise((resolve, reject) => {
+      var url = GroupService.baseURL() + "info/freeslots/" + id;
+      console.log(url);
+      HttpService.get(url, function (data) {
+        if (data != undefined || Object.keys(data).length !== 0) {
+          resolve(data);
+        } else {
+          reject('Error while retrieving group');
+        }
+      }, function (textStatus) {
+        reject(textStatus);
+      });
+    });
+
+  }
+
+  static createGroup(data) {
+    return new Promise((resolve, reject) => {
+      var url = GroupService.baseURL() + "create";
+      console.log(url);
+      HttpService.post(url, data, function (data) {
+        if (data != undefined || Object.keys(data).length !== 0) {
+          resolve(data);
+        } else {
+          reject('Error while retrieving group');
+        }
+      }, function (textStatus) {
+        reject(textStatus);
+      });
+    });
+  }
 
   static async initGroupJoin(id) {
     console.log("Init Group Join");
@@ -102,7 +103,7 @@ export default class GroupService {
 
   static async verifyPayment(orderId, payerId) {
     return new Promise((resolve, reject) => {
-      HttpService.get(GroupService.baseURL() +`join/verifyPayment?orderId=${orderId}&payerId=${payerId}`,
+      HttpService.get(GroupService.baseURL() + `join/verifyPayment?orderId=${orderId}&payerId=${payerId}`,
           function (data) {
             resolve(data);
           }, function (textStatus) {
@@ -124,11 +125,11 @@ export default class GroupService {
     })
   }
 
-  static async joinInfosForGroup(groupId){
+  static async joinInfosForGroup(groupId) {
     return new Promise((resolve, reject) => {
-      HttpService.get(GroupService.baseURL() + "joinInformation/byGroupId?groupId="+groupId,
+      HttpService.get(GroupService.baseURL() + "joinInformation/byGroupId?groupId=" + groupId,
           function (data) {
-            console.log("Got JoinInfo: "+data);
+            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);
@@ -137,11 +138,11 @@ export default class GroupService {
     })
   }
 
-  static async deliverTicket(joinInfoId, file){
+  static async deliverTicket(joinInfoId, file) {
     return new Promise((resolve, reject) => {
-      HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketDelivered=true`,{},
+      HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketDelivered=true`, {},
           function (data) {
-            console.log("Got JoinInfo: "+data);
+            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);
@@ -150,11 +151,28 @@ export default class GroupService {
     })
   }
 
-  static async receiveTicket(joinInfoId){
+  static async receiveTicket(joinInfoId) {
     return new Promise((resolve, reject) => {
-      HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketReceived=true`,{},
+      HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketReceived=true`, {},
           function (data) {
-            console.log("Got JoinInfo: "+data);
+            console.log("Got JoinInfo: " + data);
+            resolve(data);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    })
+  }
+
+  static async search(searchFields, limit) {
+    let query = "";
+    Object.keys(searchFields).filter(key => searchFields[key]).forEach(key => (query += `${key}=${searchFields[key]}&`));
+    query = query.substring(0, query.length - 1);
+    console.log(query);
+    return new Promise((resolve, reject) => {
+      HttpService.get( `http://localhost:8080/groups/search?${query}&limit=${limit}`,
+          function (data) {
+            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);

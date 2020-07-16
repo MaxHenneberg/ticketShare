@@ -372,3 +372,53 @@ exports.verifyPayment = async function (req, res) {
 
 };
 
+exports.searchGroup = async function (req, res) {
+  console.log("searchGroup");
+  const groupList = await searchGroupImpl(req.query);
+  if(!groupList){
+    res.status = 200;
+    return res.send([]);
+  }
+  // console.log(groupList);
+  res.status = 200;
+  return res.send(groupList);
+};
+
+async function searchGroupImpl(query) {
+  console.log("QUERY:" + query);
+
+  let filterObject = {};
+  if (query.groupName) {
+    Object.assign(filterObject, {name: {$regex: `${query.groupName}.*`}});
+  }
+  if (query.joinDeadline) {
+    Object.assign(filterObject, {joinDeadline: query.joinDeadline});
+  }
+  try {
+    let preFilter = Group.find(filterObject);
+    let limit = Number.parseInt(query.limit);
+    if(Number.isInteger(limit)){
+      preFilter = preFilter.limit(limit);
+    }
+    preFilter = await preFilter.populate("creator").populate("ticket").populate({path: "ticket", populate: {path: "eventInformation"}}).exec();
+    if (query.creator) {
+      preFilter = preFilter.filter(e => (e.creator.name.includes(query.creator)));
+    }
+    if (query.eventName || query.eventStart || query.eventEnd) {
+      if (query.eventName) {
+        preFilter = preFilter.filter(e => (e.ticket.eventInformation.name.includes(query.eventName)));
+      }
+      if (query.eventStart) {
+        preFilter = preFilter.filter(e => (e.ticket.eventInformation.eventStart === query.eventStart));
+      }
+      if (query.eventEnd) {
+        preFilter = preFilter.filter( e => (e.ticket.eventInformation.eventEnd === query.eventEnd));
+      }
+    }
+    return preFilter;
+  }catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+

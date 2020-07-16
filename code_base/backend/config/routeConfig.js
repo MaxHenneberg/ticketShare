@@ -31,4 +31,5 @@ module.exports = {
   CREATE_GROUP: "/group/create",
   CURRENCY: "/currency",
   GROUP_ID: "/group",
+  GROUPS_SEARCH: "/groups/search"
 };
