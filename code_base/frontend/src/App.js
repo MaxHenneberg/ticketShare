@@ -34,25 +34,24 @@ export default class App extends React.Component {
 
   render() {
     return (
-        <div>
+        <div className="content">
           <Header/>
-          <div className="content h d-flex flex-column">
-            <Row>
-              <Col xs={10}>
-                <Router>
-                  <Switch>
-                    //...route == route.component = component,
-                    route.path = path,
-                    route.exact= exact
-                    {this.state.routes.map(
-                        (route, i) => (
-                            <Route key={i} {...route}/>))}
-                  </Switch>
-                </Router>
-              </Col>
-              <Col xs={2} className="advertisementComponent">
-              </Col>
-            </Row>
+          <div>
+            <div className={"float-sm-left views"}>
+              <Router>
+                <Switch>
+                  //...route == route.component = component,
+                  route.path = path,
+                  route.exact= exact
+                  {this.state.routes.map(
+                      (route, i) => (
+                          <Route key={i} {...route}/>))}
+                </Switch>
+              </Router>
+            </div>
+            <div className={"float-sm-right advertisementComponent"}>
+              <Col xs={2}/>
+            </div>
           </div>
         </div>
     );
