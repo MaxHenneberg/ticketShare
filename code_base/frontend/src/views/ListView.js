@@ -69,7 +69,11 @@ export class ListView extends React.Component {
               <Col xs={1} className={"inheritHeight"}/>
               <Col xs={10} className={"inheritHeight"}>
                 <div className={"searchResult"}>
-                  {this.state.groups && !this.state.searching && this.renderGroups()}
+                  {this.state.groups && (this.state.groups.length > 0) && !this.state.searching && this.renderGroups()}
+                  {this.state.groups && (this.state.groups.length==0) && !this.state.searching &&
+                  <Center>
+                    <div>No Result find for given Parameters!</div>
+                  </Center>}
                   {this.state.searching &&
                   <Center>
                     <Spinner animation="border"/>

@@ -39,7 +39,7 @@ passport.serializeUser(function (user, done) {
  * Standard Passport deserialization of User from Session
  */
 passport.deserializeUser(function (id, done) {
-  console.log("Try to deserializeUser: " + id);
+  // console.log("Try to deserializeUser: " + id);
   User.findById(id, function (err, user) {
     //console.log("Deserialized User: "+user);
     done(err, user);
