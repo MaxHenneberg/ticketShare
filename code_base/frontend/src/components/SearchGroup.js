@@ -14,6 +14,7 @@ import {ChevronRight, ChevronDown} from "react-bootstrap-icons"
 import GroupService from "../services/GroupService";
 
 import "./ListGroup.css";
+import FormText from "react-bootstrap/FormText";
 
 class SearchGroup extends React.Component {
 
@@ -25,6 +26,8 @@ class SearchGroup extends React.Component {
       searchFields: {
         groupName: null,
         creator: null,
+        pricePerPerson: 0,
+        freeSlots: null,
         joinDeadline: null,
         eventName: null,
         eventStart: null,
@@ -60,6 +63,16 @@ class SearchGroup extends React.Component {
               <FormGroup as={Col}>
                 <FormLabel>Group Name</FormLabel>
                 <FormControl placeholder={"Group Name"} onChange={(event) => this.handleFormInputDebounced("groupName", event.target.value)}/>
+              </FormGroup>
+            </Form.Row>
+            <Form.Row>
+              <FormGroup as={Col}>
+                <FormLabel>Free Slots left</FormLabel>
+                <FormControl placeholder={"Free Slots"} type={"number"} onChange={(event) => this.handleFormInputDebounced("freeSlots", event.target.value)}/>
+              </FormGroup>
+              <FormGroup as={Col}>
+                <FormLabel>Max Price</FormLabel>
+                <FormControl placeholder={"Max Price"} type={"number"} onChange={(event) => this.handleFormInputDebounced("pricePerPerson", event.target.value)}/>
               </FormGroup>
             </Form.Row>
             <Form.Row>

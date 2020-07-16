@@ -59,4 +59,8 @@ body {
 .searchResult{
   overflow-y: auto;
   overflow-x: hidden;
+
+  padding: 10px;
+  border: solid lightgrey;
+  border-radius: 5px;
 }
