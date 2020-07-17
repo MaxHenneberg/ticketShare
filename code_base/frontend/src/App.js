@@ -41,7 +41,6 @@ export default class App extends React.Component {
   }
 
   async updateUser(user) {
-    console.log("UPDATE USER: "+user._id);
     let userContext = this.state.userContext;
     userContext.user = user;
     await this.setState({userContext: userContext});

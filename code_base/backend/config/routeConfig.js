@@ -1,5 +1,6 @@
 module.exports = {
   USERS_LOGIN: "/users/login",
+  USERS_LOGOUT: "/users/logout",
   USER_LOGIN_FAIL: "/users/login/fail",
   USERS_REGISTER: "/users/register",
   USERS_COOKIE: "/users/cookie",

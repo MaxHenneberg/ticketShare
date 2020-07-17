@@ -33,6 +33,12 @@ router.post(routeConfig.USERS_LOGIN, passport.authenticate('local'), function (r
   res.status = 200;
   res.send(req.user);
 });
+router.post(routeConfig.USERS_LOGOUT, function (req, res) {
+  req.logout();
+  res.status = 200;
+  res.send({});
+});
+
 router.post(routeConfig.USERS_REGISTER, user_controller.register);
 // router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
 // router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.getAll);
