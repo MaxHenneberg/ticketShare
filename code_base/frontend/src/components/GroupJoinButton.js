@@ -35,7 +35,8 @@ class GroupJoinButton extends React.Component {
     this.calcPricePerPerson()
   }
 
-  async handleClose() {
+  async handleClose(joinInformation) {
+    this.props.callback(joinInformation);
     this.setState({groupJoinModalVisible: false});
   }
 

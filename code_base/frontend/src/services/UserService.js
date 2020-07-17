@@ -4,9 +4,10 @@ const ApiEndpoint = "http://localhost:8080/";
 
 export default class UserService {
 
-  static async login() {
+  static async login(username, password) {
     console.log("Test Login");
-    let data = {username: "max", "password": "testPassword-123"};
+    // let data = {username: "max", "password": "testPassword-123"};
+    let data = {username: username, "password": password}
     return new Promise((resolve, reject) => {
       HttpService.post("http://localhost:8080/users/login", data,
           function (result) {
@@ -18,8 +19,20 @@ export default class UserService {
     });
   }
 
+  static async logout() {
+    console.log("Test Logout");
+    return new Promise((resolve, reject) => {
+      HttpService.post("http://localhost:8080/users/logout", {},
+          function (result) {
+            resolve(result);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    });
+  }
+
   static async getCurrentUser(){
-     this.login();
     return new Promise((resolve, reject) => {
       HttpService.get(ApiEndpoint + "users/cookie",
           function (data) {

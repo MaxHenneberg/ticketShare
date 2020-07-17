@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import GroupService from "../../services/GroupService";
 import GroupJoinButton from "../GroupJoinButton";
+import GroupDetailButton from "../GroupDetail/GroupDetailButton";
 
 class GroupComponent extends React.Component {
 	constructor(props) {
@@ -50,6 +51,7 @@ class GroupComponent extends React.Component {
 		(async () => {
 			try {
 				let group = await GroupService.getGroup(id);
+				console.log(`In Component ${group.name}`);
 				this.setState(group);
 				this.populatePricePerPerson();
 				this.convertDate();
@@ -91,8 +93,13 @@ class GroupComponent extends React.Component {
 										<b>{this.state.name}</b>
 									</h2>
 							</Col>
-							<Col xs={3}>
-								<center>{display_join_button && <GroupJoinButton group={this.state}></GroupJoinButton>}</center>
+							<Col>
+							{display_join_button &&
+								// <GroupJoinButton group={this.state}></GroupJoinButton>
+										<div className={"float-sm-right margin-right-medium"} >
+										<GroupDetailButton group={this.state}/>
+										</div>
+								}
 							</Col>
 						</Row>
 						<Card.Body>

@@ -14,7 +14,7 @@ const {
   editJoinInformation,
   getCreatedGroups,
 } = require('../controllers/user_controller');
-const { getAllGroups } = require('../controllers/group_controller');
+const {getAllGroups} = require('../controllers/group_controller');
 
 // Require controller modules.
 const user_controller = require("../controllers/user_controller");
@@ -29,21 +29,25 @@ router.get("/", (req, res) => res.send("Welcome"));
 // Register & Login & Cookies
 router.get(routeConfig.USERS_COOKIE, auth_controller.checkLogin("/"), user_controller.findFromCookie);
 router.get(routeConfig.USER_LOGIN_FAIL, auth_controller.loginFail);
-router.post(routeConfig.USERS_LOGIN,
-    passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: routeConfig.USER_LOGIN_FAIL,
-      failureFlash: true
-    }));
+router.post(routeConfig.USERS_LOGIN, passport.authenticate('local'), function (req, res) {
+  res.status = 200;
+  res.send(req.user);
+});
+router.post(routeConfig.USERS_LOGOUT, function (req, res) {
+  req.logout();
+  res.status = 200;
+  res.send({});
+});
+
 router.post(routeConfig.USERS_REGISTER, user_controller.register);
 // router.post(routeConfig.CREATE_GROUP, auth_controller.checkLogin("/"), group_controller.validate('create'), group_controller.create);
 // router.get(routeConfig.CURRENCY, auth_controller.checkLogin("/"), currency_controller.getAll);
 // router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
 router.get(routeConfig.CURRENCY, currency_controller.getAll);
 router.post(routeConfig.CREATE_GROUP, group_controller.validate('create'), group_controller.create);
-router.get(routeConfig.GET_GROUP, group_controller.validate('getOne'),group_controller.getOne);
+router.get(routeConfig.GET_GROUP, group_controller.validate('getOne'), group_controller.getOne);
 // get free slots left of a group
-router.get(routeConfig.GROUP_FREE_SLOTS, join_info_controller.validate('getFreeSlots'),join_info_controller.getFreeSlots);
+router.get(routeConfig.GROUP_FREE_SLOTS, join_info_controller.validate('getFreeSlots'), join_info_controller.getFreeSlots);
 // get user's created groups
 router.get(routeConfig.GetCreatedGroups, getCreatedGroups);
 router.get(routeConfig.GetJoinedGroups, join_info_controller.getJoinedGroups);
@@ -82,6 +86,8 @@ router.get(routeConfig.GROUP, getAllGroups);
 
 router.get(routeConfig.GROUP_OCCSLOTS, join_info_controller.countOccSlotsForGroup);
 router.put(routeConfig.JOIN_INFORMATION, join_info_controller.updateJoinInfo);
+
+router.get(routeConfig.GROUPS_SEARCH, group_controller.searchGroup);
 
 router.post(routeConfig.GROUP_INITJOIN, isLoggedIn, group_controller.initGroupJoin);
 router.post(routeConfig.GROUP_REVERT_INITJOIN, isLoggedIn, group_controller.revertInitGroupJoin);

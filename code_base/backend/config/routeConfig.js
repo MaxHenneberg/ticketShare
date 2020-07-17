@@ -1,5 +1,6 @@
 module.exports = {
   USERS_LOGIN: "/users/login",
+  USERS_LOGOUT: "/users/logout",
   USER_LOGIN_FAIL: "/users/login/fail",
   USERS_REGISTER: "/users/register",
   USERS_COOKIE: "/users/cookie",
@@ -31,4 +32,5 @@ module.exports = {
   CREATE_GROUP: "/group/create",
   CURRENCY: "/currency",
   GROUP_ID: "/group",
+  GROUPS_SEARCH: "/groups/search"
 };

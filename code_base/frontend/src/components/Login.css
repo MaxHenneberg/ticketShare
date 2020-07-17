@@ -1,0 +1,17 @@
+.registerText{
+  text-decoration: underline currentColor;
+  cursor: pointer;
+}
+
+.buttonListElement:not(:last-child){
+  margin-bottom: 5px;
+}
+
+.popoverButton{
+  width: 100%;
+}
+
+.buttonList{
+  list-style: none;
+  padding: 0 !important;
+}

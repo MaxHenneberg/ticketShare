@@ -41,13 +41,13 @@ class GroupJoinModal extends React.Component {
     if (result) {
       console.log(result.payed);
       if (result.payed) {
-        this.setState({currentBody: "success"});
+        this.setState({currentBody: "success", joinInformation:result});
       }
     }
   }
 
   finishCallback() {
-    this.props.onClose();
+    this.props.onClose(this.state.joinInformation);
     this.setState({currentBody: "info", selectedAddress: null});
   }
 

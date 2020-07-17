@@ -47,7 +47,7 @@ class ListGroup extends React.Component {
                     </div>
                   </Col>
                   <Col xs={1} className="float-sm-right">
-                    {/*<JoinGroupButton group={this.state.group}/>*/}
+                    {/*{<JoinGroupButton group={this.state.group}/>}*/}
                     <GroupDetailButton group={this.state.group}/>
                   </Col>
                 </Row>
