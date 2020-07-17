@@ -8,6 +8,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import GroupService from "../../services/GroupService";
 import GroupJoinButton from "../GroupJoinButton";
+import GroupDetailButton from "../GroupDetail/GroupDetailButton";
 
 class GroupComponent extends React.Component {
 	constructor(props) {
@@ -95,7 +96,12 @@ class GroupComponent extends React.Component {
 								</center>
 							</Col>
 							<Col>
-								<center>{display_join_button && <GroupJoinButton group={this.state}></GroupJoinButton>}</center>
+							{display_join_button &&
+								// <GroupJoinButton group={this.state}></GroupJoinButton>
+										<div className={"float-sm-right margin-right-medium"} >
+										<GroupDetailButton group={this.state}/>
+										</div>
+								}
 							</Col>
 						</Row>
 						<Card.Body>
