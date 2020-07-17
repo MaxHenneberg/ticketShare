@@ -49,7 +49,7 @@ class GroupJoinButton extends React.Component {
   render() {
     return (
         <div>
-          <Button variant={"success"}
+          <Button size="lg" variant={"success"}
                   onClick={() => this.openGroupJoinModal()}>+ Join!</Button>
           <GroupJoinModal
               visible={this.state.groupJoinModalVisible} group={this.state.group} pricePerPerson={this.state.pricePerPerson}

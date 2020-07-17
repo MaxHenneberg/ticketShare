@@ -6,10 +6,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import GroupService from "../../services/GroupService";
-import GroupJoinButton from "../GroupJoinButton";
-import GroupDetailButton from "../GroupDetail/GroupDetailButton";
 
-class GroupComponent extends React.Component {
+const select_style = {
+	marginTop: "1rem",
+};
+
+class GroupInfo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -43,7 +45,6 @@ class GroupComponent extends React.Component {
 			emptySlots: "Loading..",
 			eventStart: "Loading",
 			eventEnd: "Loading",
-			display_join_button: false,
 		};
 	}
 	componentDidMount() {
@@ -51,12 +52,10 @@ class GroupComponent extends React.Component {
 		(async () => {
 			try {
 				let group = await GroupService.getGroup(id);
-				console.log(`In Component ${group.name}`);
 				this.setState(group);
 				this.populatePricePerPerson();
 				this.convertDate();
 				this.getEmptySlots(id);
-				this.setState({display_join_button:true});
 			} catch (err) {
 				console.error(err);
 			}
@@ -81,7 +80,6 @@ class GroupComponent extends React.Component {
 	}
 
 	render() {
-		let display_join_button = this.state.display_join_button;
 		return (
 			<Row>
 				<Col>
@@ -89,18 +87,11 @@ class GroupComponent extends React.Component {
 						<Row style={{ paddingTop: "10px" }}>
 							<Col xs={1}></Col>
 							<Col xs={8}>
-									<h2>
-										<b>{this.state.name}</b>
-									</h2>
+								<h2>
+									<b>{this.state.name}</b>
+								</h2>
 							</Col>
-							<Col>
-							{display_join_button &&
-								// <GroupJoinButton group={this.state}></GroupJoinButton>
-										<div className={"float-sm-right margin-right-medium"} >
-										<GroupDetailButton group={this.state}/>
-										</div>
-								}
-							</Col>
+							<Col xs={3}></Col>
 						</Row>
 						<Card.Body>
 							<Row>
@@ -141,4 +132,5 @@ class GroupComponent extends React.Component {
 		);
 	}
 }
-export default withRouter(GroupComponent);
+
+export default GroupInfo;
