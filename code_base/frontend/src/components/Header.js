@@ -2,17 +2,25 @@
 
 import React from 'react';
 import Navbar from "react-bootstrap/Navbar";
-//import Logo from "../Logo.png";
 import Button from "react-bootstrap/Button";
-import {Search, Shield, PersonCircle} from "react-bootstrap-icons";
+import {Shield, PersonCircle} from "react-bootstrap-icons";
+import LoginButton from "./LoginButton";
+
+import {UserContext} from "../App";
 
 class Header extends React.Component {
 
+  static contextType;
+
+
   constructor(props) {
     super(props);
+
+    Header.contextType = UserContext
   }
 
   render() {
+    console.log("HEADER: "+this.context.user);
     return (
         <Navbar bg="primary" sticky={"top"}>
           <Navbar.Brand>
@@ -22,13 +30,11 @@ class Header extends React.Component {
           <Navbar.Toggle/>
           <Navbar.Collapse className="justify-content-end">
             <div>
-              <Button>Search <Search/></Button>
-            </div>
-            <div>
               <Button>MyTickets<Shield/></Button>
             </div>
             <div>
-              <Button>Login<PersonCircle/></Button>
+              {(this.context.user != null) && <Button>{this.context.user.username}'s Profile <PersonCircle/></Button>}
+              {!(this.context.user != null) && <LoginButton/>}
             </div>
           </Navbar.Collapse>
         </Navbar>

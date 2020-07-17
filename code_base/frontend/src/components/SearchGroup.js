@@ -35,7 +35,7 @@ class SearchGroup extends React.Component {
       }
     };
 
-    this.handleFormInputDebounced = debounce(400, this.handleFormInput)
+    this.handleFormInputDebounced = debounce(300, this.handleFormInput)
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
