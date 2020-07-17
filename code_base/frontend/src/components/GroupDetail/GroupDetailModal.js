@@ -9,23 +9,32 @@ import GroupJoinButton from "../GroupJoinButton";
 import CardDeck from "react-bootstrap/CardDeck";
 import JoinedUserCard from "./JoinedUserCard";
 import Utils from "../../utils/Util";
+import {UserContext} from "../../App";
+import GroupService from "../../services/GroupService";
+
+async function  updateJoinInformation(groupId, setJoinInformation){
+  const infos = await GroupService.joinInfosForGroup(groupId);
+  setJoinInformation(infos);
+}
 
 function loggedInArea(props) {
-  if (props.user) {
-    if (Utils.isUserJoined(props.user, props.joinInformation) || Utils.isUserCreator(props.user, props.group)) {
+  const userContext = React.useContext(UserContext);
+  const [joinInformation, setJoinInformation] = React.useState(props.joinInformation);
+  if (userContext.user) {
+    if (Utils.isUserJoined(userContext.user, joinInformation) || Utils.isUserCreator(userContext.user, props.group)) {
       let joinedInfo = [];
-      for (const info of props.joinInformation) {
-        joinedInfo.push(<JoinedUserCard joinInformation={info} user={props.user} group={props.group}/>)
+      for (const info of joinInformation) {
+        joinedInfo.push(<JoinedUserCard joinInformation={info} user={userContext.user} group={props.group}/>)
       }
 
       return <CardDeck className={"scrollableCardDeck"}>{joinedInfo}</CardDeck>
     }
-    if(props.group.creator === props.user._id) {
+    if(props.group.creator === userContext.user._id) {
       return <div>Creator</div>
     }
     return (
         <Center>
-          <GroupJoinButton group={props.group} onClick={() => setVisible(true)}/>
+          <GroupJoinButton group={props.group} callback={() => updateJoinInformation(props.group._id, setJoinInformation)} onClick={() => setVisible(true)}/>
         </Center>
     )
   } else {

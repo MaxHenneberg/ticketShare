@@ -3,15 +3,17 @@
 import React from 'react';
 import Button from "react-bootstrap/Button";
 import GroupDetailModal from "./GroupDetailModal";
-import UserService from "../../services/UserService";
 import GroupService from "../../services/GroupService";
 
+import {InfoCircle} from "react-bootstrap-icons";
+
 class GroupDetailButton extends React.Component {
+
+  static contexType;
 
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
       joinInfos: null,
       infoVisible: false,
       pricePerPerson: 0
@@ -26,7 +28,6 @@ class GroupDetailButton extends React.Component {
   }
 
   async componentDidMount(): void {
-    UserService.getCurrentUser().then(result => this.setState({user: result})).catch((e) => console.error(e));
     try{
       const infos = await GroupService.joinInfosForGroup(this.props.group._id);
       await this.setState({joinInfos: infos});
@@ -43,9 +44,9 @@ class GroupDetailButton extends React.Component {
   render() {
     return (
         <div>
-          <Button variant={"primary"}
-                  onClick={() => this.setState({infoVisible: true})}>X</Button>
-          <GroupDetailModal visible={this.state.infoVisible} group={this.props.group} user={this.state.user} joinInformation={this.state.joinInfos} pricePerPerson={this.state.pricePerPerson} onHideCallback={this.onHide}/>
+          <Button variant={"success"}
+                  onClick={() => this.setState({infoVisible: true})}>Info <InfoCircle/></Button>
+          <GroupDetailModal visible={this.state.infoVisible} group={this.props.group} joinInformation={this.state.joinInfos} pricePerPerson={this.state.pricePerPerson} onHideCallback={this.onHide}/>
         </div>
     );
   }
