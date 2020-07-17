@@ -1,0 +1,4 @@
+.registerText{
+  text-decoration: underline currentColor;
+  cursor: pointer;
+}

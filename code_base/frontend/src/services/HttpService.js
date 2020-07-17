@@ -111,7 +111,7 @@
 
        if(this.checkIfUnauthorized(resp)) {
          console.error("Not Authorized");
-         window.location = '/#';
+         onError("Not Authorized");
          return;
        }
        else {

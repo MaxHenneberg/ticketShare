@@ -64,3 +64,7 @@ body {
   border: solid lightgrey;
   border-radius: 5px;
 }
+
+.margin-right-small{
+  margin-right: 5px;
+}
