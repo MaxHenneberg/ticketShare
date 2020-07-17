@@ -19,6 +19,19 @@ export default class UserService {
     });
   }
 
+  static async logout() {
+    console.log("Test Logout");
+    return new Promise((resolve, reject) => {
+      HttpService.post("http://localhost:8080/users/logout", {},
+          function (result) {
+            resolve(result);
+          }, function (textStatus) {
+            console.error("Error in Get:" + textStatus);
+            reject(textStatus);
+          });
+    });
+  }
+
   static async getCurrentUser(){
     return new Promise((resolve, reject) => {
       HttpService.get(ApiEndpoint + "users/cookie",
