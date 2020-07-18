@@ -49,56 +49,6 @@ export class ListView extends React.Component {
 		return groupList;
 	}
 
-<<<<<<< HEAD
-	async searchingCallback() {
-		await this.setState({ searching: true });
-	}
-
-	render() {
-		return (
-			<div className={"inheritHeight"}>
-				<div>
-				</div>
-				<div>
-					<Row>
-						<Col xs={1} />
-						<Col xs={10}>
-							<SearchGroup
-								searchCallback={this.searchCallback}
-								searchingCallback={this.searchingCallback}
-							/>
-						</Col>
-						<Col xs={1} />
-					</Row>
-				</div>
-				<div className={"inheritHeight"}>
-					<Row className={"inheritHeight"}>
-						<Col xs={1} className={"inheritHeight"} />
-						<Col xs={10} className={"inheritHeight"}>
-							<div className={"searchResult"}>
-								{this.state.groups &&
-									this.state.groups.length > 0 &&
-									!this.state.searching &&
-									this.renderGroups()}
-								{this.state.groups && this.state.groups.length == 0 && !this.state.searching && (
-									<Center>
-										<div>No Result find for given Parameters!</div>
-									</Center>
-								)}
-								{this.state.searching && (
-									<Center>
-										<Spinner animation="border" />
-									</Center>
-								)}
-							</div>
-						</Col>
-						<Col xs={1} className={"inheritHeight"} />
-					</Row>
-				</div>
-			</div>
-		);
-	}
-=======
   renderGroups() {
     console.log("Render Groups: ");
     let groupList = [];
@@ -155,7 +105,6 @@ export class ListView extends React.Component {
         </div>
     );
   }
->>>>>>> 8e62c2c3a599de9d7b343c3a9500c4d407309daa
 }
 
 export default ListView;
