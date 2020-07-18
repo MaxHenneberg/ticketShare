@@ -8,6 +8,8 @@ import {UserContext} from "../App";
 import ProfilePopover from "./ProfilePopover";
 import UserService from "../services/UserService";
 
+import Logo from "../../contrib/img/logoRound.png";
+
 class Header extends React.Component {
 
   static contextType;
@@ -34,7 +36,7 @@ class Header extends React.Component {
     return (
         <Navbar bg="primary" expand={"lg"} sticky={"top"}>
           <Navbar.Brand>
-            <img alt="" src="" width="100" height="30"
+            <img alt="" src={Logo} width="90" height="90"
                  className="d-inline-block align-top"/>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav"/>

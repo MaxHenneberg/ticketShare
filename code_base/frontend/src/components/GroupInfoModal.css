@@ -92,3 +92,41 @@
 
   color: black;
 }
+
+.bannerWrapper{
+  width: 100%;
+  height: 15vh;
+  margin-bottom: 10px;
+
+  border: lightgrey solid;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.promotionGroupBannerWrapper{
+  height: 10vh;
+  justify-content: center;
+  align-content: center;
+
+  overflow: hidden;
+}
+
+.carouselCard{
+  height: 20vh;
+  width: 33%;
+  max-width: 33%;
+}
+
+.carouselCard:hover{
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.carouselCardBody{
+  max-height: 10vh;
+  height:  10vh;
+}
+
+.imgBanner{
+
+}

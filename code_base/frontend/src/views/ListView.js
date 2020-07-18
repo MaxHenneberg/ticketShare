@@ -8,6 +8,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Center from "react-center";
 import GroupService from "../services/GroupService";
 import CreateGroupHome from "../components/CreateGroupHome";
+import PromotionCarousel from "../components/PromotedGroups/PromotionCarousel";
 
 export class ListView extends React.Component {
 	constructor(props) {
@@ -48,6 +49,7 @@ export class ListView extends React.Component {
 		return groupList;
 	}
 
+<<<<<<< HEAD
 	async searchingCallback() {
 		await this.setState({ searching: true });
 	}
@@ -96,6 +98,64 @@ export class ListView extends React.Component {
 			</div>
 		);
 	}
+=======
+  renderGroups() {
+    console.log("Render Groups: ");
+    let groupList = [];
+    if (this.state.groups) {
+      for (const group of this.state.groups) {
+        console.log(`${group._id}:${group.name}`);
+        groupList.push(<GroupComponent group={group}/>);
+      }
+    }
+    return groupList;
+  }
+
+  async searchingCallback() {
+    await this.setState({searching: true});
+  }
+
+  render() {
+    return (
+        <div className={"inheritHeight"}>
+          <div>
+            <Row>
+              <Col xs={1}/>
+              <Col xs={11}>
+                <SearchGroup searchCallback={this.searchCallback} searchingCallback={this.searchingCallback}/>
+              </Col>
+            </Row>
+          </div>
+          <Row className={"margin-bottom-medium"}>
+            <Col xs={1}/>
+            <Col xs={11}>
+              <div className={"landingPageBorder"}>
+                <PromotionCarousel/>
+              </div>
+            </Col>
+          </Row>
+          <div className={"inheritHeight"}>
+            <Row className={"inheritHeight"}>
+              <Col xs={1} className={"inheritHeight"}/>
+              <Col xs={11} className={"inheritHeight"}>
+                <div className={"searchResult landingPageBorder"}>
+                  {this.state.groups && (this.state.groups.length > 0) && !this.state.searching && this.renderGroups()}
+                  {this.state.groups && (this.state.groups.length == 0) && !this.state.searching &&
+                  <Center>
+                    <div>No Result find for given Parameters!</div>
+                  </Center>}
+                  {this.state.searching &&
+                  <Center>
+                    <Spinner animation="border"/>
+                  </Center>}
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </div>
+    );
+  }
+>>>>>>> 8e62c2c3a599de9d7b343c3a9500c4d407309daa
 }
 
 export default ListView;

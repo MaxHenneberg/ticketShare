@@ -7,7 +7,6 @@
    static apiURL() {return 'http://localhost:3000'; }
 
    static async get(url, onSuccess, onError) {
-    console.log("Get");
      try {
        let resp = await fetch(url, {
          method: 'GET',
@@ -15,11 +14,11 @@
          credentials:'include'
 
        });
-      console.log("fetch: "+resp);
+      // console.log("fetch: "+resp);
        if(this.checkIfUnauthorized(resp)) {
          window.location = '/#/';
        } else {
-         console.log(resp);
+         // console.log(resp);
          resp = await resp.json();
        }
 
@@ -80,18 +79,18 @@
        }
        else {
          resp = await resp.json();
-         console.log("RESP: "+resp);
+         // console.log("RESP: "+resp);
        }
 
        if(resp.error) {
-         console.log("ERROR:"+resp.error)
+         console.error("ERROR:"+resp.error)
          onError(resp.error);
        }
        else {
          onSuccess(resp);
        }
      } catch(err) {
-       console.log("ERROR:"+err)
+       console.error("ERROR:"+err)
        onError(err.message);
      }
    }
@@ -116,7 +115,7 @@
        }
        else {
          resp = await resp.json();
-         console.log("Resp: "+resp);
+         // console.log("Resp: "+resp);
        }
        if(resp.error) {
          onError(resp.error);
