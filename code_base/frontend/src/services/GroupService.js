@@ -26,7 +26,6 @@ export default class GroupService {
   static getGroup(id) {
     return new Promise((resolve, reject) => {
       var url = GroupService.baseURL() + id;
-      console.log(url);
       HttpService.get(url, function (data) {
         if (data != undefined || Object.keys(data).length !== 0) {
           resolve(data);
@@ -42,7 +41,6 @@ export default class GroupService {
   static getFreeSlots(id) {
     return new Promise((resolve, reject) => {
       var url = GroupService.baseURL() + "info/freeslots/" + id;
-      console.log(url);
       HttpService.get(url, function (data) {
         if (data != undefined || Object.keys(data).length !== 0) {
           resolve(data);
@@ -59,7 +57,6 @@ export default class GroupService {
   static createGroup(data) {
     return new Promise((resolve, reject) => {
       var url = GroupService.baseURL() + "create";
-      console.log(url);
       HttpService.post(url, data, function (data) {
         if (data != undefined || Object.keys(data).length !== 0) {
           resolve(data);
@@ -73,29 +70,24 @@ export default class GroupService {
   }
 
   static async initGroupJoin(id) {
-    console.log("Init Group Join");
     const body = {group: id};
     return new Promise((resolve, reject) => {
       HttpService.post(GroupService.baseURL() + "join/initJoin", body,
           function (data) {
-            console.log("GroupJoin:" + data._id);
             resolve(data);
           }, function (textStatus) {
-            console.error("Error in Post:" + textStatus);
             reject(textStatus);
           });
     })
   }
 
   static async revertInitGroupJoin(id) {
-    console.log("Revert Init Group Join");
     const body = {group: id};
     return new Promise((resolve, reject) => {
       HttpService.post(GroupService.baseURL() + "join/revertInitJoin", body,
           function (data) {
             resolve(data);
           }, function (textStatus) {
-            console.error("Error in Post:" + textStatus);
             reject(textStatus);
           });
     })
@@ -107,7 +99,6 @@ export default class GroupService {
           function (data) {
             resolve(data);
           }, function (textStatus) {
-            console.error("Error in Get:" + textStatus);
             reject(textStatus);
           });
     })
@@ -119,7 +110,6 @@ export default class GroupService {
           function (data) {
             resolve(data);
           }, function (textStatus) {
-            console.error("Error in Get:" + textStatus);
             reject(textStatus);
           });
     })
@@ -129,7 +119,6 @@ export default class GroupService {
     return new Promise((resolve, reject) => {
       HttpService.get(GroupService.baseURL() + "joinInformation/byGroupId?groupId=" + groupId,
           function (data) {
-            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);
@@ -142,7 +131,6 @@ export default class GroupService {
     return new Promise((resolve, reject) => {
       HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketDelivered=true`, {},
           function (data) {
-            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);
@@ -155,7 +143,6 @@ export default class GroupService {
     return new Promise((resolve, reject) => {
       HttpService.put(`http://localhost:8080/joinInformation/${joinInfoId}?ticketReceived=true`, {},
           function (data) {
-            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);
@@ -172,7 +159,6 @@ export default class GroupService {
     return new Promise((resolve, reject) => {
       HttpService.get( `http://localhost:8080/groups/search?${query}&limit=${limit}`,
           function (data) {
-            console.log("Got JoinInfo: " + data);
             resolve(data);
           }, function (textStatus) {
             console.error("Error in Get:" + textStatus);

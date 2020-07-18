@@ -1,11 +1,15 @@
 "use strict";
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
+import "../contrib/lux.css";
+// import "../contrib/litera.css";
+// import "../contrib/scetchy.css";
+// import "../contrib/superhero.css";
+// import "../contrib/flatly.css";
 import "./Temp.css"
 
 import React from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import Header from "./components/Header";
-import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import {ListView} from "./views/ListView";
 import UserView from "./views/UserView";
@@ -78,7 +82,9 @@ export default class App extends React.Component {
                 </Router>
               </div>
               <div className={"float-sm-right advertisementComponent"}>
-                <Col xs={2}/>
+                <Col xs={1}>
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Wikipedia_anzeige2c.jpg/120px-Wikipedia_anzeige2c.jpg"/>
+                </Col>
               </div>
             </div>
           </UserContext.Provider>

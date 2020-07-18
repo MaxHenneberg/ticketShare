@@ -46,13 +46,12 @@ class GroupComponent extends React.Component {
 			display_join_button: false,
 		};
 	}
+
 	componentDidMount() {
-		let id = this.props.id;
+		let id = this.props.group._id;
 		(async () => {
 			try {
-				let group = await GroupService.getGroup(id);
-				console.log(`In Component ${group.name}`);
-				this.setState(group);
+				await this.setState(this.props.group);
 				this.populatePricePerPerson();
 				this.convertDate();
 				this.getEmptySlots(id);

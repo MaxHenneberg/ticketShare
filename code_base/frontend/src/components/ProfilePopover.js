@@ -16,15 +16,15 @@ function ProfilePopover(props) {
         <PopoverTitle as="h3">Welcome {userContext.user.username}</PopoverTitle>
         <PopoverContent>
           <ul className={"buttonList"}>
-            <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}><div>Show Profile  <PersonCircle style={{'margintop':'3px'}} className={"float-right"}/></div></Button></li>
-            <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}>My Tickets <Files style={{'margin-top':'3px'}} className={"float-right"}/></Button></li>
-            <li className={"buttonListElement"}><Button variant={"danger"} className={"popoverButton"} onClick={() => props.handleLogout()}>Logout <DoorOpenFill style={{'margin-top':'3px'}} className={"float-right"}/></Button></li>
+            <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}><div>Show Profile  <PersonCircle className={"float-right popoverIcon"}/></div></Button></li>
+            <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}>My Tickets <Files className={"float-right popoverIcon"}/></Button></li>
+            <li className={"buttonListElement"}><Button variant={"danger"} className={"popoverButton"} onClick={() => props.handleLogout()}>Logout <DoorOpenFill className={"float-right popoverIcon"}/></Button></li>
           </ul>
         </PopoverContent>
       </Popover>);
   return (
       <OverlayTrigger overlay={popover} trigger="click" placement="bottom">
-        <Button>{userContext.user.username}'s Profile <PersonCircle/></Button>
+        <Button variant={"outline-light"}>{userContext.user.username}'s Profile <PersonCircle/></Button>
       </OverlayTrigger>
   )
 }
