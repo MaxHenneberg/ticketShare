@@ -15,6 +15,7 @@ import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalTitle from "react-bootstrap/ModalTitle";
 
 import "./GroupInfoModal.css";
+import Utils from "../utils/Util";
 
 class GroupJoinModalContent extends React.Component {
 
@@ -34,22 +35,12 @@ class GroupJoinModalContent extends React.Component {
   }
 
   renderSlots() {
+    console.log("RENDER SLOTS!!!!!");
     if (this.state.loading) {
       return <Spinner animation="border"/>
     } else {
       if (!this.state.error) {
-        console.log("Render Slots");
-        console.log("MaxCovered: "+this.props.group.ticket.initialFreeSlotsLeft);
-        console.log("OccSlots: "+this.state.occSlots);
-        let slotList = [];
-        for (let i = 0; i < this.props.group.ticket.initialFreeSlotsLeft; i++) {
-          if (i < this.state.occSlots) {
-            slotList.push(<PersonFill className="occupiedSlot"/>);
-          } else {
-            slotList.push(<PersonFill className="freeSlot"/>);
-          }
-        }
-        return slotList;
+        return Utils.renderSlots(this.props.group.ticket.initialFreeSlotsLeft,this.state.occSlots)
       } else {
         console.log("Error");
         return <div>Error...</div>

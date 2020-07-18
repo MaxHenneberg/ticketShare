@@ -12,29 +12,32 @@ import Utils from "../../utils/Util";
 import {UserContext} from "../../App";
 import GroupService from "../../services/GroupService";
 
-async function  updateJoinInformation(groupId, setJoinInformation){
+async function updateJoinInformation(groupId, setJoinInformation) {
   const infos = await GroupService.joinInfosForGroup(groupId);
   setJoinInformation(infos);
 }
 
 function loggedInArea(props) {
   const userContext = React.useContext(UserContext);
-  const [joinInformation, setJoinInformation] = React.useState(props.joinInformation);
-  if (userContext.user) {
+  const [joinInformation, setJoinInformation] = React.useState(null);
+  if (!joinInformation) {
+    GroupService.joinInfosForGroup(props.group._id).then(result => setJoinInformation(result)).catch(e => console.error(e));
+  }
+  if (userContext.user && joinInformation) {
     if (Utils.isUserJoined(userContext.user, joinInformation) || Utils.isUserCreator(userContext.user, props.group)) {
       let joinedInfo = [];
+
       for (const info of joinInformation) {
         joinedInfo.push(<JoinedUserCard joinInformation={info} user={userContext.user} group={props.group}/>)
       }
-
       return <CardDeck className={"scrollableCardDeck"}>{joinedInfo}</CardDeck>
     }
-    if(props.group.creator === userContext.user._id) {
+    if (props.group.creator === userContext.user._id) {
       return <div>Creator</div>
     }
     return (
         <Center>
-          <GroupJoinButton group={props.group} callback={() => updateJoinInformation(props.group._id, setJoinInformation)} onClick={() => setVisible(true)}/>
+          <GroupJoinButton group={props.group} callback={() => updateJoinInformation(props.group._id, setJoinInformation)}/>
         </Center>
     )
   } else {
@@ -45,7 +48,7 @@ function loggedInArea(props) {
 function GroupDetailModal(props) {
   return (
       <Modal centered animation={false} backdrop="static" backdropClassName={"backdrop"}
-             show={props.visible} onHide={props.onHideCallback}>
+             show={props.visible} onHide={() => props.onHideCallback()}>
         <ModalHeader closeButton>
           <ModalTitle>Group Details</ModalTitle>
         </ModalHeader>

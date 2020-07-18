@@ -7,6 +7,7 @@ import GroupComponent from "../components/group/GroupComponent";
 import Spinner from "react-bootstrap/Spinner";
 import Center from 'react-center';
 import GroupService from "../services/GroupService";
+import PromotionCarousel from "../components/PromotedGroups/PromotionCarousel";
 
 export class ListView extends React.Component {
 
@@ -42,7 +43,7 @@ export class ListView extends React.Component {
     if (this.state.groups) {
       for (const group of this.state.groups) {
         console.log(`${group._id}:${group.name}`);
-        groupList.push(<GroupComponent id={group._id}/>);
+        groupList.push(<GroupComponent group={group}/>);
       }
     }
     return groupList;
@@ -58,19 +59,26 @@ export class ListView extends React.Component {
           <div>
             <Row>
               <Col xs={1}/>
-              <Col xs={10}>
+              <Col xs={11}>
                 <SearchGroup searchCallback={this.searchCallback} searchingCallback={this.searchingCallback}/>
               </Col>
-              <Col xs={1}/>
             </Row>
           </div>
+          <Row className={"margin-bottom-medium"}>
+            <Col xs={1}/>
+            <Col xs={11}>
+              <div className={"landingPageBorder"}>
+                <PromotionCarousel/>
+              </div>
+            </Col>
+          </Row>
           <div className={"inheritHeight"}>
             <Row className={"inheritHeight"}>
               <Col xs={1} className={"inheritHeight"}/>
-              <Col xs={10} className={"inheritHeight"}>
-                <div className={"searchResult"}>
+              <Col xs={11} className={"inheritHeight"}>
+                <div className={"searchResult landingPageBorder"}>
                   {this.state.groups && (this.state.groups.length > 0) && !this.state.searching && this.renderGroups()}
-                  {this.state.groups && (this.state.groups.length==0) && !this.state.searching &&
+                  {this.state.groups && (this.state.groups.length == 0) && !this.state.searching &&
                   <Center>
                     <div>No Result find for given Parameters!</div>
                   </Center>}
@@ -80,7 +88,6 @@ export class ListView extends React.Component {
                   </Center>}
                 </div>
               </Col>
-              <Col xs={1} className={"inheritHeight"}/>
             </Row>
           </div>
         </div>

@@ -1,5 +1,4 @@
 .advertisementComponent {
-  background-color: red !important;
   max-height: 80vh !important;
   height: 80vh;
   width: 10vw;
@@ -21,6 +20,11 @@
   max-height: 90vh;
 }
 
+.navbar{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .horizontalCenter {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -35,6 +39,7 @@
 body {
   height: 100vh !important;
   width: 100vw !important;
+  overflow: hidden;
 }
 
 #app {
@@ -43,8 +48,13 @@ body {
 }
 
 .inheritHeight{
-  height: 100% !important;
-  max-height: 100%;
+   height: 100% !important;
+   max-height: 100%;
+ }
+
+.inheritWidth{
+  width: 100% !important;
+  max-width: 100%;
 }
 
 .inheritHeight > .row{
@@ -59,7 +69,9 @@ body {
 .searchResult{
   overflow-y: auto;
   overflow-x: hidden;
+}
 
+.landingPageBorder{
   padding: 10px;
   border: solid lightgrey;
   border-radius: 5px;
@@ -71,4 +83,16 @@ body {
 
 .margin-right-medium{
   margin-right: 10px;
+}
+
+.margin-bottom-small{
+   margin-bottom: 5px;
+ }
+
+.margin-bottom-medium{
+  margin-bottom: 10px;
+}
+
+.heightFitContent{
+  height: fit-content;
 }

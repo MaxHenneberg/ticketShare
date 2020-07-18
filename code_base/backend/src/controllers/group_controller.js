@@ -400,7 +400,7 @@ async function searchGroupImpl(query) {
     if (Number.isInteger(limit)) {
       preFilter = preFilter.limit(limit);
     }
-    preFilter = await preFilter.populate("creator").populate("ticket").populate({path: "ticket", populate: {path: "eventInformation"}}).exec();
+    preFilter = await preFilter.populate("creator").populate("ticket").populate({path: "ticket", populate: {path: "currency"}}).populate({path: "ticket", populate: {path: "eventInformation"}}).exec();
     if (query.pricePerPerson) {
       preFilter = preFilter.filter(e => ((e.ticket.fullPrice / e.ticket.maxCoveredPeople) < query.pricePerPerson));
     }
