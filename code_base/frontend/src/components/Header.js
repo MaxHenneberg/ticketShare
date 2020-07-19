@@ -35,9 +35,12 @@ class Header extends React.Component {
     console.log("HEADER: " + this.context.user);
     return (
         <Navbar bg="primary" expand={"lg"} sticky={"top"}>
-          <Navbar.Brand>
+          <Navbar.Brand href="#/">
+            <div className={"brandContainer"}>
             <img alt="" src={Logo} width="90" height="90"
                  className="d-inline-block align-top"/>
+                 <span className={"title"}>Ticket Share</span>
+            </div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
           <Navbar.Collapse id={"responsive-navbar-nav"} className="justify-content-end">

@@ -23,6 +23,9 @@
 .navbar{
   padding-top: 10px;
   padding-bottom: 10px;
+
+  max-height: 15vh;
+  height: 15vh;
 }
 
 .horizontalCenter {
@@ -95,4 +98,17 @@ body {
 
 .heightFitContent{
   height: fit-content;
+}
+
+.title{
+  margin-left: 1vw;
+  margin-top: 5px;
+  color: white;
+  font-size: xx-large;
+}
+
+.brandContainer{
+  flex-direction: row;
+  align-items: center;
+  display: flex;
 }

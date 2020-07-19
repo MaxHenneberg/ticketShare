@@ -4,10 +4,11 @@ import PopoverTitle from "react-bootstrap/PopoverTitle";
 import PopoverContent from "react-bootstrap/PopoverContent";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Button from "react-bootstrap/Button";
-import {PersonCircle, DoorOpenFill, Files} from "react-bootstrap-icons";
+import {PersonCircle, DoorOpenFill, Files, PlusCircle} from "react-bootstrap-icons";
 
 import {UserContext} from "../App";
 import "./Login.css";
+import CreateGroupHome from "./CreateGroupHome";
 
 function ProfilePopover(props) {
   const userContext = useContext(UserContext);
@@ -18,6 +19,7 @@ function ProfilePopover(props) {
           <ul className={"buttonList"}>
             <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}><div>Show Profile  <PersonCircle className={"float-right popoverIcon"}/></div></Button></li>
             <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}>My Tickets <Files className={"float-right popoverIcon"}/></Button></li>
+            <li className={"buttonListElement"}><CreateGroupHome/></li>
             <li className={"buttonListElement"}><Button variant={"danger"} className={"popoverButton"} onClick={() => props.handleLogout()}>Logout <DoorOpenFill className={"float-right popoverIcon"}/></Button></li>
           </ul>
         </PopoverContent>

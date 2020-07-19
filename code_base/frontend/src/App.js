@@ -19,7 +19,8 @@ import UserService from "./services/UserService";
 
 export const UserContext = React.createContext({
   user: null,
-  setUser: () => {}
+  setUser: () => {
+  }
 });
 
 export default class App extends React.Component {
@@ -53,12 +54,12 @@ export default class App extends React.Component {
   async componentDidMount() {
     document.title = this.state.title;
 
-    try{
+    try {
       const user = await UserService.getCurrentUser();
-      if(user){
+      if (user) {
         await this.state.userContext.setUser(user);
       }
-    }catch (e) {
+    } catch (e) {
       console.error(e);
     }
   }
@@ -67,10 +68,10 @@ export default class App extends React.Component {
     return (
         <div className="content">
           <UserContext.Provider value={this.state.userContext}>
-            <Header/>
-            <div>
-              <div className={"float-sm-left views"}>
-                <Router>
+            <Router>
+              <div>
+                <Header/>
+                <div className={"float-sm-left views"}>
                   <Switch>
                     //...route == route.component = component,
                     route.path = path,
@@ -79,14 +80,14 @@ export default class App extends React.Component {
                         (route, i) => (
                             <Route key={i} {...route}/>))}
                   </Switch>
-                </Router>
+                </div>
+                <div className={"float-sm-right advertisementComponent"}>
+                  <Col xs={1}>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Wikipedia_anzeige2c.jpg/120px-Wikipedia_anzeige2c.jpg"/>
+                  </Col>
+                </div>
               </div>
-              <div className={"float-sm-right advertisementComponent"}>
-                <Col xs={1}>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Wikipedia_anzeige2c.jpg/120px-Wikipedia_anzeige2c.jpg"/>
-                </Col>
-              </div>
-            </div>
+            </Router>
           </UserContext.Provider>
         </div>
     );
