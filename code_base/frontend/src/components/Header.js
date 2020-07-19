@@ -37,7 +37,7 @@ class Header extends React.Component {
         <Navbar bg="primary" expand={"lg"} sticky={"top"}>
           <Navbar.Brand href="#/">
             <div className={"brandContainer"}>
-            <img alt="" src={Logo} width="90" height="90"
+            <img alt="" src={Logo} width="50" height="50"
                  className="d-inline-block align-top"/>
                  <span className={"title"}>Ticket Share</span>
             </div>
