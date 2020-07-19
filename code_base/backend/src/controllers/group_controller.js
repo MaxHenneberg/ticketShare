@@ -389,7 +389,7 @@ async function searchGroupImpl(query) {
 
   let filterObject = {};
   if (query.groupName) {
-    Object.assign(filterObject, {name: {$regex: `${query.groupName}.*`}});
+    Object.assign(filterObject, {name: {$regex: `${query.groupName.trim()}.*`,$options:'i'}});
   }
   if (query.joinDeadline) {
     Object.assign(filterObject, {joinDeadline: query.joinDeadline});
@@ -405,11 +405,20 @@ async function searchGroupImpl(query) {
       preFilter = preFilter.filter(e => ((e.ticket.fullPrice / e.ticket.maxCoveredPeople) < query.pricePerPerson));
     }
     if (query.creator) {
-      preFilter = preFilter.filter(e => (e.creator.name.includes(query.creator)));
+      if(query.creator.trim().includes(' ')){
+        const splittedString  = query.creator.trim().split(' ');
+        const firstName = splittedString[0];
+        const surname = splittedString[1];
+        preFilter = preFilter.filter(e => ((e.creator.userInformation.firstname.toLowerCase().includes(firstName.toLowerCase())) && (e.creator.userInformation.surname.toLowerCase().includes(surname.toLowerCase()))));
+      }else{
+        preFilter = preFilter.filter(e => ((e.creator.userInformation.firstname.toLowerCase().includes(query.creator.trim().toLowerCase())) || (e.creator.userInformation.surname.toLowerCase().includes(query.creator.trim().toLowerCase()))));
+      }
+      console.log(`${query.creator.trim().toLowerCase()}`);
+
     }
     if (query.eventName || query.eventStart || query.eventEnd) {
       if (query.eventName) {
-        preFilter = preFilter.filter(e => (e.ticket.eventInformation.name.includes(query.eventName)));
+        preFilter = preFilter.filter(e => (e.ticket.eventInformation.name.toLowerCase().includes(query.eventName.trim().toLowerCase())));
       }
       if (query.eventStart) {
         preFilter = preFilter.filter(e => (e.ticket.eventInformation.eventStart === query.eventStart));

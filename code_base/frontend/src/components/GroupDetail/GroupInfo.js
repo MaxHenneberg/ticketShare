@@ -7,7 +7,6 @@ import "../GroupInfoModal.css"
 import Banner from "./Banner";
 import Utils from "../../utils/Util";
 
-
 function GroupInfo(props) {
   return (
       <div>
@@ -30,6 +29,14 @@ function GroupInfo(props) {
           </Col>
           <Col>
             {Utils.renderDate(props.group.joinDeadline)}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h4>Creator: </h4>
+          </Col>
+          <Col>
+            {`${props.group.creator.userInformation.firstname} ${props.group.creator.userInformation.surname}`}
           </Col>
         </Row>
         <Row>

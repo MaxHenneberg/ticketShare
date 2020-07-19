@@ -9,6 +9,7 @@
 
 .popoverButton{
   width: 100%;
+  border: 1px solid lightgrey;
 }
 
 .buttonList{
@@ -19,4 +20,8 @@
 .popoverIcon{
   margin-top: 5px;
   margin-left: 5px;
+}
+
+.loginIcon{
+  margin-bottom: 2px;
 }
