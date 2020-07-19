@@ -36,7 +36,7 @@ class LoginModal extends React.Component{
       },
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFormInputDebounced = debounce(300, this.handleFormInput)
+    this.handleFormInputDebounced = debounce(50, this.handleFormInput)
   }
 
   async handleLogin(){
@@ -111,7 +111,7 @@ class LoginModal extends React.Component{
               </Form.Row>
               <Form.Row>
                 <FormGroup as={Col}>
-                  <FormText muted><div>No Account <span className={"registerText"}>Register here!</span></div></FormText>
+                  <FormText muted><div>No Account? <span className={"registerText"}>Register here!</span></div></FormText>
                 </FormGroup>
               </Form.Row>
               <Form.Row>

@@ -17,7 +17,7 @@ function ProfilePopover(props) {
         <PopoverTitle as="h3">Welcome {userContext.user.username}</PopoverTitle>
         <PopoverContent>
           <ul className={"buttonList"}>
-            <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}><div>Show Profile  <PersonCircle className={"float-right popoverIcon"}/></div></Button></li>
+            <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}>Show Profile  <PersonCircle className={"float-right popoverIcon"}/></Button></li>
             <li className={"buttonListElement"}><Button variant={"light"} className={"popoverButton"}>My Tickets <Files className={"float-right popoverIcon"}/></Button></li>
             <li className={"buttonListElement"}><CreateGroupHome/></li>
             <li className={"buttonListElement"}><Button variant={"danger"} className={"popoverButton"} onClick={() => props.handleLogout()}>Logout <DoorOpenFill className={"float-right popoverIcon"}/></Button></li>
