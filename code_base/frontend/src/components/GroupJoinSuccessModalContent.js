@@ -111,7 +111,7 @@ class GroupJoinSuccessModalContent extends React.Component {
               </Col>
             </ModalBody>
           <ModalFooter>
-          <Button variant={"primary"} onClick={this.props.callback}>Finish</Button>
+          <Button variant={"success"} onClick={this.props.callback}>Finish</Button>
         </ModalFooter>
         </div>
     );

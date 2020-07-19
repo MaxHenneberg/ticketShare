@@ -12,7 +12,7 @@ function LoginButton(props) {
   };
   return (
       <div>
-        <Button onClick={() => setModalVisible(true)}>><PersonCircle/></Button>
+        <Button variant={"outline-success"} onClick={() => setModalVisible(true)}>Login<PersonCircle/></Button>
         <LoginModal visible={modalVisible} successCallback={successCallback} cancelCallback={() => setModalVisible(false)}/>
       </div>
   )

@@ -116,8 +116,8 @@ class LoginModal extends React.Component{
               </Form.Row>
               <Form.Row>
                 <FormGroup>
-                  <Button className={"margin-right-small"} variant={"primary"} type={"submit"}>Login</Button>
-                  <Button variant={"secondary"} onClick={this.props.cancelCallback}>Cancel</Button>
+                  <Button className={"margin-right-small"} variant={"success"} type={"submit"}>Login</Button>
+                  <Button variant={"primary"} onClick={this.props.cancelCallback}>Cancel</Button>
                 </FormGroup>
               </Form.Row>
             </Form>

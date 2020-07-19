@@ -38,7 +38,7 @@ function ticketTradeReceiverCardBody(props) {
       } else {
         return (
             <div className={"buttonWrapper horizontalCenter"}>
-              <Button variant={"primary"} onClick={props.receivedCallback}>Approve Delivery</Button>
+              <Button variant={"success"} onClick={props.receivedCallback}>Approve Delivery</Button>
             </div>
         )
       }

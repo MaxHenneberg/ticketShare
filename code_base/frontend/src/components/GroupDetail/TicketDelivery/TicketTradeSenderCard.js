@@ -20,7 +20,7 @@ function ticketTradeSenderCardBody(props) {
                         label={"Upload Proof: "} accept={"image/*,.pdf"} onChange={(event) => props.setUploadedFile(event.target.value)}/>
             </FormGroup>
             <div className={"buttonWrapper horizontalCenter"}>
-              <Button variant={"primary"} type={"submit"}>Deliver</Button>
+              <Button variant={"success"} type={"submit"}>Deliver</Button>
             </div>
           </Form>}
           {props.joinInformation.ticketDelivered &&

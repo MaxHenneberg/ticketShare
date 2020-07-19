@@ -75,7 +75,7 @@
   cursor: pointer;
 }
 .userCard:hover{
-  background-color: lightgrey;
+  background-color: #fff3d4;
 }
 
 .ticketTradeModalUserCardBody{
@@ -118,7 +118,7 @@
 }
 
 .carouselCard:hover{
-  background-color: lightgrey;
+  background-color: #fff3d4;
   cursor: pointer;
 }
 

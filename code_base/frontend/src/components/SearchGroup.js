@@ -122,7 +122,7 @@ class SearchGroup extends React.Component {
               </div>
             </Collapse>
             <Form.Row>
-              <Button type={"submit"}>Search</Button>
+              <Button variant={"success"} type={"submit"}>Search</Button>
             </Form.Row>
           </Form>
         </div>

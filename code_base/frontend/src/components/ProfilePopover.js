@@ -26,7 +26,7 @@ function ProfilePopover(props) {
       </Popover>);
   return (
       <OverlayTrigger overlay={popover} trigger="click" placement="bottom">
-        <Button variant={"outline-light"}>{userContext.user.username}'s Profile <PersonCircle/></Button>
+        <Button variant={"outline-success"}>{userContext.user.username}'s Profile <PersonCircle/></Button>
       </OverlayTrigger>
   )
 }

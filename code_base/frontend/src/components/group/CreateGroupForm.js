@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import CurrencyDropdown from "./CurrencyDropdown";
 import { CardTitle, Button } from "react-md";
+import "../../../contrib/lux.css";
 
 const select_style = {
 	marginTop: "1rem",
@@ -214,7 +215,7 @@ class CreateGroupForm extends React.Component {
 						</Form.Group>
 					</Col>
 				</Row>
-				<Button raised primary disabled={this.state.isLoading} type="submit">
+				<Button raised variant={"success"} disabled={this.state.isLoading} type="submit">
 					{this.state.isLoading ? "Loading..." : "Submit"}
 				</Button>
 			</Form>

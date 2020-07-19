@@ -166,7 +166,7 @@ class GroupJoinModalContent extends React.Component {
           </Col>
           </ModalBody>
           <ModalFooter>
-            <Button variant={"primary"}
+            <Button variant={"success"}
                     onClick={() => this.props.openPayment(this.selectedAddress)} disabled={!this.hasFreeSlot()}>Checkout</Button>
             <Button variant={"secondary"}>Close</Button>
           </ModalFooter>
